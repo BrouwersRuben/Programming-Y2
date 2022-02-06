@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruben's Project</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:insert="~{fragments/header::header}">header</div>
+
+<div th:insert="~{fragments/navbar::navbar}">navbar</div>
+
+<h1 class="display-1 text-center m-4">An Error Occurred</h1>
+
+<div class="d-flex justify-content-center">
+    <div class="container m-4">
+        <div class="d-flex flex-row-reverse">
+            <div class="d-flex flex-row-reverse">
+                <img alt="sad cat meme image" class="my-4" th:src="@{/Sad_Cat.png}" width="60%">
+            </div>
+            <div class="col-sm">
+                <p th:if="${url}">
+                    <b>On page:</b> <span th:text="${url}">Page URL</span>
+                </p>
+                <p th:if="${url == null}">
+                    <b>URL:</b> <span th:text="${#httpServletRequest.requestURL}">Request URL</span>
+                </p>
+                <p th:if="${status}">
+                    <b>Response Status:</b> <span th:text="${status}">status-code</span> <span
+                        th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+                </p>
+                <p id='created' th:if="${timestamp}">
+                    <b>Occurred at:</b> <span th:text="${timestamp}">Timestamp</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center">
+    <a class="btn btn-outline-dark m-4" th:href="@{/}">Go to Home</a>
+</div>
+
+<div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'be.kdg.java2'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = "16"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Database
+    runtimeOnly 'org.hsqldb:hsqldb'
+    runtimeOnly 'com.h2database:h2'
+
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //Web
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.webjars:bootstrap:5.1.2'
+    implementation 'org.webjars:webjars-locator:0.42'
+
+    //Etc
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    //Spring Boot
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //developmentOnly("org.springframework.boot:spring-boot-devtools") //Could not get this to work....
+}
+
+test {
+    useJUnitPlatform()
+}
+targetCompatibility = JavaVersion.VERSION_16

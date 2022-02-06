@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruben's Project</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:insert="~{fragments/header::header}">header</div>
+
+<div th:insert="~{fragments/navbar::navbar}">navbar</div>
+
+<div class="d-flex justify-content-center m-5">
+    <img alt="interior design" src="../static/indexPageImage.jpg" th:src="@{/indexPageImage.jpg}" title="interior design"/>
+</div>
+
+<div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>
+
+</body>
+</html>
