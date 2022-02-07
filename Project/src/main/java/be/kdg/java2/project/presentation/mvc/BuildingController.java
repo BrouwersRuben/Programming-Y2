@@ -1,12 +1,12 @@
-package be.kdg.java2.project.presentation;
+package be.kdg.java2.project.presentation.mvc;
 
 import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.exceptions.LocationNotFoundException;
-import be.kdg.java2.project.presentation.dto.BuildingDTO;
-import be.kdg.java2.project.presentation.dto.DeletingDTO;
+import be.kdg.java2.project.presentation.mvc.viewmodels.BuildingViewModel;
+import be.kdg.java2.project.presentation.mvc.viewmodels.DeletingViewModel;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.slf4j.Logger;
@@ -42,21 +42,7 @@ public class BuildingController {
         return "/mainpages/buildings";
     }
 
-    @RequestMapping(value = "/filteredByLocation", method = RequestMethod.POST)
-    public String showBuildingByLocation(/*@Param("loc")*/ @RequestParam(value = "loc") String location, Model model) {
-        if(Objects.equals(location, "")){
-            model.addAttribute("allBuildings", buildingService.findAll());
-            model.addAttribute("errorMessage", "You did not enter a location");
-            logger.warn("You did not enter a location");
-        } else {
-            List<Building> buildings = buildingService.findByLocation(location);
-            logger.debug("Buildings with location: " + location + " are: " + buildings);
-            model.addAttribute("allBuildings", buildings);
-        }
-        return "/mainpages/buildings";
-    }
-
-    @ExceptionHandler(LocationNotFoundException.class)
+/*    @ExceptionHandler(LocationNotFoundException.class)
     //the req used for logging, like the url that threw the exception for example
     public ModelAndView handleError(HttpServletRequest req, LocationNotFoundException exception) {
         logger.error(exception.getMessage());
@@ -64,25 +50,18 @@ public class BuildingController {
         modelAndView.addObject("exception", exception);
         modelAndView.setViewName("/errorpages/locationerror");
         return modelAndView;
-    }
-
-/*
-    Model, ModelMap, and ModelAndView are used to define a model in a Spring MVC application.
-    Model defines a holder for model attributes and is primarily designed for adding attributes to the model.
-    ModelMap is an extension of Model with the ability to store attributes in a map and chain method calls.
-    ModelAndView is a holder for a model and a view; it allows to return both model and view in one return value.
-*/
+    }*/
 
     @GetMapping("/add")
     public String showAddBuildingsForm(Model model) {
-        model.addAttribute("buildingDTO", new BuildingDTO());
+        model.addAttribute("buildingDTO", new BuildingViewModel());
         model.addAttribute("buildingTypes", BuildingType.values());
         model.addAttribute("architects", architectService.findAll());
         return "/addpages/addbuildings";
     }
 
     @PostMapping("/add")
-    public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingDTO buildingDTO, BindingResult errors) {
+    public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingViewModel buildingViewModel, BindingResult errors) {
         if (errors.hasErrors()){
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             model.addAttribute("buildingTypes", BuildingType.values());
@@ -90,8 +69,8 @@ public class BuildingController {
             return "/addpages/addbuildings";
         } else {
             List<Architect> architects = new ArrayList<>();
-            buildingDTO.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
-            Building building = new Building(buildingDTO.getName(), buildingDTO.getLocation(), buildingDTO.getHeight(), new TypeOfBuilding(buildingDTO.getType()));
+            buildingViewModel.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
+            Building building = new Building(buildingViewModel.getName(), buildingViewModel.getLocation(), buildingViewModel.getHeight(), new TypeOfBuilding(buildingViewModel.getType()));
             building.addArchitects(architects);
             architects.forEach(architect -> architect.addBuilding(building));
             buildingService.addBuilding(building);
@@ -107,8 +86,8 @@ public class BuildingController {
     }
 
     @PostMapping(params = {"delete"})
-    public String removeBuilding(@ModelAttribute("deletingDTO") DeletingDTO deletingDTO){
-        buildingService.delete(deletingDTO.getID());
+    public String removeBuilding(@ModelAttribute("deletingDTO") DeletingViewModel deletingViewModel){
+        buildingService.delete(deletingViewModel.getID());
         return "redirect:/buildings";
     }
 }
