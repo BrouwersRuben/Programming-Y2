@@ -1,6 +1,6 @@
-package be.kdg.java2.project.presentation.dto;
+package be.kdg.java2.project.presentation.mvc.viewmodels;
 
-public class DeletingDTO {
+public class DeletingViewModel {
     int ID;
 
     public int getID() {
@@ -13,6 +13,6 @@ public class DeletingDTO {
 
     @Override
     public String toString() {
-        return "DeletingDTO{" + "ID=" + ID + '}';
+        return "DeletingViewModel{" + "ID=" + ID + '}';
     }
 }

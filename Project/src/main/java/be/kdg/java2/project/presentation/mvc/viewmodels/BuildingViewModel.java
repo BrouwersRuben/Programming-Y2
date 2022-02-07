@@ -1,4 +1,4 @@
-package be.kdg.java2.project.presentation.dto;
+package be.kdg.java2.project.presentation.mvc.viewmodels;
 
 import be.kdg.java2.project.domain.BuildingType;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-public class BuildingDTO {
+public class BuildingViewModel {
     // Attributes
     @NotEmpty(message = "The name of the building should be given.")
     @Size(min = 5, max = 30, message = "The name should have a length between 5 and 30.")
@@ -69,6 +69,6 @@ public class BuildingDTO {
 
     @Override
     public String toString() {
-        return "BuildingDTO{" + "name='" + name + '\'' + ", location='" + location + '\'' + ", height=" + height + ", architectsIDs=" + architectsIDs + ", stringType='" + type + '\'' + '}';
+        return "BuildingViewModel{" + "name='" + name + '\'' + ", location='" + location + '\'' + ", height=" + height + ", architectsIDs=" + architectsIDs + ", stringType='" + type + '\'' + '}';
     }
 }

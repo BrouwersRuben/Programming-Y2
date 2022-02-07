@@ -1,4 +1,4 @@
-package be.kdg.java2.project.presentation.dto;
+package be.kdg.java2.project.presentation.mvc.viewmodels;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ArchitectDTO {
+public class ArchitectViewModel {
     // Attributes
     @NotEmpty(message = "The name of the firm should be given.")
     @Size(min = 5, max = 30, message = "The name should have a length between 5 and 30.")
@@ -56,6 +56,6 @@ public class ArchitectDTO {
 
     @Override
     public String toString() {
-        return "ArchitectDTO{" + "name='" + name + '\'' + ", date=" + establishmentDate + ", numberOfEmployees=" + numberOfEmployees + ", buildingsIds=" + buildingsIDs + '}';
+        return "ArchitectViewModel{" + "name='" + name + '\'' + ", date=" + establishmentDate + ", numberOfEmployees=" + numberOfEmployees + ", buildingsIds=" + buildingsIDs + '}';
     }
 }
