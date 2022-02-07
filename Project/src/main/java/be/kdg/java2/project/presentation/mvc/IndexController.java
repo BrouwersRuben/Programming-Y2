@@ -1,4 +1,4 @@
-package be.kdg.java2.project.presentation;
+package be.kdg.java2.project.presentation.mvc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
