@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Ruben's Project</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <link href="../../static/style.css" media="all" rel="stylesheet" th:href="@{/style.css}" type="text/css"/>
+    <link href="../../static/css/style.css" media="all" rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/filteringBuildings.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -25,7 +26,7 @@
             <th th:utext="#{buildings.detail}">Detail button</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
         <tr th:each="building : ${allBuildings}">
             <td th:text="${building.getName()}">Building name</td>
             <td th:text="${building.getLocation()}">Location</td>
@@ -39,17 +40,17 @@
 </div>
 
 <div class="w-80 p-4">
-    <form method="post" th:action="@{../buildings/filteredByLocation}">
+    <form>
         <div class="mb-3">
             <label class="form-label" for="location">Location:</label>
-            <input class="form-control" id="location" name="loc" placeholder="Antwerp, Belgium" type="text">
-            <div class="alert alert-warning w-25 my-4" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">
-                Please fill in your correct details.
-            </div>
+            <input class="form-control" id="location" name="loc" placeholder="Antwerp, Belgium" type="search">
+<!--            <div class="alert alert-warning w-25 my-4" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">-->
+<!--                Please fill in your correct details.-->
+<!--            </div>-->
         </div>
         <div class="d-flex">
             <div class="">
-                <button class="btn btn-dark" th:value="Search" type="submit">Filter</button>
+                <button class="btn btn-dark" id="locationFilter" type="button">Filter</button>
             </div>
             <div class="mx-4">
                 <a class="btn btn-outline-dark" th:href="@{/buildings}">Reset</a>
