@@ -1,18 +1,32 @@
+# Architect Controller testing
+### 200 Ok
 GET http://localhost:6969/api/architects HTTP/1.1
 Accept: application/json
 
-###
-GET http://localhost:6969/api/architects/nameCompany?name=Grimm and Parker Architects HTTP/1.1
+### 200 Ok
+GET http://localhost:6969/api/architects/300 HTTP/1.1
 Accept: application/json
 
-###
-GET http://localhost:6969/api/architects/nameCompany?name=Diamond Schmitt Architects HTTP/1.1
+### 204 No Content
+GET http://localhost:6969/api/architects/900 HTTP/1.1
 Accept: application/json
 
-###
-GET http://localhost:6969/api/architects/numberEmployees?amount=399 HTTP/1.1
+### 400 Bad Request (Could not recreate this error)
+#GET http://localhost:6969/api/architects/amount?number=300 HTTP/1.1
+#Accept: application/json
+
+### 404 Not Found
+GET http://localhost:6969/api/architectss HTTP/1.1
 Accept: application/json
 
+### 500 Internal Server Error
+GET http://localhost:6969/api/architects/Denmark HTTP/1.1
+Accept: application/json
+
+
+
+
+#Building Controller testing
 ###
 GET http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
