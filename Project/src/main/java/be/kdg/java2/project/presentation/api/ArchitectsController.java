@@ -63,42 +63,6 @@ public class ArchitectsController {
         return new ResponseEntity<>(architectsdtos, HttpStatus.OK);
     }
 
-    @GetMapping("/nameCompany")
-    public ResponseEntity<List<ArchitectDTO>> getArchitectByName(@RequestParam("name") String nameCompany){
-
-        var architects = architectService.findArchitectByNameCompany(nameCompany);
-
-        var architectsdtos = architects
-                .stream()
-                .map(architect -> {
-                    var architectDTO = new ArchitectDTO();
-                    architectDTO.setId(architect.getId());
-                    architectDTO.setNameCompany(architect.getNameCompany());
-                    architectDTO.setEstablishmentDate(architect.getEstablishmentDate());
-                    architectDTO.setNumberOfEmployees(architect.getNumberOfEmployees());
-                    architectDTO.setBuildings(architect.getBuildings().stream()
-                            .map(building -> {
-                                var buildingDTO = new BuildingDTO();
-                                buildingDTO.setId(building.getId());
-                                buildingDTO.setName(building.getName());
-                                buildingDTO.setLocation(building.getLocation());
-                                buildingDTO.setHeight(building.getHeight());
-                                var buildingTypeDTO = new BuildingTypeDTO();
-                                buildingTypeDTO.setId(building.getType().getId());
-                                buildingTypeDTO.setCode(building.getType().getCode());
-                                buildingTypeDTO.setType(building.getType().getType());
-                                buildingTypeDTO.setRequiresSpecialPermission(building.getType().isRequiresSpecialPermission());
-                                buildingDTO.setType(buildingTypeDTO);
-                                return buildingDTO;
-                            })
-                            .collect(Collectors.toList()));
-                    return architectDTO;
-                })
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(architectsdtos, HttpStatus.OK);
-    }
-
     @GetMapping("/numberEmployees")
     public ResponseEntity<List<ArchitectDTO>> getArchitectByNumberOfEmployees(@RequestParam("amount") int numberOfEmplyees){
 

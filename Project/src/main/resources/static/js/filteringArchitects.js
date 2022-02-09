@@ -11,37 +11,6 @@ numberFilter.addEventListener("click", numberFilterFunction);
 
 //TODO: When entered nothing, the form gives this as output "", this is not int and gives error
 
-
-//This function does not work, because it does not output an array, and just 1 architect
-function nameFilterFunction(){
-    const name = nameInput.value;
-
-    if (name === null){
-        return;
-    }
-
-    fetch(`/api/architects/nameCompany?name=${name}`, {
-        method: "GET"
-    })
-        .then(response => {
-            if (response.status === 200){
-                return response.json();
-            } else if (response.status === 204){
-                processData([]);
-            } else {
-                //TODO: Proper error handling
-                alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-            }
-        })
-        .then(architects => {
-            processData(architects);
-        })
-        .catch(error => {
-            // TODO: proper error handling!
-            alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-        })
-}
-
 function numberFilterFunction(){
     const number = numberInput.value;
 
