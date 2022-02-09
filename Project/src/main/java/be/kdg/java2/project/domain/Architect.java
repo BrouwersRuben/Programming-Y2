@@ -16,7 +16,7 @@ public class Architect extends EntityClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "company_name", nullable = false, unique = true, length = 30)
+    @Column(name = "company_name", nullable = false, length = 30)
     private String nameCompany;
 
     @Column(name = "establishment_date", nullable = false)

@@ -64,36 +64,39 @@ public class ArchitectsController {
     }
 
     @GetMapping("/nameCompany")
-    public ResponseEntity<ArchitectDTO> getArchitectByName(@RequestParam("name") String nameCompany){
+    public ResponseEntity<List<ArchitectDTO>> getArchitectByName(@RequestParam("name") String nameCompany){
 
-        var architect = architectService.findArchitectByNameCompany(nameCompany);
+        var architects = architectService.findArchitectByNameCompany(nameCompany);
 
-        if (architect != null){
-            var architectDTO = new ArchitectDTO();
-            architectDTO.setId(architect.getId());
-            architectDTO.setNameCompany(architect.getNameCompany());
-            architectDTO.setEstablishmentDate(architect.getEstablishmentDate());
-            architectDTO.setNumberOfEmployees(architect.getNumberOfEmployees());
-            architectDTO.setBuildings(architect.getBuildings().stream()
-                    .map(building -> {
-                        var buildingDTO = new BuildingDTO();
-                        buildingDTO.setId(building.getId());
-                        buildingDTO.setName(building.getName());
-                        buildingDTO.setLocation(building.getLocation());
-                        buildingDTO.setHeight(building.getHeight());
-                        var buildingTypeDTO = new BuildingTypeDTO();
-                        buildingTypeDTO.setId(building.getType().getId());
-                        buildingTypeDTO.setCode(building.getType().getCode());
-                        buildingTypeDTO.setType(building.getType().getType());
-                        buildingTypeDTO.setRequiresSpecialPermission(building.getType().isRequiresSpecialPermission());
-                        buildingDTO.setType(buildingTypeDTO);
-                        return buildingDTO;
-                    })
-                    .collect(Collectors.toList()));
-            return ResponseEntity.ok(architectDTO);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        var architectsdtos = architects
+                .stream()
+                .map(architect -> {
+                    var architectDTO = new ArchitectDTO();
+                    architectDTO.setId(architect.getId());
+                    architectDTO.setNameCompany(architect.getNameCompany());
+                    architectDTO.setEstablishmentDate(architect.getEstablishmentDate());
+                    architectDTO.setNumberOfEmployees(architect.getNumberOfEmployees());
+                    architectDTO.setBuildings(architect.getBuildings().stream()
+                            .map(building -> {
+                                var buildingDTO = new BuildingDTO();
+                                buildingDTO.setId(building.getId());
+                                buildingDTO.setName(building.getName());
+                                buildingDTO.setLocation(building.getLocation());
+                                buildingDTO.setHeight(building.getHeight());
+                                var buildingTypeDTO = new BuildingTypeDTO();
+                                buildingTypeDTO.setId(building.getType().getId());
+                                buildingTypeDTO.setCode(building.getType().getCode());
+                                buildingTypeDTO.setType(building.getType().getType());
+                                buildingTypeDTO.setRequiresSpecialPermission(building.getType().isRequiresSpecialPermission());
+                                buildingDTO.setType(buildingTypeDTO);
+                                return buildingDTO;
+                            })
+                            .collect(Collectors.toList()));
+                    return architectDTO;
+                })
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(architectsdtos, HttpStatus.OK);
     }
 
     @GetMapping("/numberEmployees")

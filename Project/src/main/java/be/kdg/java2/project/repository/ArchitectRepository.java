@@ -10,5 +10,5 @@ public interface ArchitectRepository extends JpaRepository<Architect, Integer> {
     @Query("SELECT a from Architect a WHERE a.numberOfEmployees > ?1")
     List<Architect> findArchitectsByNumberOfEmployeesIsGreaterThan(int numberOfEmployees);
 
-    Architect findArchitectByNameCompany(String nameCompany);
+    List<Architect> findArchitectByNameCompany(String nameCompany);
 }
