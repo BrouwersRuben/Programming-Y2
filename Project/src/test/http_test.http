@@ -20,6 +20,17 @@ Accept: application/json
 ###
 GET http://localhost:6969/api/buildings/location?name=Denmark HTTP/1.1
 Accept: application/json
+# Code 200
+
+###
+GET http://localhost:6969/api/buildings/location?name=Hoevenen HTTP/1.1
+Accept: application/json
+# Code 404
+
+###
+GET http://localhost:6969/api/buildings/location HTTP/1.1
+Accept: application/json
+# Code 500
 
 #TODO: HTTP request messages for each endpoint and each possible status code of the response (including 400).
                   #Don't forget your HTTP headers!
