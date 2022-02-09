@@ -39,28 +39,43 @@
     </table>
 </div>
 
-<div class="w-80 p-4">
-    <form>
-        <div class="mb-3">
-            <label class="form-label" for="location">Location:</label>
-            <input class="form-control" id="location" name="loc" placeholder="Antwerp, Belgium" type="search">
-<!--            <div class="alert alert-warning w-25 my-4" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">-->
-<!--                Please fill in your correct details.-->
-<!--            </div>-->
-        </div>
-        <div class="d-flex">
-            <div class="">
-                <button class="btn btn-dark" id="locationFilter" type="button">Filter</button>
-            </div>
-            <div class="mx-4">
-                <a class="btn btn-outline-dark" th:href="@{/buildings}">Reset</a>
-            </div>
-        </div>
-    </form>
-</div>
 
 <div class="p-4">
-    <a class="btn btn-dark" th:href="@{/buildings/add}" th:utext="#{buildings.button}">add a building</a>
+    <!--    <div class="alert alert-warning w-50 my-4" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">-->
+    <!--        Please fill in your correct details.-->
+    <!--    </div>-->
+    <div class="d-flex">
+        <div class="w-25">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location:</label>
+                    <input class="form-control" id="location" name="loc" placeholder="Antwerp, Belgium" type="search">
+<!--                    <div class="alert alert-warning w-25 my-4" role="alert" th:if="${errorMessage}" th:text="${errorMessage}">-->
+<!--                        Please fill in your correct details.-->
+<!--                    </div>-->
+                </div>
+                <div class="d-flex">
+                    <div class="">
+                        <button class="btn btn-dark" id="locationFilter" type="button">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="px-4 d-flex">
+    <div class="">
+        <a class="btn btn-dark" th:href="@{/buildings/add}" th:utext="#{buildings.button}">add a building</a>
+    </div>
+    <div class="mx-4">
+        <a class="btn btn-outline-dark" th:href="@{/buildings}">Reset</a>
+    </div>
+</div>
+
+
+<div class="p-4">
+
 </div>
 
 <div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>
