@@ -38,12 +38,11 @@ public class ArchitectsController {
             if (!architectsByEmpoyees.isEmpty()){
                 return ResponseEntity.ok(architectDTOMapping(architectsByEmpoyees));
             } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
     }
 
-    //TODO: test
     @DeleteMapping("/architects/del/{id}")
     public ResponseEntity<ArchitectDTO> removeArchitectByID(@PathVariable(name = "id") Integer id){
         Architect foundArchitect = architectService.findById(id);
