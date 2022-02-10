@@ -7,13 +7,13 @@ Accept: application/json
 GET http://localhost:6969/api/architects/300 HTTP/1.1
 Accept: application/json
 
+### 200 Ok
+DELETE http://localhost:6969/api/architects/del/1 HTTP/1.1
+Accept: application/json
+
 ### 204 No Content
 GET http://localhost:6969/api/architects/900 HTTP/1.1
 Accept: application/json
-
-### 400 Bad Request (Could not recreate this error)
-#GET http://localhost:6969/api/architects/amount?number=300 HTTP/1.1
-#Accept: application/json
 
 ### 404 Not Found
 GET http://localhost:6969/api/architectss HTTP/1.1
@@ -27,24 +27,27 @@ Accept: application/json
 
 
 #Building Controller testing
-###
+### 200 Ok
 GET http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
 
-###
-GET http://localhost:6969/api/buildings/location?name=Denmark HTTP/1.1
+### 200 Ok
+GET http://localhost:6969/api/buildings/Denmark HTTP/1.1
 Accept: application/json
-# Code 200
 
-###
-GET http://localhost:6969/api/buildings/location?name=Hoevenen HTTP/1.1
+### 200 Ok
+DELETE http://localhost:6969/api/buildings/del/1 HTTP/1.1
 Accept: application/json
-# Code 404
 
-###
-GET http://localhost:6969/api/buildings/location HTTP/1.1
+### 204 No Content
+GET http://localhost:6969/api/buildings/Hoevenen HTTP/1.1
 Accept: application/json
-# Code 500
 
-#TODO: HTTP request messages for each endpoint and each possible status code of the response (including 400).
-                  #Don't forget your HTTP headers!
+### 204 No Content
+GET http://localhost:6969/api/buildings/123 HTTP/1.1
+Accept: application/
+
+### 404 Not Found
+GET http://localhost:6969/api/buildingss HTTP/1.1
+Accept: application/json
+
