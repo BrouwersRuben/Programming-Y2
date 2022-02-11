@@ -38,7 +38,7 @@ public class ArchitectsController {
             if (!architectsByEmpoyees.isEmpty()){
                 return ResponseEntity.ok(architectDTOMapping(architectsByEmpoyees));
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
     }
