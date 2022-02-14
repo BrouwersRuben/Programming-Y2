@@ -46,4 +46,9 @@ public class ArchitectServiceImpl implements ArchitectService {
     public List<Architect> findArchitectByNameCompany(String nameCompany) {
         return architectRepository.findArchitectByNameCompany(nameCompany);
     }
+
+    @Override
+    public void updateArchitect(Architect architect) {
+        architectRepository.save(architect);
+    }
 }

@@ -2,15 +2,19 @@ package be.kdg.java2.project.presentation.api;
 
 import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.presentation.api.dto.architect.ArchitectDTO;
+import be.kdg.java2.project.presentation.api.dto.architect.ArchitectUpdateDTO;
 import be.kdg.java2.project.presentation.api.dto.architect.BuildingDTO;
 import be.kdg.java2.project.presentation.api.dto.BuildingTypeDTO;
+import be.kdg.java2.project.presentation.mvc.viewmodels.ArchitectViewModel;
 import be.kdg.java2.project.services.ArchitectService;
+import org.apache.commons.lang3.arch.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +57,29 @@ public class ArchitectsController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/architects/{architectID}")
+    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "architectID") Integer id, @RequestBody ArchitectUpdateDTO architect){
+        if (id != architect.getId()){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        var architectFound = architectService.findById(id);
+
+        if (architectFound == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        architectFound.setNumberOfEmployees(architect.getNumberOfEmployees());
+
+        architectService.updateArchitect(architectFound);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//    @PostMapping("/architects")
+//    public Architect createArchitect(){
+//
+//    }
 
     private List<ArchitectDTO> architectDTOMapping(List<Architect> architects){
         return architects

@@ -17,4 +17,5 @@ public interface ArchitectService {
 
     List<Architect> findArchitectByNameCompany(String nameCompany);
 
+    void updateArchitect(Architect architect);
 }

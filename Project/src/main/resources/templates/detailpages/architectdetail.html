@@ -7,6 +7,7 @@
     <link href="../../static/css/style.css" media="all" rel="stylesheet" th:href="@{/style.css}" type="text/css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script defer th:src="@{/js/deleteArchitect.js}"></script>
+    <script defer th:src="@{/js/updateArchitect.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -36,7 +37,12 @@
         </div>
         <div class="col">
             <h4 th:utext="#{architectDetail.employee}">Number of employees: </h4>
-            <span th:text="${architect.getNumberOfEmployees()}">number of employees</span>
+            <span id="numbE" th:text="${architect.getNumberOfEmployees()}">number of employees</span>
+            <form class="my-2 d-flex flex-row">
+                <input type="hidden" id="id" th:value="${architect.id}">
+                <input type="text" id="updateValue" class="w-25 me-2 my-2 form-control">
+                <button type="button" id="updateButton" class="btn btn-dark my-2">Update Value</button>
+            </form>
         </div>
     </div>
     <div class="row row-cols-1 g-5">

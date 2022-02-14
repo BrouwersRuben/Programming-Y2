@@ -11,6 +11,15 @@ Accept: application/json
 DELETE http://localhost:6969/api/architects/del/1 HTTP/1.1
 Accept: application/json
 
+### 200 Ok
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 6969
+}
+
 ### 204 No Content
 GET http://localhost:6969/api/architects/900 HTTP/1.1
 Accept: application/json
