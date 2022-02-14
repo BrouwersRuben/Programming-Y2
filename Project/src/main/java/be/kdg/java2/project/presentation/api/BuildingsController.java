@@ -1,14 +1,22 @@
 package be.kdg.java2.project.presentation.api;
 
+import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
+import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.presentation.api.dto.BuildingTypeDTO;
 import be.kdg.java2.project.presentation.api.dto.building.ArchitectDTO;
+import be.kdg.java2.project.presentation.api.dto.building.BuildingAddDTO;
 import be.kdg.java2.project.presentation.api.dto.building.BuildingDTO;
+import be.kdg.java2.project.presentation.mvc.viewmodels.BuildingViewModel;
+import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +25,11 @@ import java.util.stream.Collectors;
 public class BuildingsController {
 
     private final BuildingService buildingService;
+    private final ArchitectService architectService;
 
-    public BuildingsController(BuildingService buildingService) {
+    public BuildingsController(BuildingService buildingService, ArchitectService architectService) {
         this.buildingService = buildingService;
+        this.architectService = architectService;
     }
 
     @RequestMapping(value = {"/buildings", "/buildings/{location}"})
@@ -50,6 +60,21 @@ public class BuildingsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/buildings")
+    public ResponseEntity<Void> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors){
+        if (errors.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        } else {
+            List<Architect> architects = new ArrayList<>();
+            buildingDTO.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
+            Building building = new Building(buildingDTO.getName(), buildingDTO.getLocation(), buildingDTO.getHeight(), new TypeOfBuilding(buildingDTO.getType()));
+            building.addArchitects(architects);
+            architects.forEach(architect -> architect.addBuilding(building));
+            buildingService.addBuilding(building);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
     private List<BuildingDTO> buildingDTOMapping(List<Building> buildings){

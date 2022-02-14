@@ -52,6 +52,19 @@ Accept: application/json
 DELETE http://localhost:6969/api/buildings/del/1 HTTP/1.1
 Accept: application/json
 
+### 201 Created
+POST http://localhost:6969/api/buildings HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "testing",
+  "location" : "Antwerp, BE",
+  "height" : 123,
+  "architectsIDs" : [1],
+  "type" : "SLUMS"
+}
+
 ### 204 No Content
 GET http://localhost:6969/api/buildings/Hoevenen HTTP/1.1
 Accept: application/json
