@@ -1,12 +1,9 @@
-const nameFilter = document.getElementById("nameFilter");
 const numberFilter = document.getElementById("numberFilter");
 
 const numberInput = document.getElementById("numberOfEmployees");
-const nameInput = document.getElementById("nameOfCompany");
 
 const tableBody = document.getElementById("tableBody");
 
-nameFilter.addEventListener("click", nameFilterFunction);
 numberFilter.addEventListener("click", numberFilterFunction);
 
 //TODO: When entered nothing, the form gives this as output "", this is not int and gives error
