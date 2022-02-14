@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link href="../../static/css/style.css" media="all" rel="stylesheet" th:href="@{/style.css}" type="text/css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/deleteArchitect.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -49,10 +50,12 @@
 </div>
 
 <div class="container m-4">
-    <form action="/architects" method="post" th:object="${deletingViewModel}">
-        <input hidden id="ID" name="ID" th:value="${architect.getId()}" type="text">
-        <input class="btn btn-dark" name="delete" type="submit" value="Delete Architect">
-    </form>
+    <input type="hidden" th:value="${architect.id}">
+    <button type="button" class="btn btn-dark" id="deleteButton">Delete</button>
+<!--    <form action="/architects" method="post" th:object="${deletingViewModel}">-->
+<!--        <input hidden id="ID" name="ID" th:value="${architect.getId()}" type="text">-->
+<!--        <input class="btn btn-dark" name="delete" type="submit" value="Delete Architect">-->
+<!--    </form>-->
 </div>
 
 <div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>

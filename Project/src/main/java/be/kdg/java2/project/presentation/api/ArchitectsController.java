@@ -43,7 +43,7 @@ public class ArchitectsController {
         }
     }
 
-    @DeleteMapping("/architects/del/{id}")
+    @DeleteMapping("/architects/{id}")
     public ResponseEntity<ArchitectDTO> removeArchitectByID(@PathVariable(name = "id") Integer id){
         Architect foundArchitect = architectService.findById(id);
         if (foundArchitect != null){
