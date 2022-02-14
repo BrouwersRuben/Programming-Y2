@@ -41,7 +41,7 @@ public class BuildingsController {
         }
     }
 
-    @DeleteMapping("/buildings/del/{id}")
+    @DeleteMapping("/buildings/{id}")
     public ResponseEntity<BuildingDTO> removeBuildingByID(@PathVariable(name = "id") Integer id){
         Building foundBuilding = buildingService.findById(id);
         if (foundBuilding != null){
