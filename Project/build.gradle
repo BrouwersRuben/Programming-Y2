@@ -28,6 +28,7 @@ dependencies {
 
     //Etc
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation "org.modelmapper:modelmapper:3.0.0"
 
     //Spring Boot
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
