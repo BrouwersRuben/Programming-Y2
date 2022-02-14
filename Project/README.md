@@ -28,6 +28,10 @@ same types.
 
 # Weeks
 ## Week 1
+My code will not be able to give a 400, because all exceptions are catched with the @ControllerAdvice and will return a
+HTTPStatus 500.
+
+If this exception handler is commented out, it will give a HTTPStatus 400 (Bad Request).
 ### Architects
 #### Getting all architects - 200 Ok
 ```http request
