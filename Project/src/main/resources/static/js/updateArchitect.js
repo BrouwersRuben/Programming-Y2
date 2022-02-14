@@ -26,13 +26,12 @@ function updateNumberOfEmployees(){
         .then(response => {
             if (response.status === 204 || response.status === 200){
                 displayValue.innerHTML=value;
+                updateValue.value="";
             } else {
                 alert(`Received status code: ${response.status}`);
             }
         })
         .catch(error => {
             alert(error.message)
-        })
-
-
+        });
 }
