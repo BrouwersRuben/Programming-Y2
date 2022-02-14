@@ -1,6 +1,7 @@
 package be.kdg.java2.project.configuration;
 
 import be.kdg.java2.project.converters.StringToBuildingTypeConverter;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,9 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Bean
     public ModelMapper modelMapper(){
+//        var modelMapper = new ModelMapper();
+//
+//        Converter<>
         return new ModelMapper();
     }
 }

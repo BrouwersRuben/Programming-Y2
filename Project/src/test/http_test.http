@@ -49,7 +49,7 @@ GET http://localhost:6969/api/buildings/Denmark HTTP/1.1
 Accept: application/json
 
 ### 200 Ok
-DELETE http://localhost:6969/api/buildings/del/1 HTTP/1.1
+DELETE http://localhost:6969/api/buildings/1 HTTP/1.1
 Accept: application/json
 
 ### 201 Created

@@ -10,8 +10,10 @@ import be.kdg.java2.project.presentation.api.dto.building.BuildingDTO;
 import be.kdg.java2.project.presentation.mvc.viewmodels.BuildingViewModel;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +28,12 @@ public class BuildingsController {
 
     private final BuildingService buildingService;
     private final ArchitectService architectService;
+    private final ModelMapper modelMapper;
 
-    public BuildingsController(BuildingService buildingService, ArchitectService architectService) {
+    public BuildingsController(BuildingService buildingService, ArchitectService architectService, ModelMapper modelMapper) {
         this.buildingService = buildingService;
         this.architectService = architectService;
+        this.modelMapper = modelMapper;
     }
 
     @RequestMapping(value = {"/buildings", "/buildings/{location}"})
@@ -80,6 +84,14 @@ public class BuildingsController {
     private List<BuildingDTO> buildingDTOMapping(List<Building> buildings){
         return buildings
                 .stream()
+                .map(building -> modelMapper.map(building, BuildingDTO.class))
+                .collect(Collectors.toList());
+    }
+}
+
+/*    private List<BuildingDTO> buildingDTOMapping(List<Building> buildings){
+        return buildings
+                .stream()
                 .map(building -> {
                     var buildingDTO = new BuildingDTO();
                     buildingDTO.setId(building.getId());
@@ -106,5 +118,4 @@ public class BuildingsController {
                     return buildingDTO;
                 })
                 .collect(Collectors.toList());
-    }
-}
+    }*/

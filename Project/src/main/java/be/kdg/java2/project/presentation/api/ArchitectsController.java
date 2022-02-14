@@ -8,6 +8,7 @@ import be.kdg.java2.project.presentation.api.dto.BuildingTypeDTO;
 import be.kdg.java2.project.presentation.mvc.viewmodels.ArchitectViewModel;
 import be.kdg.java2.project.services.ArchitectService;
 import org.apache.commons.lang3.arch.Processor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,11 @@ import java.util.stream.Collectors;
 public class ArchitectsController {
     private final Logger logger = LoggerFactory.getLogger(ArchitectsController.class);
     private final ArchitectService architectService;
+    private final ModelMapper modelMapper;
 
-    public ArchitectsController(ArchitectService architectService) {
+    public ArchitectsController(ArchitectService architectService, ModelMapper modelMapper) {
         this.architectService = architectService;
+        this.modelMapper = modelMapper;
     }
 
     @RequestMapping(value = {"/architects", "/architects/{amount}"})
@@ -58,8 +61,8 @@ public class ArchitectsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/architects/{architectID}")
-    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "architectID") Integer id, @RequestBody ArchitectUpdateDTO architect){
+    @PutMapping("/architects/{id}")
+    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "id") Integer id, @RequestBody ArchitectUpdateDTO architect){
         if (id != architect.getId()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -82,6 +85,14 @@ public class ArchitectsController {
 //    }
 
     private List<ArchitectDTO> architectDTOMapping(List<Architect> architects){
+        return architects
+                .stream()
+                .map(architect -> modelMapper.map(architect, ArchitectDTO.class))
+                .collect(Collectors.toList());
+    }
+}
+
+/*    private List<ArchitectDTO> architectDTOMapping(List<Architect> architects){
         return architects
                 .stream()
                 .map(architect -> {
@@ -109,5 +120,4 @@ public class ArchitectsController {
                     return architectDTO;
                 })
                 .collect(Collectors.toList());
-    }
-}
+    }*/
