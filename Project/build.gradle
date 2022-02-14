@@ -28,6 +28,7 @@ dependencies {
 
     //Etc
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1"
     implementation "org.modelmapper:modelmapper:3.0.0"
 
     //Spring Boot
