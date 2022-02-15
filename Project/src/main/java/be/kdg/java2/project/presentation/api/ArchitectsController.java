@@ -76,7 +76,7 @@ public class ArchitectsController {
         architectFound.setNumberOfEmployees(architect.getNumberOfEmployees());
 
         architectService.updateArchitect(architectFound);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 //    @PostMapping("/architects")
