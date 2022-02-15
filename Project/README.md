@@ -32,8 +32,8 @@ My code will not be able to give a 400, because all exceptions are catched with 
 HTTPStatus 500.
 
 If this exception handler is commented out, it will give a HTTPStatus 400 (Bad Request).
-### Architects
-#### Getting all architects - 200 Ok
+### Get
+#### 200
 ```http request
 GET http://localhost:6969/api/architects HTTP/1.1
 Accept: application/json
@@ -42,30 +42,7 @@ Accept: application/json
 HTTP/1.1 200 
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Thu, 10 Feb 2022 23:53:05 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-[
-  {
-    "id": 1,
-    "nameCompany": "Zaha Hadid Architects",
-    "establishmentDate": "1980-01-01",
-    "numberOfEmployees": 708,
-    "buildings": [
-      {
-        "id": 1,
-        "name": "Port Authority", ...
-```
-#### Getting architects with more than 300 employees - 200 Ok
-```http request
-GET http://localhost:6969/api/architects/300 HTTP/1.1
-Accept: application/json
-```
-```http request
-HTTP/1.1 200 
-Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Thu, 10 Feb 2022 23:54:57 GMT
+Date: Tue, 15 Feb 2022 20:47:27 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
@@ -74,176 +51,246 @@ Connection: keep-alive
     "id": 1,
     "nameCompany": "Zaha Hadid Architects",
     "establishmentDate": "1980-01-01",
-    "numberOfEmployees": 708,...
+    "numberOfEmployees": ...
 ```
-#### Removing architect with id 1 - 200 Ok
-```http request
-DELETE http://localhost:6969/api/architects/del/1 HTTP/1.1
-Accept: application/json
-```
-```http request
-HTTP/1.1 200
-Content-Length: 0
-Date: Thu, 10 Feb 2022 23:57:23 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
-```
-#### Getting architects with more than 300 employees - 204 No Content
+#### 204
 ```http request
 GET http://localhost:6969/api/architects/900 HTTP/1.1
 Accept: application/json
 ```
 ```http request
 HTTP/1.1 204 
-Date: Thu, 10 Feb 2022 23:59:28 GMT
+Date: Tue, 15 Feb 2022 20:48:21 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 <Response body is empty>
 ```
-#### Getting all architects - 404 Not Found
+#### 404
 ```http request
 GET http://localhost:6969/api/architectss HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 404
+HTTP/1.1 404 
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 11 Feb 2022 00:00:59 GMT
+Date: Tue, 15 Feb 2022 20:48:53 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 {
-  "timestamp": "2022-02-11T00:00:59.864+00:00",
+  "timestamp": "2022-02-15T20:48:53.909+00:00",
   "status": 404,
   "error": "Not Found",
   "path": "/api/architectss"
 }
 ```
-#### Getting architects with more than "Denmark" employees - 500 Internal Server Error
+### Delete
+#### 200
 ```http request
-GET http://localhost:6969/api/architects/Denmark HTTP/1.1
+DELETE http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 500
+HTTP/1.1 200 
+Content-Length: 0
+Date: Tue, 15 Feb 2022 20:53:43 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+#### 204 
+How is there a code created 204 No content with a delete... When there is not a record to delete, it will throw a 404
+```http request
+
+```
+```http request
+
+```
+#### 500
+This request returned a 500 because of my general exception handler. There the message was No value present which technically is a 404
+```http request
+DELETE http://localhost:6969/api/architects/69 HTTP/1.1
+Accept: application/json
+```
+```http request
+HTTP/1.1 500 
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 11 Feb 2022 00:02:17 GMT
+Date: Tue, 15 Feb 2022 20:59:09 GMT
 Connection: close
 
 {
-  "timestamp": "2022-02-11T00:02:17.965+00:00",
+  "timestamp": "2022-02-15T20:59:09.019+00:00",
   "status": 500,
   "error": "Internal Server Error",
-  "path": "/api/architects/Denmark"
+  "path": "/api/architects/69"
 }
 ```
-### Buildings
-#### Getting all buildings - 200 Ok
+## Week 2
+### Post
+#### 201
 ```http request
-GET http://localhost:6969/api/buildings HTTP/1.1
+POST http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
-```
-```http request
-HTTP/1.1 200
 Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Fri, 11 Feb 2022 00:04:11 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
 
-[
-  {
-    "id": 1,
-    "name": "Port Authority",
-    "location": "Antwerp, Belgium", ...
-```
-#### Getting all buildings in Denmark - 200 Ok
-```http request
-GET http://localhost:6969/api/buildings/Denmark HTTP/1.1
-Accept: application/json
+{
+  "name" : "testing",
+  "location" : "Antwerp, BE",
+  "height" : 123,
+  "architectsIDs" : [1],
+  "type" : "SLUMS"
+}
 ```
 ```http request
-HTTP/1.1 200
-Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Fri, 11 Feb 2022 00:05:26 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-[
-  {
-    "id": 4,
-    "name": "The Uno-X Petrol Station",
-    "location": "Denmark", ...
-```
-#### Delete building with id 1 - 200 Ok
-```http request
-DELETE http://localhost:6969/api/buildings/del/1 HTTP/1.1
-Accept: application/json
-```
-```http request
-HTTP/1.1 200
+HTTP/1.1 201 
 Content-Length: 0
-Date: Fri, 11 Feb 2022 00:06:46 GMT
+Date: Tue, 15 Feb 2022 21:02:43 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 <Response body is empty>
 ```
-#### Getting all buildings in Hoevenen - 204 No Content
+#### 204
+How is there a 204 no content with a post?
 ```http request
-GET http://localhost:6969/api/buildings/Hoevenen HTTP/1.1
+
+```
+```http request
+
+```
+#### 400
+```http request
+POST http://localhost:6969/api/buildingss HTTP/1.1
 Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "te",
+  "location" : "Antwerp, BE",
+  "height" : 123,
+  "architectsIDs" : [1],
+  "type" : "SLUMS"
+}
 ```
 ```http request
-HTTP/1.1 204
-Date: Fri, 11 Feb 2022 00:07:39 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
+HTTP/1.1 400
+Content-Length: 0
+Date: Tue, 15 Feb 2022 21:11:06 GMT
+Connection: close
 
 <Response body is empty>
 ```
-#### Getting all buildings in 123 - 204 No Content
+#### 404
 ```http request
-GET http://localhost:6969/api/buildings/123 HTTP/1.1
-Accept: application/
-```
-```http request
-HTTP/1.1 204
-Date: Fri, 11 Feb 2022 00:08:08 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
-```
-#### Getting all buildings - 404 Not Found
-```http request
-GET http://localhost:6969/api/buildingss HTTP/1.1
+POST http://localhost:6969/api/buildingss HTTP/1.1
 Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "testing",
+  "location" : "Antwerp, BE",
+  "height" : 123,
+  "architectsIDs" : [1],
+  "type" : "SLUMS"
+}
 ```
 ```http request
-HTTP/1.1 404
+HTTP/1.1 404 
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Fri, 11 Feb 2022 00:08:58 GMT
+Date: Tue, 15 Feb 2022 21:04:04 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 {
-  "timestamp": "2022-02-11T00:08:58.423+00:00",
+  "timestamp": "2022-02-15T21:04:04.643+00:00",
   "status": 404,
   "error": "Not Found",
   "path": "/api/buildingss"
 }
+```
+### Put
+How is there a code created 201 with a put... this is more like an update
+#### 201
+```http request
+
+```
+```http request
+
+```
+#### 204
+```http request
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 6969
+}
+```
+```http request
+HTTP/1.1 200 
+Content-Length: 0
+Date: Tue, 15 Feb 2022 21:04:50 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+#### 404
+```http request
+PUT http://localhost:6969/api/architectss/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 6969
+}
+```
+```http request
+HTTP/1.1 404 
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 15 Feb 2022 21:06:45 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+{
+  "timestamp": "2022-02-15T21:06:45.465+00:00",
+  "status": 404,
+  "error": "Not Found",
+  "path": "/api/architectss/1"
+}
+```
+#### 409
+```http request
+PUT http://localhost:6969/api/architects/153 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 6969
+}
+```
+```http request
+HTTP/1.1 409 
+Content-Length: 0
+Date: Tue, 15 Feb 2022 21:05:57 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
 ```
