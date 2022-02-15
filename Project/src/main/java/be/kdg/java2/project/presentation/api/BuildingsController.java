@@ -69,7 +69,7 @@ public class BuildingsController {
     @PostMapping("/buildings")
     public ResponseEntity<Void> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors){
         if (errors.hasErrors()){
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             List<Architect> architects = new ArrayList<>();
             buildingDTO.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
