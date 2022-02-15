@@ -215,6 +215,7 @@ How is there a 204 no content with a post?
 
 ```
 #### 400 Bad Request
+Because the name is less than 3 Characters long
 ```http request
 POST http://localhost:6969/api/buildingss HTTP/1.1
 Accept: application/json
