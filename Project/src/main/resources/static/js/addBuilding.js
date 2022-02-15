@@ -11,6 +11,16 @@ function addBuilding(){
     const nameValue = nameInput.value;
     const locationValue = locationInput.value;
     const heightValue = heightInput.value;
+    let architectIDs = [];
+
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+    for(let i=0; i < checkboxes.length; i++ ){
+        if (checkboxes[i].checked === true) { //This does not...
+            architectIDs.push(parseInt(checkboxes[i].value));
+        }
+    }
+
     const typeValue = typeInput.value;
 
     if (nameValue === null || locationValue === null || heightValue === null || typeValue === null){
@@ -20,7 +30,7 @@ function addBuilding(){
     console.log("name: " + nameValue);
     console.log("location: " + locationValue);
     console.log("height: " + heightValue);
-    console.log("Architect ID's (hard coded): " + [1, 3]);
+    console.log("architect ID's:" + architectIDs);
     console.log("type: " + typeValue.toUpperCase());
 
     fetch(`/api/buildings`, {
@@ -32,7 +42,7 @@ function addBuilding(){
             name : nameValue,
             location : locationValue,
             height : heightValue,
-            architectsIDs : [1, 3],
+            architectsIDs : architectIDs,
             type : typeValue.toUpperCase()
         })
     })
