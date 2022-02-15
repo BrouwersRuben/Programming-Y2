@@ -8,7 +8,7 @@ GET http://localhost:6969/api/architects/300 HTTP/1.1
 Accept: application/json
 
 ### 200 Ok
-DELETE http://localhost:6969/api/architects/del/1 HTTP/1.1
+DELETE http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 
 ### 200 Ok
