@@ -96,8 +96,7 @@ DELETE http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 200 
-Content-Length: 0
+HTTP/1.1 200
 Date: Tue, 15 Feb 2022 20:53:43 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
@@ -198,8 +197,7 @@ Content-Type: application/json
 }
 ```
 ```http request
-HTTP/1.1 201 
-Content-Length: 0
+HTTP/1.1 201
 Date: Tue, 15 Feb 2022 21:02:43 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
@@ -231,7 +229,6 @@ Content-Type: application/json
 ```
 ```http request
 HTTP/1.1 400
-Content-Length: 0
 Date: Tue, 15 Feb 2022 21:11:06 GMT
 Connection: close
 
@@ -289,8 +286,7 @@ Content-Type: application/json
 }
 ```
 ```http request
-HTTP/1.1 200 
-Content-Length: 0
+HTTP/1.1 200
 Date: Tue, 15 Feb 2022 21:04:50 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
@@ -336,8 +332,7 @@ Content-Type: application/json
 }
 ```
 ```http request
-HTTP/1.1 409 
-Content-Length: 0
+HTTP/1.1 409
 Date: Tue, 15 Feb 2022 21:05:57 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
