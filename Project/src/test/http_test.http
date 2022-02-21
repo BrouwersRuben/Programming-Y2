@@ -1,57 +1,42 @@
-# Architect Controller testing
+# API testing
+# GET
+# All
 ### 200 Ok
 GET http://localhost:6969/api/architects HTTP/1.1
 Accept: application/json
+# A 204 will appear if there are no records of any architect in the database, very unlikely.
 
+# 1 Record
 ### 200 Ok
-GET http://localhost:6969/api/architects/300 HTTP/1.1
+GET http://localhost:6969/api/architects/Zaha Hadid Architects HTTP/1.1
 Accept: application/json
 
-### 200 Ok
-DELETE http://localhost:6969/api/architects/1 HTTP/1.1
+### 204 Not Found
+GET http://localhost:6969/api/architects/Zaha Hadid HTTP/1.1
 Accept: application/json
 
+# All ... of ...
 ### 200 Ok
-PUT http://localhost:6969/api/architects/1 HTTP/1.1
-Content-Type: application/json
-
-{
-  "id" : "1",
-  "numberOfEmployees" : 6969
-}
+GET http://localhost:6969/api/architects?numbE=700 HTTP/1.1
+Accept: application/json
 
 ### 204 No Content
-GET http://localhost:6969/api/architects/900 HTTP/1.1
+GET http://localhost:6969/api/buildings?location=Stabroek HTTP/1.1
 Accept: application/json
 
-### 404 Not Found
-GET http://localhost:6969/api/architectss HTTP/1.1
-Accept: application/json
-
-### 500 Internal Server Error
-GET http://localhost:6969/api/architects/Denmark HTTP/1.1
-Accept: application/json
+### 404 Not Found HELP
 
 
-
-
-#Building Controller testing
-### 200 Ok
-GET http://localhost:6969/api/buildings HTTP/1.1
-Accept: application/json
-
-###
-GET http://localhost:6969/api/buildings HTTP/1.1
-Accept: application/xml
-
-### 200 Ok
-GET http://localhost:6969/api/buildings/Denmark HTTP/1.1
-Accept: application/json
-
+# DELETE
 ### 200 Ok
 DELETE http://localhost:6969/api/buildings/1 HTTP/1.1
 Accept: application/json
 
+### 404 Not Found
+DELETE http://localhost:6969/api/buildings/420 HTTP/1.1
+Accept: application/json
+
+# Post
 ### 201 Created
 POST http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
@@ -64,16 +49,48 @@ Content-Type: application/json
   "architectsIDs" : [1],
   "type" : "SLUMS"
 }
+###
 
+# Post (Nested)
 ### 204 No Content
-GET http://localhost:6969/api/buildings/Hoevenen HTTP/1.1
-Accept: application/json
-
-### 204 No Content
-GET http://localhost:6969/api/buildings/123 HTTP/1.1
-Accept: application/
 
 ### 404 Not Found
-GET http://localhost:6969/api/buildingss HTTP/1.1
+
+# Put
+### 204 No Content
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 900
+}
+
+### 404 Not Found
+PUT http://localhost:6969/api/architects/420 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "420",
+  "numberOfEmployees" : 6969
+}
+
+### 409 Conflict
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "420",
+  "numberOfEmployees" : 6969
+}
+
+###
+
+# Content Negotiation
+### JSON
+GET http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
 
+### XML
+GET http://localhost:6969/api/buildings HTTP/1.1
+Accept: application/xml

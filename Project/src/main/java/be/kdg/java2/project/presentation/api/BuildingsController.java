@@ -43,7 +43,12 @@ public class BuildingsController {
     @GetMapping()
     public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@RequestParam(value = "location", required = false) String location){
         if (location == null){
-            return new ResponseEntity<>(buildingDTOMapping(buildingService.findAll()), HttpStatus.OK);
+            var allBuildings = buildingService.findAll();
+            if (allBuildings.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(buildingDTOMapping(allBuildings), HttpStatus.OK);
+            }
         } else {
             var buildingsByLocation = buildingService.findByLocation(location);
             if (buildingsByLocation.isEmpty()){

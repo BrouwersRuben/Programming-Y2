@@ -33,16 +33,17 @@ HTTPStatus 500.
 
 If this exception handler is commented out, it will give a HTTPStatus 400 (Bad Request).
 ### Get
-#### 200 Ok
+#### All
+##### 200 Ok
 ```http request
 GET http://localhost:6969/api/architects HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 200 
+HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Tue, 15 Feb 2022 20:47:27 GMT
+Date: Mon, 21 Feb 2022 20:48:59 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
@@ -51,53 +52,94 @@ Connection: keep-alive
     "id": 1,
     "nameCompany": "Zaha Hadid Architects",
     "establishmentDate": "1980-01-01",
-    "numberOfEmployees": ...
+    "numberOfEmployees": 900,
+    "buildings": [
+      {
+        "id": 2,
+        "name": "Vitra Fire St...
 ```
-#### 204 No Content
+A 204 will appear if there are no records of any architect in the database, very unlikely.
+#### 1 Record
+##### 200 Ok
 ```http request
-GET http://localhost:6969/api/architects/900 HTTP/1.1
+GET http://localhost:6969/api/architects/Zaha Hadid Architects HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 204 
-Date: Tue, 15 Feb 2022 20:48:21 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
-```
-#### 404 Not Found
-```http request
-GET http://localhost:6969/api/architectss HTTP/1.1
-Accept: application/json
-```
-```http request
-HTTP/1.1 404 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
+HTTP/1.1 200 
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Tue, 15 Feb 2022 20:48:53 GMT
+Date: Mon, 21 Feb 2022 20:50:14 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 {
-  "timestamp": "2022-02-15T20:48:53.909+00:00",
-  "status": 404,
-  "error": "Not Found",
-  "path": "/api/architectss"
-}
+  "id": 1,
+  "nameCompany": "Zaha Hadid Architects",
+  "establishmentDate": "1980...
 ```
-### Delete
-#### 204 No Content
+##### 204 Not Found
 ```http request
-DELETE http://localhost:6969/api/architects/1 HTTP/1.1
+GET http://localhost:6969/api/architects/Zaha Hadid HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 204 
-Date: Mon, 21 Feb 2022 10:41:31 GMT
+HTTP/1.1 204
+Date: Mon, 21 Feb 2022 20:51:05 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+#### All ... of ...
+##### 200 Ok
+```http request
+GET http://localhost:6969/api/architects?numbE=700 HTTP/1.1
+Accept: application/json
+```
+```http request
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 21 Feb 2022 20:51:54 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+[
+  {
+    "id": 1,
+    "nameCompany": "Zaha Hadid Architects",
+    "establishmentDate": "1980-0...
+```
+##### 204 No Content
+```http request
+GET http://localhost:6969/api/buildings?location=Stabroek HTTP/1.1
+Accept: application/json
+```
+```http request
+HTTP/1.1 204
+Date: Mon, 21 Feb 2022 20:52:41 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+##### 404 Not Found
+```http request
+
+```
+```http request
+
+```
+### Delete
+#### 200 Ok
+```http request
+DELETE http://localhost:6969/api/buildings/1 HTTP/1.1
+Accept: application/json
+```
+```http request
+HTTP/1.1 200
+Date: Mon, 21 Feb 2022 20:54:26 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
@@ -105,18 +147,96 @@ Connection: keep-alive
 ```
 #### 404 Not Found
 ```http request
-DELETE http://localhost:6969/api/architects/69 HTTP/1.1
+DELETE http://localhost:6969/api/buildings/420 HTTP/1.1
 Accept: application/json
 ```
 ```http request
 HTTP/1.1 404
-Date: Mon, 21 Feb 2022 10:46:56 GMT
+Date: Mon, 21 Feb 2022 20:54:53 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 <Response body is empty>
 ```
 ## Week 2
+### Post
+#### 201 Created
+```http request
+POST http://localhost:6969/api/buildings HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name" : "testing",
+  "location" : "Antwerp, BE",
+  "height" : 123,
+  "architectsIDs" : [1],
+  "type" : "SLUMS"
+}
+```
+```http request
+HTTP/1.1 201
+Date: Tue, 15 Feb 2022 21:02:43 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+### Put
+#### 204 No Content
+```http request
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "1",
+  "numberOfEmployees" : 900
+}
+```
+```http request
+HTTP/1.1 204
+Date: Mon, 21 Feb 2022 20:57:15 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+#### 404 Not Found
+```http request
+PUT http://localhost:6969/api/architects/420 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "420",
+  "numberOfEmployees" : 6969
+}
+```
+```http request
+HTTP/1.1 404
+Date: Mon, 21 Feb 2022 20:57:41 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
+#### 409 Conflict
+```http request
+PUT http://localhost:6969/api/architects/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "id" : "420",
+  "numberOfEmployees" : 6969
+}
+```
+```http request
+HTTP/1.1 409
+Date: Mon, 21 Feb 2022 20:58:10 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+
+<Response body is empty>
+```
 ### Content Negotiation
 #### Retrieving all buildings in JSON format
 ```http request
@@ -165,148 +285,4 @@ Connection: keep-alive
             <buildings>
                 <id>1</id>
                 <name>Port Authori...
-```
-### Post
-#### 201 Created
-```http request
-POST http://localhost:6969/api/buildings HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name" : "testing",
-  "location" : "Antwerp, BE",
-  "height" : 123,
-  "architectsIDs" : [1],
-  "type" : "SLUMS"
-}
-```
-```http request
-HTTP/1.1 201
-Date: Tue, 15 Feb 2022 21:02:43 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
-```
-
-[//]: # (The 204 is only for a nested post)
-#### 400 Bad Request
-Because the name is less than 3 Characters long
-```http request
-POST http://localhost:6969/api/buildingss HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name" : "te",
-  "location" : "Antwerp, BE",
-  "height" : 123,
-  "architectsIDs" : [1],
-  "type" : "SLUMS"
-}
-```
-```http request
-HTTP/1.1 400
-Date: Tue, 15 Feb 2022 21:11:06 GMT
-Connection: close
-
-<Response body is empty>
-```
-#### 404 Not Found
-```http request
-POST http://localhost:6969/api/buildingss HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name" : "testing",
-  "location" : "Antwerp, BE",
-  "height" : 123,
-  "architectsIDs" : [1],
-  "type" : "SLUMS"
-}
-```
-```http request
-HTTP/1.1 404 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Tue, 15 Feb 2022 21:04:04 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-{
-  "timestamp": "2022-02-15T21:04:04.643+00:00",
-  "status": 404,
-  "error": "Not Found",
-  "path": "/api/buildingss"
-}
-```
-### Put
-#### 204 No Content
-```http request
-PUT http://localhost:6969/api/architects/1 HTTP/1.1
-Content-Type: application/json
-
-{
-  "id" : "1",
-  "numberOfEmployees" : 6969
-}
-```
-```http request
-HTTP/1.1 200
-Date: Tue, 15 Feb 2022 21:04:50 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
-```
-#### 404 Not Found
-```http request
-PUT http://localhost:6969/api/architectss/1 HTTP/1.1
-Content-Type: application/json
-
-{
-  "id" : "1",
-  "numberOfEmployees" : 6969
-}
-```
-```http request
-HTTP/1.1 404 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Tue, 15 Feb 2022 21:06:45 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-{
-  "timestamp": "2022-02-15T21:06:45.465+00:00",
-  "status": 404,
-  "error": "Not Found",
-  "path": "/api/architectss/1"
-}
-```
-#### 409 Conflict
-```http request
-PUT http://localhost:6969/api/architects/153 HTTP/1.1
-Content-Type: application/json
-
-{
-  "id" : "1",
-  "numberOfEmployees" : 6969
-}
-```
-```http request
-HTTP/1.1 409
-Date: Tue, 15 Feb 2022 21:05:57 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-
-<Response body is empty>
 ```

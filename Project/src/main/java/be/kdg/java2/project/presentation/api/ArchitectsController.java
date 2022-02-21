@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,12 @@ public class ArchitectsController {
     @GetMapping()
     public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@RequestParam(value = "numbE", required = false) String numbE){
         if (numbE == null){
-            return new ResponseEntity<>(architectDTOMapping(architectService.findAll()), HttpStatus.OK);
+            var allArchitects = architectService.findAll();
+            if (allArchitects.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
+            }
         } else {
             int numberOfEmployees = Integer.parseInt(numbE);
             var architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numberOfEmployees);
@@ -66,9 +72,9 @@ public class ArchitectsController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "id") Integer id, @RequestBody ArchitectUpdateDTO architect){
-        if (id != architect.getId()){
+    @PutMapping("{architectId}")
+    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "architectId") Integer id, @RequestBody @Valid ArchitectUpdateDTO architectDTO){
+        if (id != architectDTO.getId()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
@@ -78,7 +84,7 @@ public class ArchitectsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        architectFound.setNumberOfEmployees(architect.getNumberOfEmployees());
+        architectFound.setNumberOfEmployees(architectDTO.getNumberOfEmployees());
 
         architectService.updateArchitect(architectFound);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
