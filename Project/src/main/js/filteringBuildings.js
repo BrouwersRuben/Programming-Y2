@@ -10,29 +10,45 @@ function locationFilterFunction(){
 
     console.log(location);
 
-    if (location === null ) {
-        return;
-    }
-
-    fetch(`/api/buildings/location?name=${location}`, {
-        method: "GET"
-    })
-        .then(response => {
+    if (location === "" ) {
+        fetch(`/api/buildings`, {
+            method: "GET"
+        })
+            .then(response => {
                 if (response.status === 200){
                     return response.json();
                 } else if (response.status === 204){
-                    processData([]);
+                    alert(`There are no buildings in the database`)
+                    return [];
                 } else {
-                    //TODO: Proper error handling
                     alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
                 }
             })
-        .then(buildings =>
-            processData(buildings))
-        .catch(error => {
-            // TODO: proper error handling!
-            alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-        });
+            .then(buildings =>
+                processData(buildings))
+            .catch(error => {
+                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+            })
+    } else {
+        fetch(`/api/buildings?location=${location}`, {
+            method: "GET"
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 204) {
+                    alert(`There is no building with location: ${location}`)
+                    return [];
+                } else {
+                    alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+                }
+            })
+            .then(buildings =>
+                processData(buildings))
+            .catch(error => {
+                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+            });
+    }
 }
 
 function processData(dataArray){

@@ -22,12 +22,12 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public Building findById(int id) {
-        return buildingRepository.findById(id).orElseThrow();
+        return buildingRepository.findById(id).orElse(null);
     }
 
     @Override
     public void delete(int id) {
-        Building buildingToDelete = buildingRepository.findById(id).orElseThrow();
+        Building buildingToDelete = buildingRepository.findById(id).orElse(null);
         buildingToDelete.getArchitects()
                 .forEach(architect -> architect.removeBuilding(buildingToDelete));
         buildingRepository.delete(buildingToDelete);

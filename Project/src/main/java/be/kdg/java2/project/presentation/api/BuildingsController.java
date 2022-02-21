@@ -11,6 +11,8 @@ import be.kdg.java2.project.presentation.mvc.viewmodels.BuildingViewModel;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -20,11 +22,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/buildings")
 public class BuildingsController {
+    private final Logger logger = LoggerFactory.getLogger(BuildingsController.class);
 
     private final BuildingService buildingService;
     private final ArchitectService architectService;
@@ -36,26 +40,21 @@ public class BuildingsController {
         this.modelMapper = modelMapper;
     }
 
-    @RequestMapping(value = {"/buildings", "/buildings/{location}"})
-    public ResponseEntity<List<BuildingDTO>> getBuildings(@PathVariable(required = false, name = "location") String location){
+    @GetMapping()
+    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@RequestParam(value = "location", required = false) String location){
         if (location == null){
-            var allBuildings = buildingService.findAll();
-            if (!allBuildings.isEmpty()){
-                return ResponseEntity.ok(buildingDTOMapping(allBuildings));
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            return new ResponseEntity<>(buildingDTOMapping(buildingService.findAll()), HttpStatus.OK);
         } else {
             var buildingsByLocation = buildingService.findByLocation(location);
-            if (!buildingsByLocation.isEmpty()){
-                return ResponseEntity.ok(buildingDTOMapping(buildingsByLocation));
+            if (buildingsByLocation.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(buildingDTOMapping(buildingsByLocation), HttpStatus.OK);
             }
         }
     }
 
-    @DeleteMapping("/buildings/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<BuildingDTO> removeBuildingByID(@PathVariable(name = "id") Integer id){
         Building foundBuilding = buildingService.findById(id);
         if (foundBuilding != null){
@@ -66,7 +65,7 @@ public class BuildingsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/buildings")
+    @PostMapping()
     public ResponseEntity<Void> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors){
         if (errors.hasErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -88,34 +87,3 @@ public class BuildingsController {
                 .collect(Collectors.toList());
     }
 }
-
-/*    private List<BuildingDTO> buildingDTOMapping(List<Building> buildings){
-        return buildings
-                .stream()
-                .map(building -> {
-                    var buildingDTO = new BuildingDTO();
-                    buildingDTO.setId(building.getId());
-                    buildingDTO.setName(building.getName());
-                    buildingDTO.setLocation(building.getLocation());
-                    buildingDTO.setHeight(building.getHeight());
-                    var buildingTypeDTO = new BuildingTypeDTO();
-                    buildingTypeDTO.setId(building.getType().getId());
-                    buildingTypeDTO.setCode(building.getType().getCode());
-                    buildingTypeDTO.setType(building.getType().getType());
-                    buildingTypeDTO.setRequiresSpecialPermission(building.getType().isRequiresSpecialPermission());
-                    buildingDTO.setType(buildingTypeDTO);
-                    buildingDTO.setArchitects(building.getArchitects()
-                            .stream()
-                            .map(architect -> {
-                                var architectDTO = new ArchitectDTO();
-                                architectDTO.setId(architect.getId());
-                                architectDTO.setNameCompany(architect.getNameCompany());
-                                architectDTO.setEstablishmentDate(architect.getEstablishmentDate());
-                                architectDTO.setNumberOfEmployees(architect.getNumberOfEmployees());
-                                return architectDTO;
-                            })
-                            .collect(Collectors.toList()));
-                    return buildingDTO;
-                })
-                .collect(Collectors.toList());
-    }*/
