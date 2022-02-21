@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 
-bootRun.dependsOn npm_run_build
+compileJava.dependsOn npm_run_build
 
 dependencies {
     //Database
@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.webjars:webjars-locator:0.42'
 
     //Etc
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1"
     implementation "org.modelmapper:modelmapper:3.0.0"
 
