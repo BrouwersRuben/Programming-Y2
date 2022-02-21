@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link href="/css/bundle.css" media="all" rel="stylesheet" type="text/css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/bundle-flatpickr.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -24,8 +25,10 @@
     </div>
     <div class="mb-3">
         <label class="form-label" for="establishmentDate" th:utext="#{addArchitect.l2}">Establishment Date:</label>
-        <input class="form-control" id="establishmentDate" name="establishmentDate" th:field="*{establishmentDate}"
-               type="date">
+        <div class="group">
+            <label for="establishmentDate">Fill in a date:</label>
+            <input type="text" id="establishmentDate" class="form-control" name="establishmentDate" th:field="*{establishmentDate}">
+        </div>
         <div class="m-2 alert alert-danger" th:errors="*{establishmentDate}"
              th:if="${#fields.hasErrors('establishmentDate')}">Date Error
         </div>
