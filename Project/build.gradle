@@ -13,6 +13,8 @@ repositories {
     mavenCentral()
 }
 
+bootRun.dependsOn npm_run_build
+
 dependencies {
     //Database
     runtimeOnly 'org.hsqldb:hsqldb'
