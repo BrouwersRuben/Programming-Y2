@@ -1,10 +1,12 @@
+$table-color: #f2f2f2;
+
 body {
     /*background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("background.jpg");*/
     background-size: cover;
 }
 
 tbody td:nth-of-type(even){
-    background: #f2f2f2;
+    background: $table-color;
 }
 
 .dbExceptionGif {
