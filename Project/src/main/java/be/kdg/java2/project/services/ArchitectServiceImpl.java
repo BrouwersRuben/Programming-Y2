@@ -43,7 +43,7 @@ public class ArchitectServiceImpl implements ArchitectService {
     }
 
     @Override
-    public List<Architect> findArchitectByNameCompany(String nameCompany) {
+    public Architect findArchitectByNameCompany(String nameCompany) {
         return architectRepository.findArchitectByNameCompany(nameCompany);
     }
 
