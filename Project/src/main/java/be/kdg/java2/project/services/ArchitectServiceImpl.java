@@ -21,7 +21,7 @@ public class ArchitectServiceImpl implements ArchitectService {
 
     @Override
     public Architect findById(int id) {
-        return architectRepository.findById(id).orElseThrow();
+        return architectRepository.findById(id).orElse(null);
     }
 
     @Override

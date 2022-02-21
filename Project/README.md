@@ -17,7 +17,7 @@ Buildings can have multiple architects, architects can also have 0 or more build
 relationship between building type and building, a building can only have 1 type, but multiple buildings can have the
 same types.
 
-<img src="src/main/resources/static/uml-diagram.png" alt="uml domain model" width="500"/>
+<img src="src/main/resources/static/images/uml-diagram.png" alt="uml domain model" width="500"/>
 
 ## How to get it Running
 
@@ -90,46 +90,31 @@ Connection: keep-alive
 }
 ```
 ### Delete
-#### 200 Ok
+#### 204 No Content
 ```http request
 DELETE http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 200
-Date: Tue, 15 Feb 2022 20:53:43 GMT
+HTTP/1.1 204 
+Date: Mon, 21 Feb 2022 10:41:31 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 <Response body is empty>
 ```
-#### 204 No Content
-How is there a code created 204 No content with a delete... When there is not a record to delete, it will throw a 404
-```http request
-
-```
-```http request
-
-```
-#### 500 Internal Server Error
-This request returned a 500 because of my general exception handler. There the message was No value present which technically is a 404
+#### 404 Not Found
 ```http request
 DELETE http://localhost:6969/api/architects/69 HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 500 
-Content-Type: application/json
-Transfer-Encoding: chunked
-Date: Tue, 15 Feb 2022 20:59:09 GMT
-Connection: close
+HTTP/1.1 404
+Date: Mon, 21 Feb 2022 10:46:56 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
 
-{
-  "timestamp": "2022-02-15T20:59:09.019+00:00",
-  "status": 500,
-  "error": "Internal Server Error",
-  "path": "/api/architects/69"
-}
+<Response body is empty>
 ```
 ## Week 2
 ### Content Negotiation
@@ -204,14 +189,8 @@ Connection: keep-alive
 
 <Response body is empty>
 ```
-#### 204 No Content
-How is there a 204 no content with a post?
-```http request
 
-```
-```http request
-
-```
+[//]: # (The 204 is only for a nested post)
 #### 400 Bad Request
 Because the name is less than 3 Characters long
 ```http request
@@ -267,14 +246,6 @@ Connection: keep-alive
 }
 ```
 ### Put
-How is there a code created 201 with a put... this is more like an update
-#### 201 Created
-```http request
-
-```
-```http request
-
-```
 #### 204 No Content
 ```http request
 PUT http://localhost:6969/api/architects/1 HTTP/1.1

@@ -17,9 +17,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Bean
     public ModelMapper modelMapper(){
-//        var modelMapper = new ModelMapper();
-//
-//        Converter<>
         return new ModelMapper();
     }
 }
