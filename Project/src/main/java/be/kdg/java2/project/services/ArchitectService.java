@@ -15,7 +15,7 @@ public interface ArchitectService {
 
     List<Architect> findArchitectsByNumberOfEmployeesIsGreaterThan(int numberOfEmployees);
 
-    List<Architect> findArchitectByNameCompany(String nameCompany);
+    Architect findArchitectByNameCompany(String nameCompany);
 
     void updateArchitect(Architect architect);
 }
