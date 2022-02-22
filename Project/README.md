@@ -24,7 +24,8 @@ same types.
 - JDK 11
 - H2 database
     - No need for PostGreSQL configuration
-- [Landing page](http://localhost:6969)
+- Enter the command ```./gradlew bootRun``` in the terminal within the project directory. (npm should build, and spring boot should start)
+  - [Landing page](http://localhost:6969)
 
 # Weeks
 ## Week 1
@@ -286,3 +287,24 @@ Connection: keep-alive
                 <id>1</id>
                 <name>Port Authori...
 ```
+## Week 3
+### Bootstrap Icons
+I have added multiple icons, all of which you can find on my *mainpages*.
+* [Buildings Page](http://localhost:6969/buildings)
+  * A map icon next to the filtering on location input field.
+  * [building.html](src/main/resources/templates/mainpages/buildings.html)
+* [Architects Page](http://localhost:6969/architects)
+  * A people icon next to the filtering on number of employees input field.
+  * A buildings icon next to the filtering on company name input field.
+  * [architect.html](src/main/resources/templates/mainpages/architects.html)
+
+### Javascript dependecies
+I have chosen to add flatpickr and X to my project.
+
+#### Flatpickr
+To see this, you need to add a new architect, and press on the establishmentDate input field. Then you will see the flatpickr date picker.
+- [Adding an architect](http://localhost:6969/architects/add)
+- Source Files:
+  - [addArchitects.html](src/main/resources/templates/addpages/addarchitects.html)
+  - [flatpickr.js](src/main/js/flatpickr.js)
+  - [style.scss](src/main/css/style.scss)
