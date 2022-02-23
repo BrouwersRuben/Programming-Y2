@@ -308,3 +308,12 @@ To see this, you need to add a new architect, and press on the establishmentDate
   - [addArchitects.html](src/main/resources/templates/addpages/addarchitects.html)
   - [flatpickr.js](src/main/js/flatpickr.js)
   - [style.scss](src/main/css/style.scss)
+
+#### Validator
+You will need to enter:
+- a string with more than 30 characters when filtering architects on name.
+- write a string with not only numbers when filtering architects on number of employees.
+- [Architect mainpage](http://localhost:6969/architects)
+- Source files:
+  - [architects.html](src/main/resources/templates/mainpages/architects.html) (Not really any validator specific code here, except the script tag which links to the JS file)
+  - [filteringArchitects.js](src/main/js/filteringArchitects.js) (here on line 16 & 76 you will find validator code)
