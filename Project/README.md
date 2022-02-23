@@ -299,9 +299,9 @@ I have added multiple icons, all of which you can find on my *mainpages*.
   * [architect.html](src/main/resources/templates/mainpages/architects.html)
 
 ### Javascript dependecies
-I have chosen to add flatpickr and X to my project.
+I have chosen to add flatpickr and validator to my project.
 
-#### Flatpickr
+#### [Flatpickr](https://www.npmjs.com/package/flatpickr)
 To see this, you need to add a new architect, and press on the establishmentDate input field. Then you will see the flatpickr date picker.
 - [Adding an architect](http://localhost:6969/architects/add)
 - Source Files:
@@ -309,8 +309,8 @@ To see this, you need to add a new architect, and press on the establishmentDate
   - [flatpickr.js](src/main/js/flatpickr.js)
   - [style.scss](src/main/css/style.scss)
 
-#### Validator
-You will need to enter:
+#### [Validator](https://www.npmjs.com/package/validator)
+To see validator in action you will need to enter:
 - a string with more than 30 characters when filtering architects on name.
 - write a string with not only numbers when filtering architects on number of employees.
 - [Architect mainpage](http://localhost:6969/architects)
