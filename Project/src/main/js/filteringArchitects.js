@@ -6,59 +6,65 @@ const nameInput = document.getElementById("nameCompany");
 
 const tableBody = document.getElementById("tableBody");
 
+const validator = require('validator');
+
 numberFilter.addEventListener("click", numberFilterFunction);
 
 function nameFilterFunction() {
     const name = nameInput.value;
 
-    if (name === ""){
-        fetch(`/api/architects/`, {
-            method: "GET"
-        })
-            .then(response => {
-                if (response.status === 200){
-                    return response.json();
-                } else if (response.status === 204){
-                    alert(`There are no architect firms`)
-                    return [];
-                } else {
-                    alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                }
-            })
-            .then(architects => {
-                processData(architects);
-            })
-            .catch(error => {
-                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-            })
+    if (!validator.isByteLength(name, {min: 0, max: 30})){
+        alert("You entered a name longer than 30 characters")
     } else {
-        fetch(`/api/architects/${name}`, {
-            method: "GET"
-        })
-            .then(response => {
-                if (response.status === 200){
-                    return response.json();
-                } else if (response.status === 204){
-                    alert(`There is no architect firm by the name ${name}`)
-                    //TODO: I want to stop everything if this happens and not display everything, currently it displays an error message
-                    return null;
-                } else {
-                    alert(`Received response code: ${response.status}`);
-                }
+        if (name === ""){
+            fetch(`/api/architects/`, {
+                method: "GET"
             })
-            .then(architect => {
-                tableBody.innerHTML="";
-                tableBody.innerHTML += `
+                .then(response => {
+                    if (response.status === 200){
+                        return response.json();
+                    } else if (response.status === 204){
+                        alert(`There are no architect firms`)
+                        return [];
+                    } else {
+                        alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+                    }
+                })
+                .then(architects => {
+                    processData(architects);
+                })
+                .catch(error => {
+                    alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+                })
+        } else {
+            fetch(`/api/architects/${name}`, {
+                method: "GET"
+            })
+                .then(response => {
+                    if (response.status === 200){
+                        return response.json();
+                    } else if (response.status === 204){
+                        alert(`There is no architect firm by the name ${name}`)
+                        //TODO: I want to stop everything if this happens and not display everything, currently it displays an error message
+                        return null;
+                    } else {
+                        alert(`Received response code: ${response.status}`);
+                    }
+                })
+                .then(architect => {
+                    tableBody.innerHTML="";
+                    tableBody.innerHTML += `
                 <tr>
                     <td>${architect.nameCompany}</td>
                     <td>${architect.establishmentDate}</td>
                     <td><a class="btn btn-outline-dark" href="/architects/architectdetail?architectID=${architect.id}">Architect Detail</a></td>
                 </tr>
         `;
-            })
-            .catch(error => {
-                alert(`Received error: ${error.message}`)
-            });
+                })
+                .catch(error => {
+                    alert(`Received error: ${error.message}`)
+                });
+        }
     }
 }
 
@@ -67,46 +73,50 @@ nameFilter.addEventListener("click", nameFilterFunction);
 function numberFilterFunction(){
     const number = numberInput.value;
 
-    if (number === ""){
-        fetch(`/api/architects/`, {
-            method: "GET"
-        })
-            .then(response => {
-                if (response.status === 200){
-                    return response.json();
-                } else if (response.status === 204){
-                    alert(`There are no architect firms`)
-                    return [];
-                } else {
-                    alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                }
-            })
-            .then(architects => {
-                processData(architects);
-            })
-            .catch(error => {
-                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-            })
+    if(!validator.isNumeric(number)) {
+        alert("You did not enter a number");
     } else {
-        fetch(`/api/architects?numbE=${number}`, {
-            method: "GET"
-        })
-            .then(response => {
-                if (response.status === 200){
-                    return response.json();
-                } else if (response.status === 204){
-                    alert(`There are no architect firms with more than ${number} employees`)
-                    return [];
-                } else {
-                    alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                }
+        if (number === ""){
+            fetch(`/api/architects/`, {
+                method: "GET"
             })
-            .then(architects => {
-                processData(architects);
+                .then(response => {
+                    if (response.status === 200){
+                        return response.json();
+                    } else if (response.status === 204){
+                        alert(`There are no architect firms`)
+                        return [];
+                    } else {
+                        alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+                    }
+                })
+                .then(architects => {
+                    processData(architects);
+                })
+                .catch(error => {
+                    alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+                })
+        } else {
+            fetch(`/api/architects?numbE=${number}`, {
+                method: "GET"
             })
-            .catch(error => {
-                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-            })
+                .then(response => {
+                    if (response.status === 200){
+                        return response.json();
+                    } else if (response.status === 204){
+                        alert(`There are no architect firms with more than ${number} employees`)
+                        return [];
+                    } else {
+                        alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+                    }
+                })
+                .then(architects => {
+                    processData(architects);
+                })
+                .catch(error => {
+                    alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+                })
+        }
     }
 }
 
