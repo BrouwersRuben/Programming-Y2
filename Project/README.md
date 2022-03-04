@@ -322,7 +322,7 @@ To see this, you need to add a new architect, and press on the establishmentDate
 - Source Files:
   - [addArchitects.html](src/main/resources/templates/addpages/addarchitects.html)
   - [flatpickr.js](src/main/js/flatpickr.js)
-  - [style.scss](src/main/css/style.scss)
+  - [site.js](src/main/js/site.js)
 
 #### [Validator](https://www.npmjs.com/package/validator)
 To see validator in action you will need to enter:
