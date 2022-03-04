@@ -183,11 +183,20 @@ Content-Type: application/json
 ```
 ```http request
 HTTP/1.1 201
-Date: Tue, 15 Feb 2022 21:02:43 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Fri, 04 Mar 2022 12:49:56 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
-<Response body is empty>
+{
+  "id": 5,
+  "name": "testing",
+  "location": "Antwerp, BE",
+  "height": 123.0,
+  "type": {
+    "id": 5,
+    "code": "gp
 ```
 ### Put
 #### 204 No Content
