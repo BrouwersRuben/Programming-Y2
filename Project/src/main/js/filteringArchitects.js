@@ -64,7 +64,7 @@ function numberFilterFunction(){
         if (number === ""){
             getAllArchitects();
         } else {
-            fetch(`/api/architects?numbE=${number}`, {
+            fetch(`/api/architects/${number}/higherThan`, {
                 method: "GET",
                 headers : {
                     "Content-Type" : "application/json"
@@ -104,7 +104,7 @@ function processData(dataArray){
 }
 
 function getAllArchitects(){
-    fetch(`/api/architects/`, {
+    fetch(`/api/architects`, {
         method: "GET",
         headers : {
             "Content-Type" : "application/json"
