@@ -14,7 +14,10 @@ function deleteArchitect(){
     console.log(architectID);
 
     fetch(`/api/architects/${architectID}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers : {
+            "Content-Type" : "application/json"
+        }
     })
         .then(response => {
             if (response.status === 200) {

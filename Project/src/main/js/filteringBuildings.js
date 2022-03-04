@@ -8,27 +8,8 @@ locationFilter.addEventListener("click", locationFilterFunction);
 function locationFilterFunction(){
     const location = locationInput.value;
 
-    console.log(location);
-
     if (location === "" ) {
-        fetch(`/api/buildings`, {
-            method: "GET"
-        })
-            .then(response => {
-                if (response.status === 200){
-                    return response.json();
-                } else if (response.status === 204){
-                    alert(`There are no buildings in the database`)
-                    return [];
-                } else {
-                    alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                }
-            })
-            .then(buildings =>
-                processData(buildings))
-            .catch(error => {
-                alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-            })
+        getAllBuildings();
     } else {
         fetch(`/api/buildings?location=${location}`, {
             method: "GET"
@@ -63,4 +44,28 @@ function processData(dataArray){
             </tr>
         `;
     }
+}
+
+function getAllBuildings(){
+    fetch(`/api/buildings`, {
+        method: "GET",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+    })
+        .then(response => {
+            if (response.status === 200){
+                return response.json();
+            } else if (response.status === 204){
+                alert(`There are no buildings in the database`)
+                return [];
+            } else {
+                alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+            }
+        })
+        .then(buildings =>
+            processData(buildings))
+        .catch(error => {
+            alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+        })
 }

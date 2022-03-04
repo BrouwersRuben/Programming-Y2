@@ -27,12 +27,6 @@ function addBuilding(){
         return;
     }
 
-    console.log("name: " + nameValue);
-    console.log("location: " + locationValue);
-    console.log("height: " + heightValue);
-    console.log("architect ID's:" + architectIDs);
-    console.log("type: " + typeValue.toUpperCase());
-
     fetch(`/api/buildings`, {
         method: "POST",
         headers : {

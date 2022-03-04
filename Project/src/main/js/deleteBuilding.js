@@ -14,7 +14,10 @@ function deleteBuilding(){
     console.log(buildingID);
 
     fetch(`/api/buildings/${buildingID}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers : {
+            "Content-Type" : "application/json"
+        }
     })
         .then(response => {
             if (response.status === 200) {
@@ -24,18 +27,3 @@ function deleteBuilding(){
             }
         });
 }
-
-/*
-/!**
- * @type {Response}
- *!/
-const response = await fetch(`/api/buildings/1`, {
-    method: "DELETE"
-});
-
-if (response === 204) {
-    Delete the answer from the UI using JS
-} else {
-    throw new Error(`Unsupported status code: ${response.status}`)
-}
-*/

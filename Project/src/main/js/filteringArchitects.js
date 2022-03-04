@@ -17,28 +17,13 @@ function nameFilterFunction() {
         alert("You entered a name longer than 30 characters")
     } else {
         if (name === ""){
-            fetch(`/api/architects/`, {
-                method: "GET"
-            })
-                .then(response => {
-                    if (response.status === 200){
-                        return response.json();
-                    } else if (response.status === 204){
-                        alert(`There are no architect firms`)
-                        return [];
-                    } else {
-                        alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                    }
-                })
-                .then(architects => {
-                    processData(architects);
-                })
-                .catch(error => {
-                    alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-                })
+            getAllArchitects();
         } else {
             fetch(`/api/architects/${name}`, {
-                method: "GET"
+                method: "GET",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
             })
                 .then(response => {
                     if (response.status === 200){
@@ -77,28 +62,13 @@ function numberFilterFunction(){
         alert("You did not enter a number");
     } else {
         if (number === ""){
-            fetch(`/api/architects/`, {
-                method: "GET"
-            })
-                .then(response => {
-                    if (response.status === 200){
-                        return response.json();
-                    } else if (response.status === 204){
-                        alert(`There are no architect firms`)
-                        return [];
-                    } else {
-                        alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
-                    }
-                })
-                .then(architects => {
-                    processData(architects);
-                })
-                .catch(error => {
-                    alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
-                })
+            getAllArchitects();
         } else {
             fetch(`/api/architects?numbE=${number}`, {
-                method: "GET"
+                method: "GET",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
             })
                 .then(response => {
                     if (response.status === 200){
@@ -133,3 +103,27 @@ function processData(dataArray){
     }
 }
 
+function getAllArchitects(){
+    fetch(`/api/architects/`, {
+        method: "GET",
+        headers : {
+            "Content-Type" : "application/json"
+        }
+    })
+        .then(response => {
+            if (response.status === 200){
+                return response.json();
+            } else if (response.status === 204){
+                alert(`There are no architect firms`)
+                return [];
+            } else {
+                alert(`Received status code: ${response.status}`); // 'alert' is NOT DONE!
+            }
+        })
+        .then(architects => {
+            processData(architects);
+        })
+        .catch(error => {
+            alert(`Received error: ${error.message}`); // 'alert' is NOT DONE!
+        })
+}
