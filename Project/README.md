@@ -205,7 +205,7 @@ PUT http://localhost:6969/api/architects/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id" : "1",
+  "id" : 1,
   "numberOfEmployees" : 900
 }
 ```
@@ -223,7 +223,7 @@ PUT http://localhost:6969/api/architects/420 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id" : "420",
+  "id" : 420,
   "numberOfEmployees" : 6969
 }
 ```
@@ -241,7 +241,7 @@ PUT http://localhost:6969/api/architects/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id" : "420",
+  "id" : 420,
   "numberOfEmployees" : 6969
 }
 ```
