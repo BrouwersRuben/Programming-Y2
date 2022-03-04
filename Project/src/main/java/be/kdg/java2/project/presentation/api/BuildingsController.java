@@ -40,8 +40,8 @@ public class BuildingsController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@RequestParam(value = "location", required = false) String location){
+    @GetMapping("{location}")
+    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@PathVariable(value = "location", required = false) String location){
         if (location == null){
             var allBuildings = buildingService.findAll();
             if (allBuildings.isEmpty()){

@@ -17,11 +17,12 @@ Accept: application/json
 
 # All ... of ...
 ### 200 Ok
-GET http://localhost:6969/api/architects?numbE=700 HTTP/1.1
+GET http://localhost:6969/api/architects/80/higherThan HTTP/1.1
 Accept: application/json
 
+
 ### 204 No Content
-GET http://localhost:6969/api/buildings?location=Stabroek HTTP/1.1
+GET http://localhost:6969/api/buildings/Denmark HTTP/1.1
 Accept: application/json
 
 ### 404 Not Found HELP

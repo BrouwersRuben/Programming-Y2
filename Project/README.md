@@ -2,14 +2,26 @@
 
 This is a progressing project made by **Ruben Brouwers** for **Programming 2.3** in S2 2021-2022.
 
-**Course**: Programming 2.3 <br>
+>**Course**: Programming 2.3 <br>
 **Name**: Ruben Brouwers <br>
 **Email**: ruben.brouwers@student.kdg.be <br>
 **ID**: 0146084-02 <br>
-**Git Repository**: [prog23/Project](https://gitlab.com/BrouwersRuben/prog23/-/tree/main/Project)
+>**Git Repository**: [prog23/Project](https://gitlab.com/BrouwersRuben/prog23/-/tree/main/Project)
 <br>
 
 I continued this project on the project that I made in programming 2.1.
+
+--- 
+
+## How to get it Running
+
+- JDK 11
+- H2 database
+  - No need for PostGreSQL configuration
+- Enter the command ```./gradlew bootRun``` in the terminal within the project directory. (npm should build, and spring boot should start)
+  - [Landing page](http://localhost:6969)
+
+---
 
 ## Domain explanation
 
@@ -19,13 +31,7 @@ same types.
 
 <img src="src/main/resources/static/images/uml-diagram.png" alt="uml domain model" width="500"/>
 
-## How to get it Running
-
-- JDK 11
-- H2 database
-    - No need for PostGreSQL configuration
-- Enter the command ```./gradlew bootRun``` in the terminal within the project directory. (npm should build, and spring boot should start)
-  - [Landing page](http://localhost:6969)
+---
 
 # Weeks
 ## Week 1
@@ -95,7 +101,7 @@ Connection: keep-alive
 #### All ... of ...
 ##### 200 Ok
 ```http request
-GET http://localhost:6969/api/architects?numbE=700 HTTP/1.1
+GET http://localhost:6969/api/architects/80/higherThan HTTP/1.1
 Accept: application/json
 ```
 ```http request
@@ -114,7 +120,7 @@ Connection: keep-alive
 ```
 ##### 204 No Content
 ```http request
-GET http://localhost:6969/api/buildings?location=Stabroek HTTP/1.1
+GET http://localhost:6969/api/buildings/Stabroek HTTP/1.1
 Accept: application/json
 ```
 ```http request

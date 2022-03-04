@@ -43,6 +43,11 @@ public class ArchitectServiceImpl implements ArchitectService {
     }
 
     @Override
+    public List<Architect> findArchitectsByNumberOfEmployeesIsLessThan(int numberOfEmployees) {
+        return architectRepository.findArchitectsByNumberOfEmployeesIsLessThan(numberOfEmployees);
+    }
+
+    @Override
     public Architect findArchitectByNameCompany(String nameCompany) {
         return architectRepository.findArchitectByNameCompany(nameCompany);
     }

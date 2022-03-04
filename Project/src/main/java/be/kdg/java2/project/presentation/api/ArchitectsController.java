@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,22 +35,32 @@ public class ArchitectsController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@RequestParam(value = "numbE", required = false) String numbE){
-        if (numbE == null){
-            var allArchitects = architectService.findAll();
-            if (allArchitects.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
-            }
+    public ResponseEntity<List<ArchitectDTO>> getAllArchitects(){
+        var allArchitects = architectService.findAll();
+        if (allArchitects.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            int numberOfEmployees = Integer.parseInt(numbE);
-            var architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numberOfEmployees);
-            if (architectsEmp.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
-            }
+            return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("{numbE}/{higherOrLower}")
+    public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@PathVariable(value = "numbE") String numbE, @PathVariable(value = "higherOrLower") String higherOrLower){
+        int numberOfEmployees = Integer.parseInt(numbE);
+        List<Architect> architectsEmp;
+
+        if (higherOrLower.equals("higherThan")){
+            architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numberOfEmployees);
+        } else if (higherOrLower.equals("lessThan")){
+            architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsLessThan(numberOfEmployees);
+        } else {
+            architectsEmp = Collections.emptyList();
+        }
+
+        if (architectsEmp.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
         }
     }
 
@@ -56,7 +68,7 @@ public class ArchitectsController {
     public ResponseEntity<ArchitectDTO> getArchitectByName(@PathVariable String nameFirm){
         var architect = architectService.findArchitectByNameCompany(nameFirm);
         if (architect == null){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }
