@@ -25,8 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
+                .antMatchers("/h2-console/**")
+                    .authenticated()
                 .anyRequest()
                     .authenticated()
+                .and()
+                    .headers().frameOptions().disable()
                 .and()
                 //TODO: fix this
                 .csrf()
