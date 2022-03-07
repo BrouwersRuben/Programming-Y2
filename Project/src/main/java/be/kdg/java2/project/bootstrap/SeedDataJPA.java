@@ -1,11 +1,9 @@
 package be.kdg.java2.project.bootstrap;
 
-import be.kdg.java2.project.domain.Architect;
-import be.kdg.java2.project.domain.Building;
-import be.kdg.java2.project.domain.BuildingType;
-import be.kdg.java2.project.domain.TypeOfBuilding;
+import be.kdg.java2.project.domain.*;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import be.kdg.java2.project.repository.BuildingRepository;
+import be.kdg.java2.project.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,18 +11,21 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Configuration
 @Transactional
 public class SeedDataJPA implements CommandLineRunner {
     private final BuildingRepository buildingRepository;
     private final ArchitectRepository architectRepository;
+    private final UserRepository userRepository;
 
     private final Logger logger = LoggerFactory.getLogger(SeedDataJPA.class);
 
-    public SeedDataJPA(BuildingRepository buildingRepository, ArchitectRepository architectRepository) {
+    public SeedDataJPA(BuildingRepository buildingRepository, ArchitectRepository architectRepository, UserRepository userRepository) {
         this.buildingRepository = buildingRepository;
         this.architectRepository = architectRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -43,6 +44,10 @@ public class SeedDataJPA implements CommandLineRunner {
         Architect grimmParker = new Architect("Grimm and Parker Architects", LocalDate.of(1972, 1, 1), 70);
         Architect diamondSchmitt = new Architect("Diamond Schmitt Architects", LocalDate.of(1975, 1, 1), 25);
 
+        // Users
+        User updater = new User("Updater", "updater@kdg.be", Role.U, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", zahaHadid);
+        User creater = new User("Ureater", "creater@kdg.be", Role.CD, "$2a$10$ICGEJWlv1V2oKR.wxwZjB.PVIQFkRM0infwcQsawaPZ.wtRDL2uFa", grimmParker);
+
         // Relations (not all of these are correct in the real world)
         portAuthority.addArchitect(zahaHadid);
         portAuthority.addArchitect(grimmParker);
@@ -58,12 +63,14 @@ public class SeedDataJPA implements CommandLineRunner {
 
         zahaHadid.addBuilding(portAuthority);
         zahaHadid.addBuilding(vitraFireStation);
+        zahaHadid.addUser(updater);
 
         utzon.addBuilding(sydneyOperaHouse);
         utzon.addBuilding(unoXPetrolStation);
 
         grimmParker.addBuilding(portAuthority);
         grimmParker.addBuilding(sydneyOperaHouse);
+        grimmParker.addUser(creater);
 
         diamondSchmitt.addBuilding(vitraFireStation);
         diamondSchmitt.addBuilding(unoXPetrolStation);
@@ -77,5 +84,8 @@ public class SeedDataJPA implements CommandLineRunner {
         architectRepository.save(utzon);
         architectRepository.save(grimmParker);
         architectRepository.save(diamondSchmitt);
+
+        userRepository.save(updater);
+        userRepository.save(creater);
     }
 }

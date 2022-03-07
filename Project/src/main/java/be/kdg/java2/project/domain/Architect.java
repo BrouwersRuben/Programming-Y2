@@ -31,6 +31,9 @@ public class Architect extends EntityClass {
     private List<Building> buildings;
     // List, because then elements can be retrieved at index, could use set or map for the unique stuff, but didn't
 
+    @OneToMany(mappedBy = "workingFirm", cascade = CascadeType.ALL)
+    private List<User> users;
+
     protected Architect() {
     }
 
@@ -38,7 +41,6 @@ public class Architect extends EntityClass {
         this.nameCompany = nameCompany;
         this.establishmentDate = establishmentDate;
         this.numberOfEmployees = numberOfEmployees;
-        this.buildings = new ArrayList<>();
     }
 
     @Override
@@ -99,5 +101,23 @@ public class Architect extends EntityClass {
 
     public void removeBuilding(Building building) {
         this.buildings.remove(building);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void addUsers(List<User> users) {
+        if (this.users == null) {
+            this.users = new ArrayList<>();
+        }
+        this.users.addAll(users);
+    }
+
+    public void addUser(User user) {
+        if (this.users == null) {
+            this.users = new ArrayList<>();
+        }
+        this.users.add(user);
     }
 }
