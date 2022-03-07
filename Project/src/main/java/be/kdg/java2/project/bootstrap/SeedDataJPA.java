@@ -46,7 +46,7 @@ public class SeedDataJPA implements CommandLineRunner {
 
         // Users
         User updater = new User("Updater", "updater@kdg.be", Role.U, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", zahaHadid);
-        User creater = new User("Ureater", "creater@kdg.be", Role.CD, "$2a$10$ICGEJWlv1V2oKR.wxwZjB.PVIQFkRM0infwcQsawaPZ.wtRDL2uFa", grimmParker);
+        User creater = new User("Creater", "creater@kdg.be", Role.CD, "$2a$10$ICGEJWlv1V2oKR.wxwZjB.PVIQFkRM0infwcQsawaPZ.wtRDL2uFa", grimmParker);
 
         // Relations (not all of these are correct in the real world)
         portAuthority.addArchitect(zahaHadid);
