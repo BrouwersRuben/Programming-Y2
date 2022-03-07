@@ -52,6 +52,12 @@
                 <li th:each="building : ${architect.getBuildings()}" th:text="${building.getName()}"></li>
             </ul>
         </div>
+        <div class="col">
+            <h4>List of employees:</h4>
+            <ul>
+                <li th:each="employee : ${architect.getUsers()}" th:text="${employee.getUsername()}"></li>
+            </ul>
+        </div>
     </div>
 </div>
 
