@@ -23,7 +23,7 @@ public class User extends EntityClass{
     private String password;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "architectFirm_id")
+    @JoinColumn(name = "architectFirm_id", nullable = false)
     private Architect workingFirm;
 
 
