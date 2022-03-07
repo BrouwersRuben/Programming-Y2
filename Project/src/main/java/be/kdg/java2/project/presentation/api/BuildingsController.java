@@ -35,7 +35,18 @@ public class BuildingsController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("{location}")
+    //TODO: use in JS
+    @GetMapping("{buildingId}")
+    public ResponseEntity<BuildingDTO> retrieveArchitect(@PathVariable int buildingId) {
+        var building = buildingService.findById(buildingId);
+        if (building == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(modelMapper.map(building, BuildingDTO.class),HttpStatus.OK);
+    }
+
+    //TODO: requestparam cause not REST principle for getting one record
+    @GetMapping("{location}/location")
     public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@PathVariable(value = "location", required = false) String location){
         if (location == null){
             var allBuildings = buildingService.findAll();

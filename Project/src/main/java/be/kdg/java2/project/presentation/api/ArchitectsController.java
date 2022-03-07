@@ -44,6 +44,17 @@ public class ArchitectsController {
         }
     }
 
+    //TODO: use in js
+    @GetMapping("{architectId}")
+    public ResponseEntity<ArchitectDTO> retrieveBuilding(@PathVariable int architectId) {
+        var architect = architectService.findById(architectId);
+        if (architect == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class),HttpStatus.OK);
+    }
+
+    //TODO: Requestparam
     @GetMapping("{numbE}/{higherOrLower}")
     public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@PathVariable(value = "numbE") String numbE, @PathVariable(value = "higherOrLower") String higherOrLower){
         int numberOfEmployees = Integer.parseInt(numbE);
@@ -64,7 +75,8 @@ public class ArchitectsController {
         }
     }
 
-    @GetMapping("{nameFirm}")
+    //TODO: Requestparam
+    @GetMapping("{nameFirm}/name")
     public ResponseEntity<ArchitectDTO> getArchitectByName(@PathVariable String nameFirm){
         var architect = architectService.findArchitectByNameCompany(nameFirm);
         if (architect == null){

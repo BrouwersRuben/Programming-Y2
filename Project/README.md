@@ -66,6 +66,8 @@ Connection: keep-alive
         "name": "Vitra Fire St...
 ```
 A 204 will appear if there are no records of any architect in the database, very unlikely.
+
+[//]: # (TODO: Look at controllers, but has to be changed according to rest principles)
 #### 1 Record
 ##### 200 Ok
 ```http request
