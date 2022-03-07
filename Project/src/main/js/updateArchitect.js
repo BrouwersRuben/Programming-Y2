@@ -21,7 +21,8 @@ function updateNumberOfEmployees(){
         body : JSON.stringify({
             id : entityId,
             numberOfEmployees : value
-        })
+        }),
+        redirect: "manual"
     })
         .then(response => {
             if (response.status === 204 || response.status === 200){
