@@ -11,7 +11,7 @@ This is a progressing project made by **Ruben Brouwers** for **Programming 2.3**
 
 I continued this project on the project that I made in programming 2.1.
 
---- 
+---
 
 ## How to get it Running
 
@@ -334,3 +334,48 @@ To see validator in action you will need to enter:
 - Source files:
   - [architects.html](src/main/resources/templates/mainpages/architects.html) (Not really any validator specific code here, except the script tag which links to the JS file)
   - [filteringArchitects.js](src/main/js/filteringArchitects.js) (here on line 16 & 76 you will find validator code)
+  
+## Week 4-5
+### Users
+```ROLE_CREATOR > ROLE_UPDATER  > ROLE_USER``` <br>
+All what the user can do, the updater can also do, and so on...
+#### Creator
+> **Username**: Creator <br>
+**E-mail**: creator@kdg.be <br>
+**Password**: creator <br>
+   
+Can do everything.
+
+#### Updater
+> **Username**: Updater <br>
+**E-mail**: updater@kdg.be <br>
+**Password**: updater <br>
+
+Can update entities (PUT architect)
+
+* They **cannot** see any off the pages to add entities, including the navbar links to those pages.
+  * Any page, because all pages have the navbar.
+* They **cannot** delete any entities, (not being able to see the delete buttons.)
+  * [Architect detail pages](http://localhost:6969/architects/architectdetail?architectID=1)
+  * [Building detail pages](http://localhost:6969/buildings/buildingdetail?buildingID=1)
+
+#### User
+>**Username**: User <br>
+**E-mail**: user@kdg.be <br>
+**Password**: user <br>
+> 
+Can view entities and filter on them
+
+* They **cannot** see any off the pages to add entities, including the navbar links to those pages.
+  * Any page, because all pages have the navbar.
+* They **cannot** delete any entities, (not being able to see the delete buttons.)
+  * [Architect detail pages](http://localhost:6969/architects/architectdetail?architectID=1)
+  * [Building detail pages](http://localhost:6969/buildings/buildingdetail?buildingID=1)
+* They **cannot** modify any entities, (not being able to see the forms and the buttons.)
+  * [Architect detail pages](http://localhost:6969/architects/architectdetail?architectID=1)
+* They **cannot** see the login button on the landing page ones logged in.
+  * [Landing page](http://localhost:6969/)
+
+### Relations between users and entity
+An architect (architect firm) can have employees and a user (normal user, updater, creator) has an architect firm they "work for".
+Every logged in user can see these relations under the detail page of each architect, these relations can only be made upon registration, there is no way to modify it, yet...
