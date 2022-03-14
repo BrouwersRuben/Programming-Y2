@@ -46,7 +46,8 @@ public class SeedDataJPA implements CommandLineRunner {
 
         // Users
         User updater = new User("Updater", "updater@kdg.be", Role.U, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", zahaHadid);
-        User creater = new User("Creater", "creater@kdg.be", Role.CD, "$2a$10$ICGEJWlv1V2oKR.wxwZjB.PVIQFkRM0infwcQsawaPZ.wtRDL2uFa", grimmParker);
+        User creater = new User("Creator", "creator@kdg.be", Role.CD, "$2a$10$109Cs92jQJDwixf5Opq9/ewRkTHKXfpI9h46cqnyWrSirH3oQpL.S", grimmParker);
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$rdzY3uR5u92hIJfi/0sS7.6k6UIS0YXVDpvMPDCYpgMc2/JJqkZhy", diamondSchmitt);
 
         // Relations (not all of these are correct in the real world)
         portAuthority.addArchitect(zahaHadid);
@@ -74,6 +75,7 @@ public class SeedDataJPA implements CommandLineRunner {
 
         diamondSchmitt.addBuilding(vitraFireStation);
         diamondSchmitt.addBuilding(unoXPetrolStation);
+        diamondSchmitt.addUser(user);
 
         buildingRepository.save(portAuthority);
         buildingRepository.save(vitraFireStation);
@@ -87,5 +89,6 @@ public class SeedDataJPA implements CommandLineRunner {
 
         userRepository.save(updater);
         userRepository.save(creater);
+        userRepository.save(user);
     }
 }
