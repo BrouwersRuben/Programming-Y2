@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "buildings")
+@Table(name = "BUILDINGS")
 public class Building extends EntityClass {
 
     // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "building_name", nullable = false, unique = true, length = 30)
+    @Column(name = "BUILDING_NAME", nullable = false, unique = true, length = 30)
     private String name;
 
-    @Column(name = "location", nullable = false, length = 30)
+    @Column(name = "BUILDING_LOCATION", nullable = false, length = 30)
     private String location;
 
-    @Column(name = "height", nullable = false)
+    @Column(name = "BUILDING_HEIGHT", nullable = false)
     private double height;
 
     @ManyToMany(mappedBy = "buildings", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)

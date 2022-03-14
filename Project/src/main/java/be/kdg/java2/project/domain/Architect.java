@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "architects")
+@Table(name = "ARCHITECTS")
 public class Architect extends EntityClass {
 
     // Attributes
@@ -16,14 +16,14 @@ public class Architect extends EntityClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "company_name", nullable = false, unique = true, length = 30)
+    @Column(name = "ARCHITECT_NAME", nullable = false, unique = true, length = 30)
     private String nameCompany;
 
-    @Column(name = "establishment_date", nullable = false)
+    @Column(name = "ARCHITECT_ESTABLISHMENT_DATE", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate establishmentDate;
 
-    @Column(name = "number_of_employees", nullable = false)
+    @Column(name = "APLICATION_NUMBER_OF_EMPLOYEES", nullable = false)
     private int numberOfEmployees;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)

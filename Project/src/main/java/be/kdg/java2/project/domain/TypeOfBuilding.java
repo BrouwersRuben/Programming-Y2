@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "types_of_buildings")
+@Table(name = "TYPES_OF_BUILDINGS")
 public class TypeOfBuilding extends EntityClass {
 
     // Attributes
@@ -13,14 +13,14 @@ public class TypeOfBuilding extends EntityClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "code", nullable = false, unique = true, length = 4)
+    @Column(name = "TYPE_CODE", nullable = false, unique = true, length = 4)
     private String code;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "TYPE_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
     private BuildingType type;
 
-    @Column(name = "permissions", nullable = false)
+    @Column(name = "TYPE_PERMISSIONS", nullable = false)
     private boolean requiresSpecialPermission;
 
     @OneToMany(mappedBy = "typeOfBuilding", cascade = CascadeType.ALL)

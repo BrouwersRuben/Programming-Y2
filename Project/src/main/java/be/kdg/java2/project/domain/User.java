@@ -3,29 +3,28 @@ package be.kdg.java2.project.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "application_user")
+@Table(name = "APPLICATION_USERS")
 public class User extends EntityClass{
     @Id
     @GeneratedValue
     private int id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "USER_USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "USER_EMAIL", nullable = false)
     private String email;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "USER_ROLE", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "USER_PASSWORD", nullable = false)
     private String password;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "architectFirm_id", nullable = false)
     private Architect workingFirm;
-
 
     protected User() {
     }
