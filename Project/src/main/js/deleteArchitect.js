@@ -11,12 +11,13 @@ function deleteArchitect(){
     const hiddenInput = clickedButton.previousElementSibling;
     const architectID = parseInt(hiddenInput.value);
 
-    console.log(architectID);
+    const cookie = document.cookie.split(';').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
 
     fetch(`/api/architects/${architectID}`, {
         method: "DELETE",
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "X-XSRF-TOKEN" : cookie[1]
         }
     })
         .then(response => {
