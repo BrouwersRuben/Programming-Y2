@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .headers().frameOptions().disable()
                 .and()
-                //TODO: fix this
                 .csrf()
                     .csrfTokenRepository(
                             CookieCsrfTokenRepository.withHttpOnlyFalse())

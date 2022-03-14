@@ -15,6 +15,16 @@ function addBuilding(){
 
     const checkboxes = document.querySelectorAll('input[type=checkbox]');
 
+    const csrfToken = document.querySelector("meta[name=_csrf]").content;
+    const csrfHeader = document.querySelector("meta[name=_csrf_header]").content;
+
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    headers[csrfHeader] = csrfToken;
+
+    console.log(headers)
+
     for(let i=0; i < checkboxes.length; i++ ){
         if (checkboxes[i].checked === true) { //This does not...
             architectIDs.push(parseInt(checkboxes[i].value));
@@ -29,9 +39,7 @@ function addBuilding(){
 
     fetch(`/api/buildings`, {
         method: "POST",
-        headers : {
-            "Content-Type" : "application/json"
-        },
+        headers,
         body: JSON.stringify({
             name : nameValue,
             location : locationValue,

@@ -13,11 +13,19 @@ function updateNumberOfEmployees(){
         return;
     }
 
+    const csrfToken = document.querySelector("meta[name=_csrf]").content;
+    const csrfHeader = document.querySelector("meta[name=_csrf_header]").content;
+
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    headers[csrfHeader] = csrfToken;
+
+    console.log(headers)
+
     fetch(`/api/architects/${entityId}`, {
         method : "PUT",
-        headers : {
-            "Content-Type" : "application/json"
-        },
+        headers,
         body : JSON.stringify({
             id : entityId,
             numberOfEmployees : value

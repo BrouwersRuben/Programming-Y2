@@ -11,13 +11,21 @@ function deleteBuilding(){
     const hiddenInput = clickedButton.previousElementSibling;
     const buildingID = parseInt(hiddenInput.value);
 
+    document.cookie.split(';').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
+    const cookie = document.cookie.split('=')
+
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    headers[""] = cookie[1];
+
+    console.log(headers)
     console.log(buildingID);
 
     fetch(`/api/buildings/${buildingID}`, {
         method: "DELETE",
-        headers : {
-            "Content-Type" : "application/json"
-        }
+        headers
     })
         .then(response => {
             if (response.status === 200) {
