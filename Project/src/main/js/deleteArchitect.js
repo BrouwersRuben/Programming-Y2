@@ -1,6 +1,6 @@
 const deleteButton = document.getElementById("deleteButton");
 
-deleteButton.addEventListener("click", deleteArchitect)
+deleteButton?.addEventListener("click", deleteArchitect)
 
 function deleteArchitect(){
     /**
@@ -11,7 +11,7 @@ function deleteArchitect(){
     const hiddenInput = clickedButton.previousElementSibling;
     const architectID = parseInt(hiddenInput.value);
 
-    const cookie = document.cookie.split(';').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
 
     fetch(`/api/architects/${architectID}`, {
         method: "DELETE",

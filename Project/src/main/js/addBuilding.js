@@ -27,7 +27,7 @@ function addBuilding(){
         return;
     }
 
-    const cookie = document.cookie.split(';').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
 
     fetch(`/api/buildings`, {
         method: "POST",

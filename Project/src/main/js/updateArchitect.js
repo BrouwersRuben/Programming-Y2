@@ -13,9 +13,7 @@ function updateNumberOfEmployees(){
         return;
     }
 
-    const cookie = document.cookie.split(';').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
-
-    console.log(headers)
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
 
     fetch(`/api/architects/${entityId}`, {
         method : "PUT",
