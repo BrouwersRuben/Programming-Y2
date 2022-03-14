@@ -50,6 +50,8 @@ Accept: application/json
 POST http://localhost:6969/api/buildings HTTP/1.1
 Accept: application/json
 Content-Type: application/json
+Cookie: JSESSIONID=E98303C36F8FD3FA2846A20BA9B446A9; XSRF-TOKEN=8ad34818-c3af-4c56-85e6-6bfd1f46b6db
+X-CSRF-TOKEN: 8ad34818-c3af-4c56-85e6-6bfd1f46b6db
 
 {
   "name" : "testing",
