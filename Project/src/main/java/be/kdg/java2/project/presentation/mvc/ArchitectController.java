@@ -4,11 +4,11 @@ import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.presentation.mvc.viewmodels.ArchitectViewModel;
 import be.kdg.java2.project.presentation.mvc.viewmodels.DeletingViewModel;
+import be.kdg.java2.project.security.CreaterOnly;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 
 @Controller
 @RequestMapping("/architects")
@@ -47,6 +45,7 @@ public class ArchitectController {
     }
 
     @PostMapping("/add")
+    @CreaterOnly
     public String processAddArchitect(Model model, @Valid @ModelAttribute("architectDTO") ArchitectViewModel architectViewModel, BindingResult errors) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
@@ -73,6 +72,7 @@ public class ArchitectController {
     }
 
     @PostMapping(params = {"delete"})
+    @CreaterOnly
     public String removeArchitect(@ModelAttribute("deletingDTO") DeletingViewModel deletingViewModel) {
         architectService.delete(deletingViewModel.getID());
         return "redirect:/architects";

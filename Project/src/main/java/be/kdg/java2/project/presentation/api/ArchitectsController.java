@@ -3,11 +3,9 @@ package be.kdg.java2.project.presentation.api;
 import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.presentation.api.dto.architect.ArchitectDTO;
 import be.kdg.java2.project.presentation.api.dto.architect.ArchitectUpdateDTO;
-import be.kdg.java2.project.presentation.api.dto.BuildingTypeDTO;
-import be.kdg.java2.project.presentation.api.dto.building.BuildingDTO;
-import be.kdg.java2.project.presentation.mvc.viewmodels.ArchitectViewModel;
+import be.kdg.java2.project.security.CreaterOnly;
+import be.kdg.java2.project.security.UpdaterOnly;
 import be.kdg.java2.project.services.ArchitectService;
-import org.apache.commons.lang3.arch.Processor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +31,9 @@ public class ArchitectsController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ArchitectDTO>> getAllArchitects(){
+    public ResponseEntity<List<ArchitectDTO>> getAllArchitects() {
         var allArchitects = architectService.findAll();
-        if (allArchitects.isEmpty()){
+        if (allArchitects.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
@@ -51,24 +47,24 @@ public class ArchitectsController {
         if (architect == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class),HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }
 
     //TODO: Requestparam
     @GetMapping("{numbE}/{higherOrLower}")
-    public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@PathVariable(value = "numbE") String numbE, @PathVariable(value = "higherOrLower") String higherOrLower){
+    public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@PathVariable(value = "numbE") String numbE, @PathVariable(value = "higherOrLower") String higherOrLower) {
         int numberOfEmployees = Integer.parseInt(numbE);
         List<Architect> architectsEmp;
 
-        if (higherOrLower.equals("higherThan")){
+        if (higherOrLower.equals("higherThan")) {
             architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numberOfEmployees);
-        } else if (higherOrLower.equals("lessThan")){
+        } else if (higherOrLower.equals("lessThan")) {
             architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsLessThan(numberOfEmployees);
         } else {
             architectsEmp = Collections.emptyList();
         }
 
-        if (architectsEmp.isEmpty()){
+        if (architectsEmp.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
@@ -77,18 +73,19 @@ public class ArchitectsController {
 
     //TODO: Requestparam
     @GetMapping("{nameFirm}/name")
-    public ResponseEntity<ArchitectDTO> getArchitectByName(@PathVariable String nameFirm){
+    public ResponseEntity<ArchitectDTO> getArchitectByName(@PathVariable String nameFirm) {
         var architect = architectService.findArchitectByNameCompany(nameFirm);
-        if (architect == null){
+        if (architect == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<ArchitectDTO> removeArchitectByID(@PathVariable(name = "id") Integer id){
+    @CreaterOnly
+    public ResponseEntity<ArchitectDTO> removeArchitectByID(@PathVariable(name = "id") Integer id) {
         Architect foundArchitect = architectService.findById(id);
-        if (foundArchitect != null){
+        if (foundArchitect != null) {
             architectService.delete(id);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -97,14 +94,15 @@ public class ArchitectsController {
     }
 
     @PutMapping("{architectId}")
-    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "architectId") Integer id, @RequestBody @Valid ArchitectUpdateDTO architectDTO){
-        if (id != architectDTO.getId()){
+    @UpdaterOnly
+    public ResponseEntity<Void> updateArchitect(@PathVariable(name = "architectId") Integer id, @RequestBody @Valid ArchitectUpdateDTO architectDTO) {
+        if (id != architectDTO.getId()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         var architectFound = architectService.findById(id);
 
-        if (architectFound == null){
+        if (architectFound == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -114,7 +112,7 @@ public class ArchitectsController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private List<ArchitectDTO> architectDTOMapping(List<Architect> architects){
+    private List<ArchitectDTO> architectDTOMapping(List<Architect> architects) {
         return architects
                 .stream()
                 .map(architect -> modelMapper.map(architect, ArchitectDTO.class))

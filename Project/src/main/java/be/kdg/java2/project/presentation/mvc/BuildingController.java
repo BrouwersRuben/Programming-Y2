@@ -4,9 +4,9 @@ import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
-import be.kdg.java2.project.exceptions.LocationNotFoundException;
 import be.kdg.java2.project.presentation.mvc.viewmodels.BuildingViewModel;
 import be.kdg.java2.project.presentation.mvc.viewmodels.DeletingViewModel;
+import be.kdg.java2.project.security.CreaterOnly;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.slf4j.Logger;
@@ -15,13 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/buildings")
@@ -61,8 +58,9 @@ public class BuildingController {
     }
 
     @PostMapping("/add")
+    @CreaterOnly
     public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingViewModel buildingViewModel, BindingResult errors) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             model.addAttribute("buildingTypes", BuildingType.values());
             model.addAttribute("architects", architectService.findAll());
@@ -86,7 +84,8 @@ public class BuildingController {
     }
 
     @PostMapping(params = {"delete"})
-    public String removeBuilding(@ModelAttribute("deletingDTO") DeletingViewModel deletingViewModel){
+    @CreaterOnly
+    public String removeBuilding(@ModelAttribute("deletingDTO") DeletingViewModel deletingViewModel) {
         buildingService.delete(deletingViewModel.getID());
         return "redirect:/buildings";
     }

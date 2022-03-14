@@ -5,6 +5,8 @@ import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.presentation.api.dto.building.BuildingAddDTO;
 import be.kdg.java2.project.presentation.api.dto.building.BuildingDTO;
+import be.kdg.java2.project.security.CreaterOnly;
+import be.kdg.java2.project.security.CustomUserDetailService;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.modelmapper.ModelMapper;
@@ -12,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,22 +45,22 @@ public class BuildingsController {
         if (building == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(modelMapper.map(building, BuildingDTO.class),HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(building, BuildingDTO.class), HttpStatus.OK);
     }
 
     //TODO: requestparam cause not REST principle for getting one record
     @GetMapping("{location}/location")
-    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@PathVariable(value = "location", required = false) String location){
-        if (location == null){
+    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@PathVariable(value = "location", required = false) String location) {
+        if (location == null) {
             var allBuildings = buildingService.findAll();
-            if (allBuildings.isEmpty()){
+            if (allBuildings.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(buildingDTOMapping(allBuildings), HttpStatus.OK);
             }
         } else {
             var buildingsByLocation = buildingService.findByLocation(location);
-            if (buildingsByLocation.isEmpty()){
+            if (buildingsByLocation.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(buildingDTOMapping(buildingsByLocation), HttpStatus.OK);
@@ -66,9 +69,10 @@ public class BuildingsController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<BuildingDTO> removeBuildingByID(@PathVariable(name = "id") Integer id){
+    @CreaterOnly
+    public ResponseEntity<BuildingDTO> removeBuildingByID(@PathVariable(name = "id") Integer id, @AuthenticationPrincipal CustomUserDetailService userDetails) {
         Building foundBuilding = buildingService.findById(id);
-        if (foundBuilding != null){
+        if (foundBuilding != null) {
             buildingService.delete(id);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,8 +81,9 @@ public class BuildingsController {
     }
 
     @PostMapping()
-    public ResponseEntity<BuildingDTO> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors){
-        if (errors.hasErrors()){
+    @CreaterOnly
+    public ResponseEntity<BuildingDTO> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors) {
+        if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             List<Architect> architects = new ArrayList<>();
@@ -91,10 +96,7 @@ public class BuildingsController {
         }
     }
 
-    private List<BuildingDTO> buildingDTOMapping(List<Building> buildings){
-        return buildings
-                .stream()
-                .map(building -> modelMapper.map(building, BuildingDTO.class))
-                .collect(Collectors.toList());
+    private List<BuildingDTO> buildingDTOMapping(List<Building> buildings) {
+        return buildings.stream().map(building -> modelMapper.map(building, BuildingDTO.class)).collect(Collectors.toList());
     }
 }
