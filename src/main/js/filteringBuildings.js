@@ -8,11 +8,17 @@ locationFilter.addEventListener("click", locationFilterFunction);
 function locationFilterFunction(){
     const location = locationInput.value;
 
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
     if (location === "" ) {
         getAllBuildings();
     } else {
         fetch(`/api/buildings?location=${location}`, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN" : cookie[1]
+            }
         })
             .then(response => {
                 if (response.status === 200) {
@@ -47,10 +53,14 @@ function processData(dataArray){
 }
 
 function getAllBuildings(){
+
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
     fetch(`/api/buildings/`, {
         method: "GET",
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "X-XSRF-TOKEN" : cookie[1]
         },
     })
         .then(response => {

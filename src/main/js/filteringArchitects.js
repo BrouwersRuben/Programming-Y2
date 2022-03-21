@@ -13,6 +13,8 @@ numberFilter.addEventListener("click", numberFilterFunction);
 function nameFilterFunction() {
     const name = nameInput.value;
 
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
     if (!validator.isByteLength(name, {min: 0, max: 30})){
         alert("You entered a name longer than 30 characters")
     } else {
@@ -22,7 +24,8 @@ function nameFilterFunction() {
             fetch(`/api/architects?name=${name}`, {
                 method: "GET",
                 headers : {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    "X-XSRF-TOKEN" : cookie[1]
                 },
             })
                 .then(response => {
@@ -51,6 +54,8 @@ nameFilter.addEventListener("click", nameFilterFunction);
 function numberFilterFunction(){
     const number = numberInput.value;
 
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
     if(!validator.isNumeric(number)) {
         alert("You did not enter a number");
     } else {
@@ -60,7 +65,8 @@ function numberFilterFunction(){
             fetch(`/api/architects?numbE=${number}`, {
                 method: "GET",
                 headers : {
-                    "Content-Type" : "application/json"
+                    "Content-Type" : "application/json",
+                    "X-XSRF-TOKEN" : cookie[1]
                 },
             })
                 .then(response => {
@@ -97,10 +103,14 @@ function processData(dataArray){
 }
 
 function getAllArchitects(){
+    const cookie = document.cookie.split('; ').map(entry => entry.split('=')).find(entry => entry[0]==="XSRF-TOKEN")
+
+
     fetch(`/api/architects/`, {
         method: "GET",
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "X-XSRF-TOKEN" : cookie[1]
         }
     })
         .then(response => {
