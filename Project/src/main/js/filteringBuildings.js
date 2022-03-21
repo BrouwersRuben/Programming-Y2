@@ -11,7 +11,7 @@ function locationFilterFunction(){
     if (location === "" ) {
         getAllBuildings();
     } else {
-        fetch(`/api/buildings/${location}/location`, {
+        fetch(`/api/buildings?location=${location}`, {
             method: "GET"
         })
             .then(response => {
@@ -47,7 +47,7 @@ function processData(dataArray){
 }
 
 function getAllBuildings(){
-    fetch(`/api/buildings`, {
+    fetch(`/api/buildings/`, {
         method: "GET",
         headers : {
             "Content-Type" : "application/json"
