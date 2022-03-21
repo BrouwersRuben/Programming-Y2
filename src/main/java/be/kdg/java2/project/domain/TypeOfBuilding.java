@@ -10,7 +10,7 @@ public class TypeOfBuilding extends EntityClass {
 
     // Attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
 
     @Column(name = "TYPE_CODE", nullable = false, unique = true, length = 4)
