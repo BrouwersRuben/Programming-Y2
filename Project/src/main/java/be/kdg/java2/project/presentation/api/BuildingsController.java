@@ -40,7 +40,7 @@ public class BuildingsController {
 
     //TODO: use in JS
     @GetMapping("{buildingId}")
-    public ResponseEntity<BuildingDTO> retrieveArchitect(@PathVariable int buildingId) {
+    public ResponseEntity<BuildingDTO> getBuildingById(@PathVariable int buildingId) {
         var building = buildingService.findById(buildingId);
         if (building == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ public class BuildingsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BuildingDTO>> getBuildingsByLoc(@RequestParam(value = "location", required = false) String location) {
+    public ResponseEntity<List<BuildingDTO>> getFilteredBuildings(@RequestParam(value = "location", required = false) String location) {
         if (location == null) {
             var allBuildings = buildingService.findAll();
             if (allBuildings.isEmpty()) {
