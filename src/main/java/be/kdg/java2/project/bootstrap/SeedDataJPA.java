@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 @Configuration
 @Transactional
+@Profile("!test")
 public class SeedDataJPA implements CommandLineRunner {
     private final BuildingRepository buildingRepository;
     private final ArchitectRepository architectRepository;
@@ -40,7 +42,7 @@ public class SeedDataJPA implements CommandLineRunner {
 
         // Architects
         Architect zahaHadid = new Architect("Zaha Hadid Architects", LocalDate.of(1980, 1, 1), 708);
-        Architect utzon = new Architect("Utzon Associates Architects", LocalDate.of(1982, 1, 1), 69);
+        Architect utzon = new Architect("Zaha Hadid Architects", LocalDate.of(1982, 1, 1), 69);
         Architect grimmParker = new Architect("Grimm and Parker Architects", LocalDate.of(1972, 1, 1), 70);
         Architect diamondSchmitt = new Architect("Diamond Schmitt Architects", LocalDate.of(1975, 1, 1), 25);
 
