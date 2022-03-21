@@ -1,3 +1,8 @@
+node_modules/
+bundle*.*
+*.woff
+*.woff2
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -37,3 +42,7 @@ out/
 
 ### DB ###
 dbData/
+*.db
+*.log
+
+HELP.md
