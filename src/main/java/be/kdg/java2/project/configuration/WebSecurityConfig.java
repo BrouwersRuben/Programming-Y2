@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                     .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**")
-                    .permitAll()
+                    .hasAnyAuthority()
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
                 .antMatchers("/h2-console/**")
