@@ -13,15 +13,13 @@ numberFilter.addEventListener("click", numberFilterFunction);
 function nameFilterFunction() {
     const name = nameInput.value;
 
-    console.log(name)
-
     if (!validator.isByteLength(name, {min: 0, max: 30})){
         alert("You entered a name longer than 30 characters")
     } else {
         if (name === ""){
             getAllArchitects();
         } else {
-            fetch(`/api/architects/${name}/name`, {
+            fetch(`/api/architects?name=${name}`, {
                 method: "GET",
                 headers : {
                     "Content-Type" : "application/json"
@@ -39,14 +37,7 @@ function nameFilterFunction() {
                     }
                 })
                 .then(architect => {
-                    tableBody.innerHTML="";
-                    tableBody.innerHTML += `
-                <tr>
-                    <td>${architect.nameCompany}</td>
-                    <td>${architect.establishmentDate}</td>
-                    <td><a class="btn btn-outline-dark" href="/architects/architectdetail?architectID=${architect.id}">Architect Detail</a></td>
-                </tr>
-        `;
+                    processData(architect)
                 })
                 .catch(error => {
                     alert(`Received error: ${error.message}`)
@@ -66,7 +57,7 @@ function numberFilterFunction(){
         if (number === ""){
             getAllArchitects();
         } else {
-            fetch(`/api/architects/${number}/higherThan`, {
+            fetch(`/api/architects?numbE=${number}`, {
                 method: "GET",
                 headers : {
                     "Content-Type" : "application/json"
@@ -106,7 +97,7 @@ function processData(dataArray){
 }
 
 function getAllArchitects(){
-    fetch(`/api/architects`, {
+    fetch(`/api/architects/`, {
         method: "GET",
         headers : {
             "Content-Type" : "application/json"

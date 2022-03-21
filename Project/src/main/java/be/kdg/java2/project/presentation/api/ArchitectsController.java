@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,19 +29,8 @@ public class ArchitectsController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<ArchitectDTO>> getAllArchitects() {
-        var allArchitects = architectService.findAll();
-        if (allArchitects.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
-        }
-    }
-
-    //TODO: use in js
     @GetMapping("{architectId}")
-    public ResponseEntity<ArchitectDTO> retrieveBuilding(@PathVariable int architectId) {
+    public ResponseEntity<ArchitectDTO> getArchitectById(@PathVariable int architectId) {
         var architect = architectService.findById(architectId);
         if (architect == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,35 +38,29 @@ public class ArchitectsController {
         return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }
 
-    //TODO: Requestparam
-    @GetMapping("{numbE}/{higherOrLower}")
-    public ResponseEntity<List<ArchitectDTO>> getArchitectsByNumberOfEmployees(@PathVariable(value = "numbE") String numbE, @PathVariable(value = "higherOrLower") String higherOrLower) {
-        int numberOfEmployees = Integer.parseInt(numbE);
-        List<Architect> architectsEmp;
-
-        if (higherOrLower.equals("higherThan")) {
-            architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numberOfEmployees);
-        } else if (higherOrLower.equals("lessThan")) {
-            architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsLessThan(numberOfEmployees);
+    @GetMapping()
+    public ResponseEntity<List<ArchitectDTO>> getFilteredArchitects(@RequestParam(value = "numbE", required = false) String numbE, @RequestParam(value = "name", required = false) String nameFirm) {
+        if (numbE != null ){
+            var architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(Integer.parseInt(numbE));
+            if (architectsEmp.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
+            }
+        } else if (nameFirm != null) {
+            var architect = architectService.findArchitectByNameCompany(nameFirm);
+            if (architect == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(List.of(modelMapper.map(architect, ArchitectDTO.class)), HttpStatus.OK);
         } else {
-            architectsEmp = Collections.emptyList();
+            var allArchitects = architectService.findAll();
+            if (allArchitects.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(architectDTOMapping(allArchitects), HttpStatus.OK);
+            }
         }
-
-        if (architectsEmp.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
-        }
-    }
-
-    //TODO: Requestparam
-    @GetMapping("{nameFirm}/name")
-    public ResponseEntity<ArchitectDTO> getArchitectByName(@PathVariable String nameFirm) {
-        var architect = architectService.findArchitectByNameCompany(nameFirm);
-        if (architect == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
@@ -119,3 +101,17 @@ public class ArchitectsController {
                 .collect(Collectors.toList());
     }
 }
+
+//if (higherOrLower.equals("higherThan")) {
+//    architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsGreaterThan(numbE);
+//    } else if (higherOrLower.equals("lessThan")) {
+//    architectsEmp = architectService.findArchitectsByNumberOfEmployeesIsLessThan(numbE);
+//    } else {
+//    architectsEmp = Collections.emptyList();
+//    }
+//
+//    if (architectsEmp.isEmpty()) {
+//    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//} else {
+//    return new ResponseEntity<>(architectDTOMapping(architectsEmp), HttpStatus.OK);
+//}
