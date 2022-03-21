@@ -4,7 +4,10 @@ import be.kdg.java2.project.domain.User;
 import be.kdg.java2.project.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;

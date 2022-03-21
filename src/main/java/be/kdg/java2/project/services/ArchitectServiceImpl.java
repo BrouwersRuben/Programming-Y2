@@ -4,9 +4,11 @@ import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArchitectServiceImpl implements ArchitectService {
     private final ArchitectRepository architectRepository;
 

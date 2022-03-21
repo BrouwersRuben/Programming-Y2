@@ -5,9 +5,11 @@ import be.kdg.java2.project.repository.BuildingRepository;
 import be.kdg.java2.project.utils.LocationCheckerUtil;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class BuildingServiceImpl implements BuildingService {
     private final BuildingRepository buildingRepository;
 
