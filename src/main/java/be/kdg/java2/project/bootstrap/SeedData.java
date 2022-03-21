@@ -12,19 +12,18 @@ import org.springframework.context.annotation.Profile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Configuration
 @Transactional
 @Profile("!test")
-public class SeedDataJPA implements CommandLineRunner {
+public class SeedData implements CommandLineRunner {
     private final BuildingRepository buildingRepository;
     private final ArchitectRepository architectRepository;
     private final UserRepository userRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(SeedDataJPA.class);
+    private final Logger logger = LoggerFactory.getLogger(SeedData.class);
 
-    public SeedDataJPA(BuildingRepository buildingRepository, ArchitectRepository architectRepository, UserRepository userRepository) {
+    public SeedData(BuildingRepository buildingRepository, ArchitectRepository architectRepository, UserRepository userRepository) {
         this.buildingRepository = buildingRepository;
         this.architectRepository = architectRepository;
         this.userRepository = userRepository;
@@ -42,7 +41,7 @@ public class SeedDataJPA implements CommandLineRunner {
 
         // Architects
         Architect zahaHadid = new Architect("Zaha Hadid Architects", LocalDate.of(1980, 1, 1), 708);
-        Architect utzon = new Architect("Zaha Hadid Architects", LocalDate.of(1982, 1, 1), 69);
+        Architect utzon = new Architect("Utzon Associates Architects", LocalDate.of(1982, 1, 1), 69);
         Architect grimmParker = new Architect("Grimm and Parker Architects", LocalDate.of(1972, 1, 1), 70);
         Architect diamondSchmitt = new Architect("Diamond Schmitt Architects", LocalDate.of(1975, 1, 1), 25);
 
