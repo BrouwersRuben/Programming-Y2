@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruben's Project</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/css/bundle.css" media="all" rel="stylesheet" type="text/css"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/bundle-flatpickr.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:insert="~{fragments/header::header}">header</div>
+
+<div th:insert="~{fragments/navbar::navbar}">navbar</div>
+
+<h3 class="m-4 text-center h4" th:utext="#{addArchitect.h3}">Add an Architect</h3>
+
+<form class="m-4" method="post" th:object="${architectDTO}">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    <div class="mb-3">
+        <label class="form-label" for="name" th:utext="#{addArchitect.l1}">Firm name:</label>
+        <input class="form-control" id="name" name="name" placeholder="Name of the firm" th:field="*{name}" type="text">
+        <div class="m-2 alert alert-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name Error</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="establishmentDate" th:utext="#{addArchitect.l2}">Establishment Date:</label>
+        <div class="group">
+            <label for="establishmentDate">Fill in a date:</label>
+            <input type="text" id="establishmentDate" class="form-control" name="establishmentDate" th:field="*{establishmentDate}">
+        </div>
+        <div class="m-2 alert alert-danger" th:errors="*{establishmentDate}"
+             th:if="${#fields.hasErrors('establishmentDate')}">Date Error
+        </div>
+    </div>
+    <div class="mb-3">
+        <label th:utext="#{addArchitect.l4}">Buildings worked on: </label><br>
+        <div class="form-check" th:each="building : ${buildings}">
+            <input class="form-check-input" name="buildingsIDs" th:field="*{buildingsIDs}" th:value="${building.id}"
+                   type="checkbox">
+            <span th:text="${building.name}">Building name</span>
+        </div>
+        <!--        Could be that they have not worked on any buildings yet, so no bean validation here-->
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="numberOfEmployees" th:utext="#{addArchitect.l3}">Number of employees:</label>
+        <input class="form-control" id="numberOfEmployees" name="numberOfEmployees" placeholder=0
+               th:field="*{numberOfEmployees}" type="number">
+        <div class="m-2 alert alert-danger" th:errors="*{numberOfEmployees}"
+             th:if="${#fields.hasErrors('numberOfEmployees')}">Number of employees error Error
+        </div>
+    </div>
+    <button class="btn btn-dark" th:utext="#{addArchitect.btn}">Submit</button>
+</form>
+
+<div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>
+
+</body>
+</html>

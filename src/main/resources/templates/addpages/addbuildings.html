@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruben's Project</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/css/bundle.css" media="all" rel="stylesheet" type="text/css"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/bundle-addBuilding.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:insert="~{fragments/header::header}">header</div>
+
+<div th:insert="~{fragments/navbar::navbar}">navbar</div>
+
+<h3 class="m-4 text-center h4" th:utext="#{addBuilding.h3}">Add a Building</h3>
+
+<form class="m-4" method="post" th:object="${buildingDTO}">
+    <div class="mb-3">
+        <label class="form-label" for="name" th:utext="#{addBuilding.l1}">Building name:</label>
+        <input class="form-control" id="name" name="name" placeholder="Building name" th:field="*{name}" type="text">
+        <div class="m-2 alert alert-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name Error</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="location" th:utext="#{addBuilding.l2}">Location:</label>
+        <input class="form-control" id="location" name="location" placeholder="Building Location" th:field="*{location}"
+               type="text">
+        <div class="m-2 alert alert-danger" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">Location Error
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="height" th:utext="#{addBuilding.l3}">Height:</label>
+        <input class="form-control" id="height" name="height" placeholder=0 th:field="*{height}" type="number">
+        <div class="m-2 alert alert-danger" th:errors="*{height}" th:if="${#fields.hasErrors('height')}">Height Error
+        </div>
+    </div>
+    <div class="mb-3" id="architectIDs">
+        <label th:utext="#{addBuilding.l4}">Architects that worked in the building: </label><br>
+        <div class="form-check"  th:each="architect : ${architects}">
+            <input class="form-check-input" id="IDs" name="architectsIDs" th:field="*{architectsIDs}" th:value="${architect.id}"
+                   type="checkbox">
+            <span th:text="${architect.nameCompany}">Architect firm</span><br>
+        </div>
+        <div class="m-2 alert alert-danger" th:errors="*{architectsIDs}" th:if="${#fields.hasErrors('architectsIDs')}">ArchitectsIDs Error
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" th:utext="#{addBuilding.l5}"> Type of Building: </label>
+        <input class="form-control" id="type" name="type" placeholder="residential" th:field="*{type}" type="text">
+        <div class="m-2 alert alert-danger" th:errors="*{type}" th:if="${#fields.hasErrors('type')}">ArchitectsIDs Error
+        </div>
+    </div>
+    <!--    <div class="mb-3">-->
+    <!--        <label class="form-label"> Type of Building: </label>-->
+    <!--        <select aria-label="Default select example" th:field="*{type}" class="form-select" name="type">-->
+    <!--            &lt;!&ndash;th:field="*{buildingTypes}"&ndash;&gt;-->
+    <!--            <option selected="selected" value="#">Type:</option>-->
+    <!--            <option th:each="type : ${buildingTypes}" th:text="${type}"-->
+    <!--                    th:value="${type.toString()}" value="residential building"></option>-->
+    <!--        </select>-->
+    <!--        <div class="m-2 alert alert-danger d-flex align-items-center" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">-->
+    <!--            ArchitectsIDs Error-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <button type="button" id="submitButton" class="btn btn-dark" th:utext="#{addBuilding.btn}">Submit</button>
+</form>
+
+<div th:insert="~{fragments/footer::footer}">&copy; 2021 The Static Templates</div>
+
+</body>
+</html>
