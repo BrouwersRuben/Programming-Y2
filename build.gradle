@@ -23,7 +23,7 @@ ext {
     gsonVersion = '2.9.0'
     jacksonVersion = '2.13.2'
     modelMapperVersion = '3.1.0'
-    thymeleafExtraSpringSec5 = '3.1.0.M1'
+    thymeleafExtraSpringSec5 = '3.0.4.RELEASE' //Next version is unstable
     junitVersion = '5.8.2'
 
 }
