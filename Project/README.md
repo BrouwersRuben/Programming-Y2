@@ -71,30 +71,45 @@ A 204 will appear if there are no records of any architect in the database, very
 #### 1 Record
 ##### 200 Ok
 ```http request
-GET http://localhost:6969/api/architects/Zaha Hadid Architects HTTP/1.1
+GET http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 ```
 ```http request
-HTTP/1.1 200 
+HTTP/1.1 200
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 21 Feb 2022 20:50:14 GMT
+Date: Mon, 21 Mar 2022 08:11:37 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 {
   "id": 1,
   "nameCompany": "Zaha Hadid Architects",
-  "establishmentDate": "1980...
+  "establishmentDate": "1980-01-01",
+  "numberOfEmployees": 708,
+  "buildings": [
+    {
+      "id": 1,
+      "name": "Port Autho...
 ```
 ##### 204 Not Found
 ```http request
-GET http://localhost:6969/api/architects/Zaha Hadid HTTP/1.1
+GET http://localhost:6969/api/architects/420 HTTP/1.1
 Accept: application/json
 ```
 ```http request
 HTTP/1.1 204
-Date: Mon, 21 Feb 2022 20:51:05 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Date: Mon, 21 Mar 2022 08:12:07 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
@@ -103,37 +118,45 @@ Connection: keep-alive
 #### All ... of ...
 ##### 200 Ok
 ```http request
-GET http://localhost:6969/api/architects/80/higherThan HTTP/1.1
+GET http://localhost:6969/api/buildings?location=Denmark HTTP/1.1
 Accept: application/json
 ```
 ```http request
 HTTP/1.1 200
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Mon, 21 Feb 2022 20:51:54 GMT
+Date: Mon, 21 Mar 2022 08:12:56 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 [
   {
-    "id": 1,
-    "nameCompany": "Zaha Hadid Architects",
-    "establishmentDate": "1980-0...
+    "id": 4,
+    "name": "The Uno-X Petrol Station",
+    "location": "Denma
 ```
 ##### 204 No Content
 ```http request
-GET http://localhost:6969/api/buildings/Stabroek HTTP/1.1
+GET http://localhost:6969/api/buildings?location=Hoevenen HTTP/1.1
 Accept: application/json
 ```
 ```http request
 HTTP/1.1 204
-Date: Mon, 21 Feb 2022 20:52:41 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Date: Mon, 21 Mar 2022 08:13:35 GMT
 Keep-Alive: timeout=60
 Connection: keep-alive
 
 <Response body is empty>
-```
-##### 404 Not Found
 ```http request
 
 ```

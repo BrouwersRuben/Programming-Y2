@@ -33,7 +33,7 @@ public class ArchitectsController {
     public ResponseEntity<ArchitectDTO> getArchitectById(@PathVariable int architectId) {
         var architect = architectService.findById(architectId);
         if (architect == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(modelMapper.map(architect, ArchitectDTO.class), HttpStatus.OK);
     }

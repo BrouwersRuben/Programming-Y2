@@ -8,10 +8,6 @@ Accept: application/json
 
 # 1 Record
 ### 200 Ok
-GET http://localhost:6969/api/architects/Zaha Hadid Architects/name HTTP/1.1
-Accept: application/json
-
-### 200 Ok
 GET http://localhost:6969/api/architects/1 HTTP/1.1
 Accept: application/json
 
@@ -20,21 +16,21 @@ GET http://localhost:6969/api/buildings/1 HTTP/1.1
 Accept: application/json
 
 ### 204 Not Found
-GET http://localhost:6969/api/architects/Zaha Hadid/name HTTP/1.1
+GET http://localhost:6969/api/architects/420 HTTP/1.1
 Accept: application/json
 
 # All ... of ...
 ### 200 Ok
-GET http://localhost:6969/api/architects/80/higherThan HTTP/1.1
+GET http://localhost:6969/api/architects?numbE=80 HTTP/1.1
 Accept: application/json
 
 
 ### 204 No Content
-GET http://localhost:6969/api/buildings/Denmark/location HTTP/1.1
+GET http://localhost:6969/api/buildings?location=Hoevenen HTTP/1.1
 Accept: application/json
 
-### 404 Not Found HELP
-
+### 404 Not Found
+#Help
 
 # DELETE
 ### 200 Ok
