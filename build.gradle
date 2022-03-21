@@ -22,7 +22,7 @@ ext {
     webjarsLocatorVersion = '0.45'
     gsonVersion = '2.9.0'
     jacksonVersion = '2.13.2'
-    modelMapperVersion = '3.O.O'
+    modelMapperVersion = '3.1.0'
     thymeleafExtraSpringSec5 = '3.1.0.M1'
     junitVersion = '5.8.2'
 
@@ -61,6 +61,7 @@ dependencies {
     //Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 
 test {
