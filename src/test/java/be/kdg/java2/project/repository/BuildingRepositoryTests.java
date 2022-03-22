@@ -9,15 +9,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 class BuildingRepositoryTests {
 
     @Autowired
@@ -47,14 +50,15 @@ class BuildingRepositoryTests {
     @Test
     public void removingABuildingShouldNotRemoveItsArchitect() {
         // Arrange
-        var building = buildingRepository.findById(2).orElse(null); //TODO: Why cant this be 1
+        Building building = buildingRepository.getById(1);
+        assertNotNull(building);
 
         // Act
         buildingRepository.delete(building);
 
         // Assert
-        assertTrue(architectRepository.findById(building.getArchitects().stream().findFirst().get().getId()).isPresent());
         assertTrue(buildingRepository.findById(building.getId()).isEmpty());
+        assertTrue(architectRepository.findById(1).isPresent());
 
     }
 }
