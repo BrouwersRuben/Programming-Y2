@@ -30,6 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BuildingControllerTest {
 
     // Added permitAll for everything (request & matchers), so these test pass.
+    // Removed annotation "CreatorOnly" from PostMapping of architect
+    // Disabled CSRF (also commented out tag on html)
 
     @Autowired
     private MockMvc mockMvc;
