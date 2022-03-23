@@ -59,6 +59,5 @@ class BuildingRepositoryTests {
         // Assert
         assertTrue(buildingRepository.findById(building.getId()).isEmpty());
         assertTrue(architectRepository.findById(1).isPresent());
-
     }
 }
