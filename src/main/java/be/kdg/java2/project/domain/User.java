@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "APPLICATION_USERS")
 public class User extends EntityClass{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "USER_USERNAME", nullable = false, unique = true)

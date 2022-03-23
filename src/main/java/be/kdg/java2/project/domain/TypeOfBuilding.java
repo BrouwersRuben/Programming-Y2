@@ -10,7 +10,7 @@ public class TypeOfBuilding extends EntityClass {
 
     // Attributes
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "TYPE_CODE", nullable = false, unique = true, length = 4)
@@ -51,20 +51,12 @@ public class TypeOfBuilding extends EntityClass {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public BuildingType getType() {
         return type;
     }
 
     public boolean isRequiresSpecialPermission() {
         return requiresSpecialPermission;
-    }
-
-    public void setRequiresSpecialPermission(boolean requiresSpecialPermission) {
-        this.requiresSpecialPermission = requiresSpecialPermission;
     }
 
     public List<Building> getBuilding() {

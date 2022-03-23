@@ -13,7 +13,7 @@ public class Architect extends EntityClass {
 
     // Attributes
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "ARCHITECT_NAME", nullable = false, unique = true, length = 30)
