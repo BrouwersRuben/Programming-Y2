@@ -30,14 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .antMatchers("/h2-console/**")
                     .authenticated()
-//                    .permitAll() //This is only active when testing
+//                    .permitAll() // This is only active when testing
                 .anyRequest()
                     .authenticated()
-//                    .permitAll() //This is only active when testing
+//                    .permitAll() // This is only active when testing
                 .and()
                     .headers().frameOptions().disable()
                 .and()
                 .csrf()
+//                    .disable() // This is only active when testing
                     .csrfTokenRepository(
                             CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
