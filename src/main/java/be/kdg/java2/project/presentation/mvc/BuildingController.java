@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,8 +78,12 @@ public class BuildingController {
     }
 
     @GetMapping("/buildingdetail")
-    public String showBuildingDetail(@RequestParam("buildingID") Integer buildingID, Model model) {
+    public String showBuildingDetail(@RequestParam("buildingID") Integer buildingID, Model model, HttpServletResponse response) {
         Building building = buildingService.findById(buildingID);
+        if (building == null){
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            return "/mainpages/buildings";
+        }
         model.addAttribute("building", building);
         return "/detailpages/buildingdetail";
     }

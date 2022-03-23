@@ -9,11 +9,15 @@ import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,27 +50,31 @@ public class ArchitectController {
 
     @PostMapping("/add")
     @CreaterOnly
-    public String processAddArchitect(Model model, @Valid @ModelAttribute("architectDTO") ArchitectViewModel architectViewModel, BindingResult errors) {
+    public String processAddArchitect(Model model, @Valid @ModelAttribute("architectDTO") ArchitectViewModel architectViewModel, BindingResult errors, HttpServletResponse response) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             model.addAttribute("buildings", buildingService.findAll());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "addpages/addarchitects";
         } else {
             Architect architect = new Architect(architectViewModel.getName(), architectViewModel.getEstablishmentDate(), architectViewModel.getNumberOfEmployees());
-
             List<Building> buildings = new ArrayList<>();
             architectViewModel.getBuildingsIDs().forEach((id) -> buildings.add(buildingService.findById(id)));
             architect.addBuildings(buildings);
             buildings.forEach(building -> building.addArchitect(architect));
-
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             architectService.addArchitect(architect);
             return "redirect:/architects";
         }
     }
 
     @GetMapping("/architectdetail")
-    public String showArchitectDetail(@RequestParam("architectID") Integer architectID, Model model) {
+    public String showArchitectDetail(@RequestParam("architectID") Integer architectID, Model model, HttpServletResponse response) {
         Architect architect = architectService.findById(architectID);
+        if (architect == null){
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            return "/mainpages/buildings";
+        }
         model.addAttribute("architect", architect);
         return "detailpages/architectdetail";
     }
