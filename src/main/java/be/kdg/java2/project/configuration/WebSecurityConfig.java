@@ -26,15 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/", "/buildings", "/architects", "/architects/architectdetail*", "/buildings/buildingdetail*")
                 .antMatchers("/")
                     .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/**") //Could also just be left away, and then it would be picked up by "anyRequests().authenticated()"
-                    .hasAnyAuthority("ROLE_USER")
-//                    .authenticated()
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
                 .antMatchers("/h2-console/**")
                     .authenticated()
+//                    .permitAll() //This is only active when testing
                 .anyRequest()
                     .authenticated()
+//                    .permitAll() //This is only active when testing
                 .and()
                     .headers().frameOptions().disable()
                 .and()
