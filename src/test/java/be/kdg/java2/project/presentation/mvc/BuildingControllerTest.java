@@ -78,7 +78,6 @@ class BuildingControllerTest {
 
     @Test
     void showAllBuildingsShouldUseCorrectViewAndReturnCorrectNumberOfBook() throws Exception{
-        // What else can I test here?
         // Act & Assert
         var actualBuildings = buildingRepository.findAll();
         mockMvc.perform(
