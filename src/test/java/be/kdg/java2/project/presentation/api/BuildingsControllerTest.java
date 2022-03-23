@@ -22,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class BuildingsControllerTest {
 
+    // Commented out @CreaterOnly on postmapping REST API
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -33,8 +35,6 @@ class BuildingsControllerTest {
         Architect architect1 = new Architect("architect1", LocalDate.of(2000,1,1), 1);
         architectRepository.save(architect1);
     }
-
-    // Commented out @CreaterOnly on postmapping REST API
 
     @Test
     void createBuildingShouldPassWhenAllFieldsAreEntered() throws Exception {
