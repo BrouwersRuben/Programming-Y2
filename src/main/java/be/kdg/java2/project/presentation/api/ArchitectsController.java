@@ -50,7 +50,7 @@ public class ArchitectsController {
         } else if (nameFirm != null) {
             var architect = architectService.findArchitectByNameCompany(nameFirm);
             if (architect == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(List.of(modelMapper.map(architect, ArchitectDTO.class)), HttpStatus.OK);
         } else {
