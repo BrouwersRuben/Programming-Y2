@@ -21,6 +21,7 @@ I continued this project on the project that I made in programming 2.1.
 - Enter the command ```./gradlew bootRun``` in the terminal within the project directory. (npm should build, and spring boot should start)
   - [Landing page](http://localhost:6969)
 - Testing you can do with the command ```./gradlew test```
+  - Some of the tests fail when you run it through commandline, but succeed when you run it through intelliJ.
 
 ### Profiles
 - Test:
