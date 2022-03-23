@@ -49,7 +49,7 @@ public class ArchitectController {
     }
 
     @PostMapping("/add")
-    @CreaterOnly
+//    @CreaterOnly
     public String processAddArchitect(Model model, @Valid @ModelAttribute("architectDTO") ArchitectViewModel architectViewModel, BindingResult errors, HttpServletResponse response) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));

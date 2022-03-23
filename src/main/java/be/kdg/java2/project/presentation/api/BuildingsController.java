@@ -80,7 +80,7 @@ public class BuildingsController {
     }
 
     @PostMapping()
-    @CreaterOnly
+//    @CreaterOnly
     public ResponseEntity<BuildingDTO> createBuilding(@RequestBody @Valid BuildingAddDTO buildingDTO, BindingResult errors) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
