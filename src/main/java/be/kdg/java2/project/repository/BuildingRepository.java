@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BuildingRepository extends JpaRepository<Building, Integer> {
     List<Building> findBuildingByLocation(String location);
+
+    Building findByName(String name);
 }

@@ -6,6 +6,7 @@ import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import be.kdg.java2.project.repository.BuildingRepository;
+import be.kdg.java2.project.repository.TypeOfBuildingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 class BuildingControllerTest {
 
     // Added permitAll for everything (request & matchers), so these test pass.
@@ -42,12 +46,25 @@ class BuildingControllerTest {
     @Autowired
     private ArchitectRepository architectRepository;
 
+    @Autowired
+    private TypeOfBuildingRepository typeOfBuildingRepository;
+
     @BeforeEach
     void setUp() {
-        Building building1 = new Building("building1", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
-        Building building2 = new Building("building2", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
-        Building building3 = new Building("building3", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
-        Building building4 = new Building("building4", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
+        TypeOfBuilding residential = new TypeOfBuilding(BuildingType.RESIDENTIAL);
+        TypeOfBuilding educational = new TypeOfBuilding(BuildingType.EDUCATIONAL);
+        TypeOfBuilding commercial = new TypeOfBuilding(BuildingType.COMMERCIAL);
+        TypeOfBuilding institutional = new TypeOfBuilding(BuildingType.INSTITUTIONAL);
+
+        typeOfBuildingRepository.save(residential);
+        typeOfBuildingRepository.save(educational);
+        typeOfBuildingRepository.save(commercial);
+        typeOfBuildingRepository.save(institutional);
+
+        Building building1 = new Building("building1", "Antwerp", 123, residential);
+        Building building2 = new Building("building2", "Antwerp", 123, educational);
+        Building building3 = new Building("building3", "Antwerp", 123, commercial);
+        Building building4 = new Building("building4", "Antwerp", 123, institutional);
 
         Architect architect1 = new Architect("architect1", LocalDate.of(2000,1,1), 1);
         Architect architect2 = new Architect("architect2", LocalDate.of(2000,1,1), 12);
@@ -90,7 +107,7 @@ class BuildingControllerTest {
     @Test
     void showBuildingInDetailShouldPassUsingTheCorrectId() throws Exception{
         // Arrange
-        var id = 1;
+        var id = buildingRepository.findByName("building1").getId();
 
         // Act & Assert
         mockMvc.perform(
