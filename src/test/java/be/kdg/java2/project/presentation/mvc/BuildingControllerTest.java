@@ -43,7 +43,6 @@ class BuildingControllerTest {
     private ArchitectRepository architectRepository;
 
     @BeforeEach
-    @Transactional
     void setUp() {
         Building building1 = new Building("building1", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
         Building building2 = new Building("building2", "Antwerp", 123, new TypeOfBuilding(BuildingType.EDUCATIONAL));
