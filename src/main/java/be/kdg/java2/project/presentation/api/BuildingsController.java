@@ -9,6 +9,7 @@ import be.kdg.java2.project.security.CreaterOnly;
 import be.kdg.java2.project.security.CustomUserDetailService;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
+import be.kdg.java2.project.services.TypeOfBuildingService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,13 @@ public class BuildingsController {
 
     private final BuildingService buildingService;
     private final ArchitectService architectService;
+    private final TypeOfBuildingService typeOfBuildingService;
     private final ModelMapper modelMapper;
 
-    public BuildingsController(BuildingService buildingService, ArchitectService architectService, ModelMapper modelMapper) {
+    public BuildingsController(BuildingService buildingService, ArchitectService architectService, TypeOfBuildingService typeOfBuildingService, ModelMapper modelMapper) {
         this.buildingService = buildingService;
         this.architectService = architectService;
+        this.typeOfBuildingService = typeOfBuildingService;
         this.modelMapper = modelMapper;
     }
 
@@ -86,8 +89,9 @@ public class BuildingsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             List<Architect> architects = new ArrayList<>();
+            TypeOfBuilding foundType = typeOfBuildingService.findByType(buildingDTO.getType());
             buildingDTO.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
-            Building building = new Building(buildingDTO.getName(), buildingDTO.getLocation(), buildingDTO.getHeight(), new TypeOfBuilding(buildingDTO.getType()));
+            Building building = new Building(buildingDTO.getName(), buildingDTO.getLocation(), buildingDTO.getHeight(), foundType);
             building.addArchitects(architects);
             architects.forEach(architect -> architect.addBuilding(building));
             buildingService.addBuilding(building);

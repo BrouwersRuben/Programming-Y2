@@ -9,6 +9,7 @@ import be.kdg.java2.project.presentation.mvc.viewmodels.DeletingViewModel;
 import be.kdg.java2.project.security.CreaterOnly;
 import be.kdg.java2.project.services.ArchitectService;
 import be.kdg.java2.project.services.BuildingService;
+import be.kdg.java2.project.services.TypeOfBuildingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,10 +28,12 @@ public class BuildingController {
     private final Logger logger = LoggerFactory.getLogger(BuildingController.class);
     private final BuildingService buildingService;
     private final ArchitectService architectService;
+    private final TypeOfBuildingService typeOfBuildingService;
 
-    public BuildingController(BuildingService buildingService, ArchitectService architectService) {
+    public BuildingController(BuildingService buildingService, ArchitectService architectService, TypeOfBuildingService typeOfBuildingService) {
         this.buildingService = buildingService;
         this.architectService = architectService;
+        this.typeOfBuildingService = typeOfBuildingService;
     }
 
     @GetMapping
@@ -60,19 +63,22 @@ public class BuildingController {
 
     @PostMapping("/add")
 //    @CreaterOnly
-    public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingViewModel buildingViewModel, BindingResult errors) {
+    public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingViewModel buildingViewModel, BindingResult errors, HttpServletResponse response) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             model.addAttribute("buildingTypes", BuildingType.values());
             model.addAttribute("architects", architectService.findAll());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "/addpages/addbuildings";
         } else {
             List<Architect> architects = new ArrayList<>();
+            TypeOfBuilding foundType = typeOfBuildingService.findByType(buildingViewModel.getType());
             buildingViewModel.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
-            Building building = new Building(buildingViewModel.getName(), buildingViewModel.getLocation(), buildingViewModel.getHeight(), new TypeOfBuilding(buildingViewModel.getType()));
+            Building building = new Building(buildingViewModel.getName(), buildingViewModel.getLocation(), buildingViewModel.getHeight(), foundType);
             building.addArchitects(architects);
             architects.forEach(architect -> architect.addBuilding(building));
             buildingService.addBuilding(building);
+            response.setStatus(HttpServletResponse.SC_CREATED);
             return "redirect:/buildings";
         }
     }
