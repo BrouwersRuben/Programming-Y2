@@ -29,19 +29,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
                 .antMatchers("/h2-console/**")
-//                    .authenticated()
-                    .permitAll() // This is only active when testing
+                    .authenticated()
+//                    .permitAll() // This is only active when testing
                 .anyRequest()
-//                    .authenticated()
-                    .permitAll() // This is only active when testing
+                    .authenticated()
+//                    .permitAll() // This is only active when testing
                 .and()
                     .headers().frameOptions().disable()
                 .and()
                 .csrf()
-                    .disable() // This is only active when testing
-//                    .csrfTokenRepository(
-//                            CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                .and()
+//                    .disable() // This is only active when testing
+                    .csrfTokenRepository(
+                            CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
             .formLogin()
                 .loginPage("/login")
                     .permitAll()

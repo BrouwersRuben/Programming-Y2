@@ -62,7 +62,7 @@ public class BuildingController {
     }
 
     @PostMapping("/add")
-//    @CreaterOnly
+    @CreaterOnly
     public String processAddBuilding(Model model, @Valid @ModelAttribute("buildingDTO") BuildingViewModel buildingViewModel, BindingResult errors, HttpServletResponse response) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
