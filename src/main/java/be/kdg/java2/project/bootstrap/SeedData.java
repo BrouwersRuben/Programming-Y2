@@ -3,6 +3,7 @@ package be.kdg.java2.project.bootstrap;
 import be.kdg.java2.project.domain.*;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import be.kdg.java2.project.repository.BuildingRepository;
+import be.kdg.java2.project.repository.TypeOfBuildingRepository;
 import be.kdg.java2.project.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,15 @@ import java.time.LocalDate;
 @Profile("!test")
 public class SeedData implements CommandLineRunner {
     private final BuildingRepository buildingRepository;
+    private final TypeOfBuildingRepository typeOfBuildingRepository;
     private final ArchitectRepository architectRepository;
     private final UserRepository userRepository;
 
     private final Logger logger = LoggerFactory.getLogger(SeedData.class);
 
-    public SeedData(BuildingRepository buildingRepository, ArchitectRepository architectRepository, UserRepository userRepository) {
+    public SeedData(BuildingRepository buildingRepository, TypeOfBuildingRepository typeOfBuildingRepository, ArchitectRepository architectRepository, UserRepository userRepository) {
         this.buildingRepository = buildingRepository;
+        this.typeOfBuildingRepository = typeOfBuildingRepository;
         this.architectRepository = architectRepository;
         this.userRepository = userRepository;
     }
@@ -33,11 +36,26 @@ public class SeedData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         logger.debug("Seeding the repositories (H2)");
 
+        // Types of buildings
+        TypeOfBuilding residential = new TypeOfBuilding(BuildingType.RESIDENTIAL);
+        TypeOfBuilding educational = new TypeOfBuilding(BuildingType.EDUCATIONAL);
+        TypeOfBuilding commercial = new TypeOfBuilding(BuildingType.COMMERCIAL);
+        TypeOfBuilding institutional = new TypeOfBuilding(BuildingType.INSTITUTIONAL);
+        TypeOfBuilding business = new TypeOfBuilding(BuildingType.BUSINESS);
+        TypeOfBuilding industrial = new TypeOfBuilding(BuildingType.INDUSTRIAL);
+        TypeOfBuilding storage = new TypeOfBuilding(BuildingType.STORAGE);
+        TypeOfBuilding detached = new TypeOfBuilding(BuildingType.DETACHED);
+        TypeOfBuilding highrise = new TypeOfBuilding(BuildingType.HIGHRISE);
+        TypeOfBuilding slums = new TypeOfBuilding(BuildingType.SLUMS);
+        TypeOfBuilding unsafe = new TypeOfBuilding(BuildingType.UNSAFE);
+        TypeOfBuilding special = new TypeOfBuilding(BuildingType.SPECIAL);
+        TypeOfBuilding parking = new TypeOfBuilding(BuildingType.PARKING);
+
         // Buildings
-        Building portAuthority = new Building("Port Authority", "Antwerp, Belgium", 46, new TypeOfBuilding(BuildingType.BUSINESS));
-        Building vitraFireStation = new Building("Vitra Fire Station", "Weil-am-Reinn, Germany", 12, new TypeOfBuilding(BuildingType.INSTITUTIONAL));
-        Building sydneyOperaHouse = new Building("Sydney Opera House", "Sydney, Australia", 65, new TypeOfBuilding(BuildingType.SPECIAL));
-        Building unoXPetrolStation = new Building("The Uno-X Petrol Station", "Denmark", 10, new TypeOfBuilding(BuildingType.COMMERCIAL));
+        Building portAuthority = new Building("Port Authority", "Antwerp, Belgium", 46, business);
+        Building vitraFireStation = new Building("Vitra Fire Station", "Weil-am-Reinn, Germany", 12, institutional);
+        Building sydneyOperaHouse = new Building("Sydney Opera House", "Sydney, Australia", 65, special);
+        Building unoXPetrolStation = new Building("The Uno-X Petrol Station", "Denmark", 10, commercial);
 
         // Architects
         Architect zahaHadid = new Architect("Zaha Hadid Architects", LocalDate.of(1980, 1, 1), 708);
@@ -77,6 +95,20 @@ public class SeedData implements CommandLineRunner {
         diamondSchmitt.addBuilding(vitraFireStation);
         diamondSchmitt.addBuilding(unoXPetrolStation);
         diamondSchmitt.addUser(user);
+
+        typeOfBuildingRepository.save(residential);
+        typeOfBuildingRepository.save(educational);
+        typeOfBuildingRepository.save(commercial);
+        typeOfBuildingRepository.save(institutional);
+        typeOfBuildingRepository.save(business);
+        typeOfBuildingRepository.save(industrial);
+        typeOfBuildingRepository.save(storage);
+        typeOfBuildingRepository.save(detached);
+        typeOfBuildingRepository.save(highrise);
+        typeOfBuildingRepository.save(slums);
+        typeOfBuildingRepository.save(unsafe);
+        typeOfBuildingRepository.save(special);
+        typeOfBuildingRepository.save(parking);
 
         buildingRepository.save(portAuthority);
         buildingRepository.save(vitraFireStation);

@@ -50,6 +50,8 @@ function addBuilding(){
                 heightValue.value="";
                 typeValue.value="";
                 window.location.href = '/buildings';
+            } else if (response.status === 400){
+                alert("Status code 400, bad request, check your input fields.")
             } else {
                 //TODO: Error handling
                 alert(`Received status code: ${response.status}`);
