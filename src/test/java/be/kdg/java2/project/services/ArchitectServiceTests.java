@@ -25,7 +25,7 @@ class ArchitectServiceTests {
     private ArchitectRepository architectRepository;
 
     @Test
-    public void deleteQuestionShouldPassIfArchitectExists() {
+    public void deleteArchitectShouldPassIfArchitectExists() {
         // Arrange
         var architect = new Architect("architectTest", LocalDate.of(2000, 1,1), 1);
 
@@ -42,7 +42,7 @@ class ArchitectServiceTests {
     }
 
     @Test
-    public void deleteQuestionShouldFailIfArchitectDoesNotExist() {
+    public void deleteArchitectShouldFailIfArchitectDoesNotExist() {
         // Arrange
         var falseID = 69;
         var architect = new Architect("architectTest", LocalDate.of(2000, 1,1), 1);
