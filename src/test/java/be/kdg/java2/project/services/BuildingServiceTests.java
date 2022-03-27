@@ -5,8 +5,9 @@ import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.exceptions.LocationNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -20,8 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Transactional
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BuildingServiceTests {
 
     @Autowired
@@ -30,7 +30,7 @@ class BuildingServiceTests {
     @Autowired
     private ArchitectService architectService;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         var location = "Antwerp";
 
