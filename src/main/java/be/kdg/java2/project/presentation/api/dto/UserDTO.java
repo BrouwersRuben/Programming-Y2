@@ -1,6 +1,8 @@
 package be.kdg.java2.project.presentation.api.dto;
 
 import be.kdg.java2.project.domain.Role;
+import be.kdg.java2.project.utils.ValidPassword;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,29 +10,26 @@ import javax.validation.constraints.*;
 
 public class UserDTO {
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "The username should be given.")
     private String username;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "The email should be given.")
     private String email;
 
-    @NotNull
-    @NotEmpty
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @NotNull
-    @NotEmpty
+    @ValidPassword
+    @NonNull
+    @NotBlank(message = "Password is mandatory")
     private String password;
+
+    @PasswordMatch
+    @NonNull
+    @NotBlank(message = "Confirm Password is mandatory")
     private String matchingPassword;
 
     @NotNull
     @NotEmpty
     private int architectFirmId;
-
-    public UserDTO() {
-    }
 
     // Getters
 
@@ -40,10 +39,6 @@ public class UserDTO {
 
     public String getEmail() {
         return email;
-    }
-
-    public Role getRole() {
-        return role;
     }
 
     public String getPassword() {
@@ -66,10 +61,6 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public void setPassword(String password) {

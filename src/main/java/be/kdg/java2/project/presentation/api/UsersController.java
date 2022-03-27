@@ -1,5 +1,6 @@
 package be.kdg.java2.project.presentation.api;
 
+import be.kdg.java2.project.domain.Role;
 import be.kdg.java2.project.domain.User;
 import be.kdg.java2.project.presentation.api.dto.UserDTO;
 import be.kdg.java2.project.security.CreaterOnly;
@@ -48,7 +49,7 @@ public class UsersController {
         } else {
             var encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
             var workingFirm = architectService.findById(userDTO.getArchitectFirmId());
-            var newUser = new User(userDTO.getUsername(), userDTO.getEmail(), userDTO.getRole(), encryptedPassword, workingFirm);
+            var newUser = new User(userDTO.getUsername(), userDTO.getEmail(), Role.U, encryptedPassword, workingFirm);
             userService.saveUser(newUser);
             return new ResponseEntity<>(modelMapper.map(newUser, UserDTO.class), HttpStatus.CREATED);
         }

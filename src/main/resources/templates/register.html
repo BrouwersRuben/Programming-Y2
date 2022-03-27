@@ -19,7 +19,7 @@
 <div class="container mb-3">
     <h2 class="display-2 text-center my-4">Log in</h2>
 
-    <form class="m-4" th:method="post" th:object="${user}">
+    <form class="m-4" th:action="@{/login}" th:method="post" th:object="${userDTO}">
         <div class="mb-3">
             <label  class="form-label" for="username">Username:</label>
             <input id="username" type="text" th:field="*{username}" class="form-control"/>
@@ -28,8 +28,22 @@
             <label class="form-label" for="email">Email:</label>
             <input id="email" type="email" th:field="*{email}" class="form-control"/>
         </div>
+        <div class="mb-3" id="architectIDs">
+            <label th:utext="#{addBuilding.l4}">Architect firm: </label><br>
+            <div class="form-check"  th:each="architect : ${architects}">
+                <input class="form-check-input" id="IDs" name="architectsIDs" th:field="*{architectsIDs}" th:value="${architect.id}"
+                       type="radio">
+                <span th:text="${architect.nameCompany}">Architect firm</span><br>
+            </div>
+            <div class="m-2 alert alert-danger" th:errors="*{architectsIDs}" th:if="${#fields.hasErrors('architectsIDs')}">ArchitectsIDs Error
+            </div>
+        </div>
         <div class="mb-3">
             <label  class="form-label" for="password">Password:</label>
+            <input id="password" type="password" th:field="*{password}" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label  class="form-label" for="password">Repeat password:</label>
             <input id="password" type="password" th:field="*{password}" class="form-control"/>
         </div>
         <button type="submit" class="btn btn-dark">Log in</button>

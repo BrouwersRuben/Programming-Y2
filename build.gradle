@@ -25,6 +25,7 @@ ext {
     modelMapperVersion = '3.1.0'
     thymeleafExtraSpringSec5 = '3.0.4.RELEASE' //Next version is unstable
     junitVersion = '5.8.2'
+    passayVersion = '1.6.1'
 
 }
 
@@ -57,6 +58,8 @@ dependencies {
     //Spring Security
     implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
     implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:${thymeleafExtraSpringSec5}"
+    implementation "org.passay:passay:${passayVersion}"
+
 
     //Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
