@@ -20,8 +20,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,9 +65,13 @@ class BuildingControllerTest {
         Building building4 = new Building("building4", "Antwerp", 123, institutional);
 
         Architect architect1 = new Architect("architect1", LocalDate.of(2000,1,1), 1);
-        Architect architect2 = new Architect("architect2", LocalDate.of(2000,1,1), 12);
-        Architect architect3 = new Architect("architect3", LocalDate.of(2000,1,1), 123);
-        Architect architect4 = new Architect("architect4", LocalDate.of(2000,1,1), 1234);
+        architect1.setId(1);
+        Architect architect2 = new Architect("architect2", LocalDate.of(2001,1,1), 12);
+        architect2.setId(2);
+        Architect architect3 = new Architect("architect3", LocalDate.of(2002,1,1), 123);
+        architect3.setId(3);
+        Architect architect4 = new Architect("architect4", LocalDate.of(2003,1,1), 1234);
+        architect4.setId(4);
 
         building1.addArchitect(architect1);
         building2.addArchitect(architect2);

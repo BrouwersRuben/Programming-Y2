@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ArchitectServiceTests {
 
     @Autowired
@@ -35,7 +36,7 @@ class ArchitectServiceTests {
         assertTrue(architectRepository.findById(architect.getId()).isPresent());
 
         // Act
-        architectService.delete(1);
+        architectService.delete(architect.getId());
 
         // Assert
         assertTrue(architectRepository.findById(architect.getId()).isEmpty());

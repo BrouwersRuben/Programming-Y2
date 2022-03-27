@@ -2,8 +2,10 @@ package be.kdg.java2.project.presentation.api;
 
 import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.repository.ArchitectRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,13 +18,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ArchitectsControllerTest {
 
     // Added permitAll for the getters when running these tests.
@@ -33,7 +35,7 @@ class ArchitectsControllerTest {
     @Autowired
     private ArchitectRepository architectRepository;
 
-    @BeforeEach
+    @BeforeAll
     @Transactional
     void setUp() {
         Architect architect1 = new Architect("architect1", LocalDate.of(2000,1,1), 1);
