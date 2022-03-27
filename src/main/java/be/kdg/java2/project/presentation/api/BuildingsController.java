@@ -41,7 +41,6 @@ public class BuildingsController {
         this.modelMapper = modelMapper;
     }
 
-    //TODO: use in JS
     @GetMapping("{buildingId}")
     public ResponseEntity<BuildingDTO> getBuildingById(@PathVariable int buildingId) {
         var building = buildingService.findById(buildingId);
