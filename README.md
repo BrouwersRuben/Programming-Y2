@@ -315,7 +315,7 @@ GET http://localhost:6969/api/architects HTTP/1.1
 Accept: application/xml
 ```
 ```http request
-HTTP/1.1 200 
+HTTP/1.1 200
 Content-Type: application/xml;charset=UTF-8
 Transfer-Encoding: chunked
 Date: Tue, 15 Feb 2022 21:25:49 GMT
@@ -363,8 +363,11 @@ To see validator in action you will need to enter:
 - Source files:
   - [architects.html](src/main/resources/templates/mainpages/architects.html) (Not really any validator specific code here, except the script tag which links to the JS file)
   - [filteringArchitects.js](src/main/js/filteringArchitects.js) (here on line 16 & 76 you will find validator code)
-  
+
 ## Week 4-5
+Unauthenticated user only have access to the landing and login page (soon also the registering page).
+Every other pages requires authentication.
+
 ### Users
 ```ROLE_CREATOR > ROLE_UPDATER  > ROLE_USER``` <br>
 All what the user can do, the updater can also do, and so on...
@@ -372,15 +375,15 @@ All what the user can do, the updater can also do, and so on...
 > **Username**: Creator <br>
 **E-mail**: creator@kdg.be <br>
 **Password**: creator <br>
-   
-Can do everything.
+
+The "creator" can do everything.
 
 #### Updater
 > **Username**: Updater <br>
 **E-mail**: updater@kdg.be <br>
 **Password**: updater <br>
 
-Can update entities (PUT architect)
+The "updater" can update entities (PUT architect)
 
 * They **cannot** see any off the pages to add entities, including the navbar links to those pages.
   * Any page, because all pages have the navbar.
@@ -392,8 +395,8 @@ Can update entities (PUT architect)
 >**Username**: User <br>
 **E-mail**: user@kdg.be <br>
 **Password**: user <br>
-> 
-Can view entities and filter on them
+>
+The "user" can view entities and filter on them
 
 * They **cannot** see any off the pages to add entities, including the navbar links to those pages.
   * Any page, because all pages have the navbar.
