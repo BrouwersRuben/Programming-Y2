@@ -23,7 +23,7 @@ public class TypeOfBuilding extends EntityClass {
     @Column(name = "TYPE_PERMISSIONS", nullable = false)
     private boolean requiresSpecialPermission;
 
-    @OneToMany(mappedBy = "typeOfBuilding", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "typeOfBuilding")
     private List<Building> buildings;
     // One type can have many buildings
 

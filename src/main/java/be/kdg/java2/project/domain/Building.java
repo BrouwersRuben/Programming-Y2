@@ -22,10 +22,10 @@ public class Building extends EntityClass {
     @Column(name = "BUILDING_HEIGHT", nullable = false)
     private double height;
 
-    @ManyToMany(mappedBy = "buildings", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "buildings", fetch = FetchType.EAGER)
     private List<Architect> architects;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name = "type_of_building_id")
     private TypeOfBuilding typeOfBuilding;
 
