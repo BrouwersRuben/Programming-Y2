@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class ArchitectRepositoryTest {
+class ArchitectRepositoryTests {
 
     @Autowired
     private ArchitectRepository architectRepository;
