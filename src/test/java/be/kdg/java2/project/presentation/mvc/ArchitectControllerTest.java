@@ -28,6 +28,7 @@ class ArchitectControllerTest {
     private ArchitectRepository architectRepository;
 
     // Returns 302 instead of 201, and I can not find where it chooses to do that
+    // 302 is found redirect, so the stuff makes the new architect, but then it redirects to the architects page, that's why it gives this code
 /*    @Test
     void addArchitectShouldPass() throws Exception {
         // Arrange
