@@ -42,7 +42,8 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public List<Building> findByLocation(String location) {
-        LocationCheckerUtil.checkLocation(location, buildingRepository.findAll());
+        // Search within DB with a where clause, more efficient. should be done in db.
+//        LocationCheckerUtil.checkLocation(location, buildingRepository.findAll());
         return buildingRepository.findBuildingByLocation(location);
     }
 }

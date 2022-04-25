@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-class BuildingControllerTest {
+class BuildingControllerTests {
 
     // Added permitAll for everything (request & matchers), so these test pass.
     // Removed annotation "CreatorOnly" from PostMapping of architect

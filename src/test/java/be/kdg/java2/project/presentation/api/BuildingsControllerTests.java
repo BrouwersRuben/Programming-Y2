@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-class BuildingsControllerTest {
+class BuildingsControllerTests {
 
     // Commented out @CreaterOnly on postmapping REST API
 

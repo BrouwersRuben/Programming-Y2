@@ -5,6 +5,7 @@ import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.exceptions.LocationNotFoundException;
+import be.kdg.java2.project.repository.TypeOfBuildingRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,10 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -28,11 +30,17 @@ class BuildingServiceTests {
     @Autowired
     private ArchitectService architectService;
 
+    @Autowired
+    private TypeOfBuildingRepository typeOfBuildingRepository;
+
     @BeforeAll
     void setUp() {
         var location = "Antwerp";
 
-        var building = new Building("testBuilding1", location, 123, new TypeOfBuilding(BuildingType.SLUMS));
+        var typeOfBuilding = new TypeOfBuilding(BuildingType.SLUMS);
+        typeOfBuildingRepository.save(typeOfBuilding);
+
+        var building = new Building("testBuilding1", location, 123, typeOfBuilding);
         var architect = new Architect("testArchitect1", LocalDate.of(2000,1,1), 123);
 
         building.addArchitect(architect);
@@ -45,10 +53,11 @@ class BuildingServiceTests {
 
     @Test
     public void findByLocationShouldFailWhenLocationNotFoundInDatabase() {
+        // Act
+        var buildings = buildingService.findByLocation("Brussel");
+
         // Assert
-        assertThrows(LocationNotFoundException.class, () ->
-            // Act
-            buildingService.findByLocation("Brussel"));
+        assertEquals(buildings, new ArrayList<>());
     }
 
     @Test
