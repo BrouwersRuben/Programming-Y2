@@ -31,7 +31,7 @@ public class Architect extends EntityClass {
     private List<Building> buildings;
     // List, because then elements can be retrieved at index, could use set or map for the unique stuff, but didn't
 
-    @OneToMany(mappedBy = "workingFirm", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "workingFirm")
     private List<User> users;
 
     protected Architect() {
