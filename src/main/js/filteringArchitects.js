@@ -25,7 +25,8 @@ function nameFilterFunction() {
                 method: "GET",
                 headers : {
                     "Content-Type" : "application/json",
-                    "X-XSRF-TOKEN" : cookie[1]
+                    "X-XSRF-TOKEN" : cookie[1],
+                    "accept" : "application/json"
                 },
             })
                 .then(response => {
@@ -66,7 +67,8 @@ function numberFilterFunction(){
                 method: "GET",
                 headers : {
                     "Content-Type" : "application/json",
-                    "X-XSRF-TOKEN" : cookie[1]
+                    "X-XSRF-TOKEN" : cookie[1],
+                    "accept" : "application/json"
                 },
             })
                 .then(response => {
@@ -110,7 +112,8 @@ function getAllArchitects(){
         method: "GET",
         headers : {
             "Content-Type" : "application/json",
-            "X-XSRF-TOKEN" : cookie[1]
+            "X-XSRF-TOKEN" : cookie[1],
+            "accept" : "application/json"
         }
     })
         .then(response => {
