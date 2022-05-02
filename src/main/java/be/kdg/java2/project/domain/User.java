@@ -22,7 +22,7 @@ public class User extends EntityClass{
     @Column(name = "USER_PASSWORD", nullable = false)
     private String password;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "architectFirm_id", nullable = false)
     private Architect workingFirm;
 

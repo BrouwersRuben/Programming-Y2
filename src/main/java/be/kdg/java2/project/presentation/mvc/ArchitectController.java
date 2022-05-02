@@ -70,7 +70,7 @@ public class ArchitectController {
 
     @GetMapping("/architectdetail")
     public String showArchitectDetail(@RequestParam("architectID") Integer architectID, Model model, HttpServletResponse response) {
-        Architect architect = architectService.findById(architectID);
+        Architect architect = architectService.findArchitectWithBuildingsAndEmployeesByID(architectID);
         if (architect == null){
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return "/mainpages/buildings";

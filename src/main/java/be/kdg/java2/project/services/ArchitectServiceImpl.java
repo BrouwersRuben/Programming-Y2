@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class ArchitectServiceImpl implements ArchitectService {
     private final ArchitectRepository architectRepository;
 
@@ -27,6 +26,12 @@ public class ArchitectServiceImpl implements ArchitectService {
     }
 
     @Override
+    public Architect findArchitectWithBuildingsAndEmployeesByID(int id){
+        return architectRepository.findArchitectWithBuildingsAndEmployeesByID(id);
+    }
+
+    @Override
+    @Transactional
     public void delete(int id) {
         Architect architectToBeDeleted = architectRepository.findById(id).orElseThrow();
         architectToBeDeleted.getBuildings()
@@ -55,6 +60,7 @@ public class ArchitectServiceImpl implements ArchitectService {
     }
 
     @Override
+    @Transactional
     public void updateArchitect(Architect architect) {
         architectRepository.save(architect);
     }

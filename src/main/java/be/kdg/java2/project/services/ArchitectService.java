@@ -9,6 +9,8 @@ public interface ArchitectService {
 
     Architect findById(int id);
 
+    Architect findArchitectWithBuildingsAndEmployeesByID(int id);
+
     void delete(int id);
 
     void addArchitect(Architect architect);
