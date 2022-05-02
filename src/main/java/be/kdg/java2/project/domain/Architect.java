@@ -26,6 +26,7 @@ public class Architect extends EntityClass {
     @Column(name = "APLICATION_NUMBER_OF_EMPLOYEES", nullable = false)
     private int numberOfEmployees;
 
+    //TODO: Check this!!
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "architect_building", joinColumns = @JoinColumn(name = "architect_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "building_id", nullable = false))
     private List<Building> buildings;

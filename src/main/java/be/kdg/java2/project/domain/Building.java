@@ -22,6 +22,7 @@ public class Building extends EntityClass {
     @Column(name = "BUILDING_HEIGHT", nullable = false)
     private double height;
 
+    //TODO: Check this
     @ManyToMany(mappedBy = "buildings", fetch = FetchType.EAGER)
     private List<Architect> architects;
 
