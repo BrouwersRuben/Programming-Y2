@@ -1,21 +1,31 @@
 package be.kdg.java2.project.presentation.api;
 
 import be.kdg.java2.project.domain.Architect;
+import be.kdg.java2.project.domain.Role;
+import be.kdg.java2.project.domain.User;
 import be.kdg.java2.project.repository.ArchitectRepository;
+import be.kdg.java2.project.security.CostumUserDetails;
+import be.kdg.java2.project.services.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -25,13 +35,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ArchitectsControllerTests {
 
-    // Added permitAll for the getters when running these tests.
-
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ArchitectRepository architectRepository;
+
+    @MockBean
+    private UserService userService;
 
     @BeforeAll
     @Transactional
@@ -53,10 +64,20 @@ class ArchitectsControllerTests {
 
     @Test
     void filteredArchitectsShouldGiveArchitectByNameWhenAskedForIt() throws Exception {
+        // Arrange
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_UPDATER")));
+
         // Act & Assert
         mockMvc.perform(
                 get("/api/architects?name={name}", "architect2")
                         .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf())
+                        .with(user(customUserDetails))
         )
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,
@@ -67,10 +88,20 @@ class ArchitectsControllerTests {
 
     @Test
     void filteredArchitectsShouldGiveArchitectsWhenFilteredOnEmployees() throws Exception {
+        // Arrange
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_UPDATER")));
+
         // Act & Assert
         mockMvc.perform(
                         get("/api/architects?numbE={number}", "120")
                                 .accept(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                                .with(user(customUserDetails))
                 )
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE,
@@ -81,10 +112,20 @@ class ArchitectsControllerTests {
 
     @Test
     void filteredArchitectsShouldFailWhenGivenUnknownName() throws Exception {
+        // Arrange
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_UPDATER")));
+
         // Act & Assert
         mockMvc.perform(
                         get("/api/architects?name={name}", "blablabla")
                                 .accept(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                                .with(user(customUserDetails))
                 )
                 .andExpect(status().isNoContent());
     }

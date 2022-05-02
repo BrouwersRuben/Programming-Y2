@@ -30,9 +30,6 @@ public class BuildingServiceMockingTests {
     @MockBean
     private BuildingRepository buildingRepository;
 
-    @MockBean
-    private LocationCheckerUtil locationCheckerUtil;
-
     @Test
     public void findByLocationShouldFailWhenLocationNotFoundInDatabase() {
 

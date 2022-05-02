@@ -1,25 +1,30 @@
 package be.kdg.java2.project.presentation.mvc;
 
-import be.kdg.java2.project.domain.Architect;
-import be.kdg.java2.project.domain.Building;
-import be.kdg.java2.project.domain.BuildingType;
-import be.kdg.java2.project.domain.TypeOfBuilding;
+import be.kdg.java2.project.domain.*;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import be.kdg.java2.project.repository.BuildingRepository;
 import be.kdg.java2.project.repository.TypeOfBuildingRepository;
+import be.kdg.java2.project.security.CostumUserDetails;
+import be.kdg.java2.project.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,6 +51,9 @@ class BuildingControllerTests {
 
     @Autowired
     private TypeOfBuildingRepository typeOfBuildingRepository;
+
+    @MockBean
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -96,11 +104,21 @@ class BuildingControllerTests {
 
     @Test
     void showAllBuildingsShouldUseCorrectViewAndReturnCorrectNumberOfBook() throws Exception{
+        // Arrange
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
         // Act & Assert
         var actualBuildings = buildingRepository.findAll();
         System.out.println(actualBuildings);
         mockMvc.perform(
                 get("/buildings")
+                        .with(csrf())
+                        .with(user(customUserDetails))
         )
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("allBuildings", equalTo(actualBuildings)))
@@ -112,9 +130,18 @@ class BuildingControllerTests {
         // Arrange
         var id = buildingRepository.findByName("building1").getId();
 
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
         // Act & Assert
         mockMvc.perform(
                         get("/buildings/buildingdetail?buildingID={id}", id)
+                                .with(csrf())
+                                .with(user(customUserDetails))
                 )
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("building",
@@ -126,10 +153,28 @@ class BuildingControllerTests {
         // Arrange
         var falseId = 69;
 
+        User user = new User("User", "user@kdg.be", Role.N, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
+        user.setId(99);
+
+        given(userService.findByEmail(user.getEmail())).willReturn(user);
+
+        CostumUserDetails customUserDetails = new CostumUserDetails(user.getId(), user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
         // Act & Assert
         mockMvc.perform(
                         get("/buildings/buildingdetail?buildingID={id}", falseId)
+                                .with(csrf())
+                                .with(user(customUserDetails))
                 )
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void showBuildingInDetailShouldFailWhenNotSignedIn() throws Exception{
+        // Act & Assert
+        mockMvc.perform(
+                        get("/buildings")
+                )
+                .andExpect(status().isForbidden());
     }
 }
