@@ -3,6 +3,7 @@ package be.kdg.java2.project.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @ControllerAdvice
+@Profile("!test")
 public class GeneralExceptionHandler {
     private final Logger log = LoggerFactory.getLogger(GeneralExceptionHandler.class);
 
