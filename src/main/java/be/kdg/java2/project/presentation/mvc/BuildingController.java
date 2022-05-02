@@ -85,7 +85,7 @@ public class BuildingController {
 
     @GetMapping("/buildingdetail")
     public String showBuildingDetail(@RequestParam("buildingID") Integer buildingID, Model model, HttpServletResponse response) {
-        Building building = buildingService.findById(buildingID);
+        Building building = buildingService.findByIdWithArchitectsAndType(buildingID);
         if (building == null){
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return "/mainpages/buildings";

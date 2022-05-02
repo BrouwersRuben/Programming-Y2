@@ -23,6 +23,11 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    public Building findByIdWithArchitectsAndType(int id) {
+        return buildingRepository.findByIdWithArchitectsAndType(id);
+    }
+
+    @Override
     public Building findById(int id) {
         return buildingRepository.findById(id).orElse(null);
     }

@@ -22,11 +22,10 @@ public class Building extends EntityClass {
     @Column(name = "BUILDING_HEIGHT", nullable = false)
     private double height;
 
-    //TODO: Check this
-    @ManyToMany(mappedBy = "buildings", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "buildings", fetch = FetchType.LAZY)
     private List<Architect> architects;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_of_building_id")
     private TypeOfBuilding typeOfBuilding;
 

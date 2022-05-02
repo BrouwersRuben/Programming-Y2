@@ -7,6 +7,8 @@ import java.util.List;
 public interface BuildingService {
     List<Building> findAll();
 
+    Building findByIdWithArchitectsAndType(int id);
+
     Building findById(int id);
 
     void delete(int id);
