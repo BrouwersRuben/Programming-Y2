@@ -1,12 +1,10 @@
 package be.kdg.java2.project.presentation.api;
 
-import be.kdg.java2.project.configuration.GeneralExceptionHandler;
 import be.kdg.java2.project.domain.*;
 import be.kdg.java2.project.presentation.api.dto.building.BuildingAddDTO;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import be.kdg.java2.project.repository.BuildingRepository;
 import be.kdg.java2.project.security.CostumUserDetails;
-import be.kdg.java2.project.services.BuildingService;
 import be.kdg.java2.project.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -61,6 +60,7 @@ class BuildingsControllerTests {
     }
 
     @Test
+    @Transactional
     public void createBuildingShouldPassWhenAllFieldsAreEntered() throws Exception {
         // Arrange
         User user = new User("CREATOR", "creator@kdg.be", Role.CD, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);
