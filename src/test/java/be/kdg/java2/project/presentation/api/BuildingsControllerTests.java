@@ -1,13 +1,12 @@
 package be.kdg.java2.project.presentation.api;
 
 import be.kdg.java2.project.configuration.GeneralExceptionHandler;
-import be.kdg.java2.project.domain.Architect;
-import be.kdg.java2.project.domain.BuildingType;
-import be.kdg.java2.project.domain.Role;
-import be.kdg.java2.project.domain.User;
+import be.kdg.java2.project.domain.*;
 import be.kdg.java2.project.presentation.api.dto.building.BuildingAddDTO;
 import be.kdg.java2.project.repository.ArchitectRepository;
+import be.kdg.java2.project.repository.BuildingRepository;
 import be.kdg.java2.project.security.CostumUserDetails;
+import be.kdg.java2.project.services.BuildingService;
 import be.kdg.java2.project.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,6 +43,9 @@ class BuildingsControllerTests {
 
     @Autowired
     private ArchitectRepository architectRepository;
+
+    @MockBean
+    private BuildingRepository buildingRepository;
 
     @MockBean
     private UserService userService;
@@ -115,6 +120,7 @@ class BuildingsControllerTests {
                 )
                 .andExpect(status().isBadRequest());
 
+        verify(buildingRepository, times(0)).save(any(Building.class));
     }
 
     @Test
