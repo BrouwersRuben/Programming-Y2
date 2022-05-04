@@ -73,7 +73,6 @@ Connection: keep-alive
 ```
 A 204 will appear if there are no records of any architect in the database, very unlikely.
 
-[//]: # (TODO: Look at controllers, but has to be changed according to rest principles)
 #### 1 Record
 ##### 200 Ok
 ```http request
@@ -411,3 +410,41 @@ The "user" can view entities and filter on them
 ### Relations between users and entity
 An architect (architect firm) can have employees and a user (normal user, updater, creator) has an architect firm they "work for".
 Every logged in user can see these relations under the detail page of each architect, these relations can only be made upon registration, there is no way to modify it, yet...
+
+## Week 6-8
+### Coverage Report
+
+<img src="coverage_report.jpg" alt="coverage report" width="800"/>
+
+### Command-line Instruction
+I set my spring profile in each class separately, with the annotation: 
+```java
+@ActiveProfile("test")
+```
+
+The commands to run all tests are: 
+```bash
+./gradlew test
+```
+```bash
+./gradlew check
+```
+
+### Explanation about the tests
+#### Mocking tests
+I used mocking in all my presentation layer tests, because I mock the user to pass the tests with security enabled.
+
+But the classes where I really focussed the tests on mocking are: 
+- [ArchitectControllerMockingTests](src/test/java/be/kdg/java2/project/presentation/api/ArchitectControllerMockingTests.java)
+- [BuildingServiceMockingTests](src/test/java/be/kdg/java2/project/services/BuildingServiceMockingTests.java)
+
+#### Verify tests
+- [BuildingControllerTests](src/test/java/be/kdg/java2/project/presentation/api/BuildingsControllerTests.java): Line 123
+- [ArchitectControllerMockingTests](src/test/java/be/kdg/java2/project/presentation/api/ArchitectControllerMockingTests.java): Line 79
+
+#### Role verification tests
+As mentioned before, in all my presentation layer tests I used the role verification (as all my REST calls require authentication). 
+But there are 2 tests dedicated to specifically that.
+
+- [ArchitectControllerMockingTests](src/test/java/be/kdg/java2/project/presentation/api/ArchitectControllerMockingTests.java): Line 114
+- [BuildingControllerTests](src/test/java/be/kdg/java2/project/presentation/api/BuildingsControllerTests.java): Line 127
