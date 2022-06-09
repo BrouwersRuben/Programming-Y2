@@ -10,7 +10,7 @@ public class Building extends EntityClass {
 
     // Attributes
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BUILDING_SEQ")
     private int id;
 
     @Column(name = "BUILDING_NAME", nullable = false, unique = true, length = 30)
