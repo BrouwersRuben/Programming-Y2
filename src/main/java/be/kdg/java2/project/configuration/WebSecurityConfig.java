@@ -23,22 +23,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //@formatter:off
         http
             .authorizeRequests()
-//                .antMatchers("/", "/buildings", "/architects", "/architects/architectdetail*", "/buildings/buildingdetail*")
                 .antMatchers("/")
                     .permitAll()
+                .antMatchers("/buildings/add", "/architects/add")
+                    .hasAnyRole("ROLE_CREATOR")
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
                 .antMatchers("/h2-console/**")
                     .authenticated()
-//                    .permitAll() // This is only active when testing
                 .anyRequest()
                     .authenticated()
-//                    .permitAll() // This is only active when testing
                 .and()
                     .headers().frameOptions().disable()
                 .and()
                 .csrf()
-//                    .disable() // This is only active when testing
                     .csrfTokenRepository(
                             CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
