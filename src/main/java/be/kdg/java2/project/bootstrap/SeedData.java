@@ -83,18 +83,18 @@ public class SeedData implements CommandLineRunner {
 
         zahaHadid.addBuilding(portAuthority);
         zahaHadid.addBuilding(vitraFireStation);
-        zahaHadid.addUser(updater);
+        zahaHadid.addEmployee(updater);
 
         utzon.addBuilding(sydneyOperaHouse);
         utzon.addBuilding(unoXPetrolStation);
 
         grimmParker.addBuilding(portAuthority);
         grimmParker.addBuilding(sydneyOperaHouse);
-        grimmParker.addUser(creater);
+        grimmParker.addEmployee(creater);
 
         diamondSchmitt.addBuilding(vitraFireStation);
         diamondSchmitt.addBuilding(unoXPetrolStation);
-        diamondSchmitt.addUser(user);
+        diamondSchmitt.addEmployee(user);
 
         typeOfBuildingRepository.save(residential);
         typeOfBuildingRepository.save(educational);

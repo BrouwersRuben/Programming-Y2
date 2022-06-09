@@ -32,7 +32,7 @@ public class Architect extends EntityClass {
     // List, because then elements can be retrieved at index, could use set or map for the unique stuff, but didn't
 
     @OneToMany(mappedBy = "workingFirm")
-    private List<User> users;
+    private List<User> employees;
 
     protected Architect() {
     }
@@ -103,21 +103,21 @@ public class Architect extends EntityClass {
         this.buildings.remove(building);
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<User> getEmployees() {
+        return employees;
     }
 
-    public void addUsers(List<User> users) {
-        if (this.users == null) {
-            this.users = new ArrayList<>();
+    public void addEmployees(List<User> users) {
+        if (this.employees == null) {
+            this.employees = new ArrayList<>();
         }
-        this.users.addAll(users);
+        this.employees.addAll(users);
     }
 
-    public void addUser(User user) {
-        if (this.users == null) {
-            this.users = new ArrayList<>();
+    public void addEmployee(User user) {
+        if (this.employees == null) {
+            this.employees = new ArrayList<>();
         }
-        this.users.add(user);
+        this.employees.add(user);
     }
 }
