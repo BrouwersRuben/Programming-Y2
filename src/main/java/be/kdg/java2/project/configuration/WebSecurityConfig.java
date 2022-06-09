@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                     .permitAll()
                 .antMatchers("/buildings/add", "/architects/add")
-                    .hasAnyRole("ROLE_CREATOR")
+                    .hasAnyRole("CREATOR")
                 .regexMatchers(HttpMethod.GET, ".+\\.(css|js|map|woff2?|gif|png|jpg)(\\?.*)?")
                     .permitAll()
                 .antMatchers("/h2-console/**")
