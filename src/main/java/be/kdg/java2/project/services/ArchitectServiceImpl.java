@@ -1,7 +1,9 @@
 package be.kdg.java2.project.services;
 
 import be.kdg.java2.project.domain.Architect;
+import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.repository.ArchitectRepository;
+import be.kdg.java2.project.repository.BuildingRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,8 +13,11 @@ import java.util.List;
 public class ArchitectServiceImpl implements ArchitectService {
     private final ArchitectRepository architectRepository;
 
-    public ArchitectServiceImpl(ArchitectRepository architectRepository) {
+    private final  BuildingRepository buildingRepository;
+
+    public ArchitectServiceImpl(ArchitectRepository architectRepository, BuildingRepository buildingRepository) {
         this.architectRepository = architectRepository;
+        this.buildingRepository = buildingRepository;
     }
 
     @Override
@@ -40,8 +45,12 @@ public class ArchitectServiceImpl implements ArchitectService {
     }
 
     @Override
+    @Transactional
     public void addArchitect(Architect architect) {
         architectRepository.save(architect);
+        if (architect.getBuildings() != null){
+            architect.getBuildings().forEach(building -> buildingRepository.addArchitect(building.getId(), architect));
+        }
     }
 
     @Override
@@ -63,5 +72,10 @@ public class ArchitectServiceImpl implements ArchitectService {
     @Transactional
     public void updateArchitect(Architect architect) {
         architectRepository.save(architect);
+    }
+
+    @Override
+    public void addBuildingToArchitect(int id, Building building) {
+        architectRepository.addBuilding(id, building);
     }
 }

@@ -1,6 +1,9 @@
 package be.kdg.java2.project.services;
 
 import be.kdg.java2.project.domain.Architect;
+import be.kdg.java2.project.domain.Building;
+import be.kdg.java2.project.domain.BuildingType;
+import be.kdg.java2.project.domain.TypeOfBuilding;
 import be.kdg.java2.project.repository.ArchitectRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

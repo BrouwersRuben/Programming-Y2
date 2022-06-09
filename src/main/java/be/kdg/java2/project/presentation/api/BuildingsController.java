@@ -92,7 +92,6 @@ public class BuildingsController {
             buildingDTO.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
             Building building = new Building(buildingDTO.getName(), buildingDTO.getLocation(), buildingDTO.getHeight(), foundType);
             building.addArchitects(architects);
-            architects.forEach(architect -> architect.addBuilding(building));
             buildingService.addBuilding(building);
             return new ResponseEntity<>(modelMapper.map(building, BuildingDTO.class), HttpStatus.CREATED);
         }

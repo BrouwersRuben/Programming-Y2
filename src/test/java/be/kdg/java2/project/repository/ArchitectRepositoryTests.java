@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ArchitectRepositoryTests {
 
     @Autowired
@@ -29,7 +29,7 @@ class ArchitectRepositoryTests {
         architectRepository.save(architect1);
 
         // Assert
-        assertTrue(architectRepository.findById(2).isEmpty());
+        assertEquals(architectRepository.findArchitectByNameCompany("architect1"), architect1);
         assertThrows(DataIntegrityViolationException.class, () -> {
             // Act
             architectRepository.save(new Architect("architect1", LocalDate.of(2018, 3, 25), 70));
@@ -41,17 +41,17 @@ class ArchitectRepositoryTests {
     public void saveArchitectShouldPassWhenNameUnique() {
 
         // Arrange
-        var architect1 = new Architect("architect1", LocalDate.of(2001, 9, 10), 15);
-        var architect2 = new Architect("architect2", LocalDate.of(2018, 3, 25), 70);
-        architectRepository.save(architect1);
-
-        // Act
+        var architect2 = new Architect("architect2", LocalDate.of(2001, 9, 10), 15);
+        var architect3 = new Architect("architect3", LocalDate.of(2018, 3, 25), 70);
         architectRepository.save(architect2);
 
+        // Act
+        architectRepository.save(architect3);
+
         // Assert
-        assertTrue(architectRepository.findById(2).isPresent());
-        var architect2Found = architectRepository.getById(2);
-        assertEquals("architect2", architect2Found.getNameCompany());
-        assertEquals(70, architect2Found.getNumberOfEmployees());
+        assertEquals(architectRepository.findArchitectByNameCompany("architect3"), architect3);
+        var architect3Found = architectRepository.findArchitectByNameCompany("architect3");
+        assertEquals("architect3", architect3Found.getNameCompany());
+        assertEquals(70, architect3Found.getNumberOfEmployees());
     }
 }

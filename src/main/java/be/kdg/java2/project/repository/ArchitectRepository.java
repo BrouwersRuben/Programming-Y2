@@ -9,9 +9,6 @@ import java.util.List;
 
 public interface ArchitectRepository extends JpaRepository<Architect, Integer>, CustomArchitectRepository {
 
-    @Query("SELECT a FROM Architect a JOIN FETCH a.users WHERE a.id = :id")
-    Architect findByIdWithBuildings(int id);
-
     @Query("SELECT a from Architect a WHERE a.numberOfEmployees > ?1")
     List<Architect> findArchitectsByNumberOfEmployeesIsGreaterThan(int numberOfEmployees);
 

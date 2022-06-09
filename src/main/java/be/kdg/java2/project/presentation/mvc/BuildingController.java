@@ -76,7 +76,6 @@ public class BuildingController {
             buildingViewModel.getArchitectsIDs().forEach((id) -> architects.add(architectService.findById(id)));
             Building building = new Building(buildingViewModel.getName(), buildingViewModel.getLocation(), buildingViewModel.getHeight(), foundType);
             building.addArchitects(architects);
-            architects.forEach(architect -> architect.addBuilding(building));
             buildingService.addBuilding(building);
             response.setStatus(HttpServletResponse.SC_CREATED);
             return "redirect:/buildings";

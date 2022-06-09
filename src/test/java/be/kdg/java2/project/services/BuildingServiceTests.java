@@ -4,7 +4,6 @@ import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
 import be.kdg.java2.project.domain.BuildingType;
 import be.kdg.java2.project.domain.TypeOfBuilding;
-import be.kdg.java2.project.exceptions.LocationNotFoundException;
 import be.kdg.java2.project.repository.TypeOfBuildingRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BuildingServiceTests {
 
@@ -40,15 +40,15 @@ class BuildingServiceTests {
         var typeOfBuilding = new TypeOfBuilding(BuildingType.SLUMS);
         typeOfBuildingRepository.save(typeOfBuilding);
 
-        var building = new Building("testBuilding1", location, 123, typeOfBuilding);
         var architect = new Architect("testArchitect1", LocalDate.of(2000,1,1), 123);
+
+        architectService.addArchitect(architect);
+
+        var building = new Building("testBuilding1", location, 123, typeOfBuilding);
 
         building.addArchitect(architect);
 
-        architect.addBuilding(building);
-
         buildingService.addBuilding(building);
-        architectService.addArchitect(architect);
     }
 
     @Test

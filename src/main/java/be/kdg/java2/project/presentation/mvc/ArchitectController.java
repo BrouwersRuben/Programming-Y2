@@ -61,7 +61,6 @@ public class ArchitectController {
             List<Building> buildings = new ArrayList<>();
             architectViewModel.getBuildingsIDs().forEach((id) -> buildings.add(buildingService.findById(id)));
             architect.addBuildings(buildings);
-            buildings.forEach(building -> building.addArchitect(architect));
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             architectService.addArchitect(architect);
             return "redirect:/architects";

@@ -60,7 +60,6 @@ class BuildingsControllerTests {
     }
 
     @Test
-    @Transactional
     public void createBuildingShouldPassWhenAllFieldsAreEntered() throws Exception {
         // Arrange
         User user = new User("CREATOR", "creator@kdg.be", Role.CD, "$2a$10$ng5ekeJ2KHTAlhRkQV1jeeDjElLC1SBcMnmyS.bNmD3zUZ6PnpzKK", null);

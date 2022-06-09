@@ -1,5 +1,6 @@
 package be.kdg.java2.project.services;
 
+import be.kdg.java2.project.domain.Architect;
 import be.kdg.java2.project.domain.Building;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface BuildingService {
     void addBuilding(Building building);
 
     List<Building> findByLocation(String location);
+
+    void addArchitectToBuilding(int id, Architect architect);
 }
