@@ -73,7 +73,7 @@ public class ArchitectController {
         Architect architect = architectService.findArchitectWithBuildingsAndEmployeesByID(architectID);
         if (architect == null){
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            return "/mainpages/buildings";
+            return "/mainpages/architects";
         }
         model.addAttribute("architect", architect);
         return "detailpages/architectdetail";
